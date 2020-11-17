@@ -1,0 +1,17 @@
+$color_menu_logo: #ffffff;
+
+.logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: $color_menu_logo;
+
+  @media(max-width: 920px) {
+    font-size: 1.4rem;
+  }
+}
+
+.header__logo {
+  float: left;
+  margin: 0 30px 0 0;
+}

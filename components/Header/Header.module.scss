@@ -1,0 +1,18 @@
+$color_header_bg: #76B9D3;
+
+.header {
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  width: 100%;
+  height: 48px;
+  line-height: 47px;
+  background-color: $color_header_bg;
+  padding-left: 1.5rem;
+  
+  @media(max-width: 920px) {
+    height: 40px;
+    line-height: 40px;
+    padding-left: .75rem;
+  }
+}
