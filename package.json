@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "@types/classnames": "^2.2.11",
     "@types/materialize-css": "^1.0.8",
     "classnames": "^2.2.6",
