@@ -1,12 +1,12 @@
+import { useState } from 'react';
+import dbConnect from '../utilities/db-connect';
+import Users from '../models/Users';
+import UserDataProps from '../components/Interfaces/User-data-props';
+
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
+import InputField from '../components/Input-field/Input-field';
 import Head from 'next/head';
-
-import { useState } from 'react';
-import { useButtonActive } from '../hooks/hooks';
-
-import dbConnect from "../utilities/db-connect";
-import Users from "../models/Users";
 
 export async function getServerSideProps() {
   await dbConnect();
@@ -32,7 +32,7 @@ export async function getServerSideProps() {
   }
 }
 
-function UserData(props) {
+function UserData(props: UserDataProps) {
   const {
     first_name,
     middle_name,
@@ -42,19 +42,24 @@ function UserData(props) {
 
   const { number, registered_place } = props.users[0].passport;
 
-  const [state, setState] = useState({
-    passportNumber: number,
-    passportRigisteredPlace: registered_place,
+  const [inputValue, setInputValue] = useState({
+    number: number,
+    registered_place: registered_place,
   });
 
-  const [buttonDisabled, setButtonDisabled] = useState('');
+  function inputChange(e: React.FormEvent<EventTarget>) {
+    const { name, value } = e.target as HTMLInputElement;
 
-  function setButtonClass(value: string): void {
-    !value
-      ? setButtonDisabled("disabled")
-      : setButtonDisabled("");
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
   }
 
+  function onSubmit(e: React.FormEvent<EventTarget>) {
+    e.preventDefault();
+  }
+  
   return (
     <>
       <HeadGlobal />
@@ -69,86 +74,66 @@ function UserData(props) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Персональные данные</h5>
-          <form action='' className='user-data'>
-            <div className='input-field'>
-              <input
-                id='surname'
-                type='text'
-                className='validate'
-                value={last_name}
-                disabled
-              />
-              <label htmlFor='surname'>Фамилия</label>
-            </div>
-
-            <div className='input-field'>
-              <input
-                id='name'
-                type='text'
-                className='validate'
-                value={first_name}
-                disabled
-              />
-              <label htmlFor='name'>Имя</label>
-            </div>
-
-            <div className='input-field'>
-              <input
-                id='middle_name'
-                type='text'
-                className='validate'
-                value={middle_name}
-                disabled
-              />
-              <label htmlFor='middle_name'>Отчество</label>
-            </div>
-
-            <div className='input-field'>
-              <input
-                id='birth_date'
-                type='text'
-                className='validate'
-                value={`${birthday.day}. ${birthday.month}. ${birthday.year}`}
-                disabled
-              />
-              <label htmlFor='birth_date'>Дата рождения</label>
-            </div>
+          <form action='' className='user-data' onSubmit={onSubmit}>
+            <InputField
+              id='surname'
+              maxLength=''
+              name=''
+              value={last_name}
+              disabled={true}
+              labelText='Фамилия'
+            />
+            <InputField
+              id='name'
+              maxLength=''
+              name=''
+              value={first_name}
+              disabled={true}
+              labelText='Имя'
+            />
+            <InputField
+              id='middle_name'
+              maxLength=''
+              name=''
+              value={middle_name}
+              disabled={true}
+              labelText='Отчество'
+            />
+            <InputField
+              id='birth_date'
+              maxLength=''
+              name=''
+              value={`${birthday.day}. ${birthday.month}. ${birthday.year}`}
+              disabled={true}
+              labelText='Дата рождения'
+            />
 
             <h5 className='page-header'>Паспорт</h5>
-
-            <div className='input-field'>
-              <input
-                id='passport'
-                type='text'
-                className='validate'
-                maxLength={11}
-                value={state.passportNumber}
-                onChange={(e) => {
-                  setState({ ...state, passportNumber: e.target.value });
-                  setButtonClass(e.target.value);
-                }}
-              />
-              <label htmlFor='passport'>Серия и номер</label>
-            </div>
-
-            <div className='input-field'>
-              <input
-                id='passport_issued'
-                type='text'
-                className='validate'
-                value={state.passportRigisteredPlace}
-                onChange={(e) =>
-                  setState({
-                    ...state,
-                    passportRigisteredPlace: e.target.value,
-                  })
-                }
-              />
-              <label htmlFor='passport_issued'>Кем выдан</label>
-            </div>
+            <InputField
+              id='passport'
+              maxLength='11'
+              name='number'
+              value={inputValue.number ? inputValue.number : number}
+              disabled={false}
+              labelText='Серия и номер'
+              inputChange={inputChange}
+            />
+            <InputField
+              id='passport_issued'
+              maxLength=''
+              name='registered_place'
+              value={
+                inputValue.registered_place
+                  ? inputValue.registered_place
+                  : registered_place
+              }
+              disabled={false}
+              labelText='Кем выдан'
+              inputChange={inputChange}
+            />
 
             <button
-              className={`btn ${buttonDisabled} waves-effect waves-light block-centered btn-custom_submit btn-custom_green`}
+              className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
               type='submit'
               name='action'
             >
