@@ -1,5 +1,6 @@
 interface UserDataProps {
-  users: {
+  user: {
+    _id: string;
     personal: {
       first_name: string;
       middle_name: string;
@@ -20,14 +21,14 @@ interface UserDataProps {
     };
     home_address: {
       city: string;
-      address: string;
+      address_one: string;
     };
     work: {
       company: string;
       position: string;
       income: string;
     }
-  }[]
+  }
 }
 
 export default UserDataProps;

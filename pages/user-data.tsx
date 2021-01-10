@@ -1,34 +1,29 @@
 import { useState } from 'react';
-import dbConnect from '../utilities/db-connect';
-import Users from '../models/Users';
-import UserDataProps from '../components/Interfaces/User-data-props';
+import dbConnect from '../lib/db-connect';
+import getUserById from '../lib/db-get-user-by-id';
+import updateUserData from '../lib/db-update-user-data';
+import Head from 'next/head';
 
+import UserDataProps from './Interfaces/User-data-props';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
-import InputField from '../components/Input-field/Input-field';
-import Head from 'next/head';
+import Input from '../components/Ui/Input/Input';
+import Button from '../components/Ui/Button/Button';
+
+import {
+  inputChange,
+  userDataOnSubmit,
+} from '../components/Ui/handlers/handlers';
 
 export async function getServerSideProps() {
   await dbConnect();
 
-  try {
-    const data = await Users.find({});
+  const user = await getUserById('5fec5250f79e186ea110fb6f');
 
-    const users = data.map((item) => {
-      const user = item.toObject();
-
-      user._id = user._id.toString();
-
-      return user;
-    });
-
-    return {
-      props: {
-        users,
-      },
-    };
-  } catch {
-    return null;
+  return {
+    props: {
+      user
+    }
   }
 }
 
@@ -38,28 +33,24 @@ function UserData(props: UserDataProps) {
     middle_name,
     last_name,
     birthday,
-  } = props.users[0].personal;
+  } = props.user.personal;
 
-  const { number, registered_place } = props.users[0].passport;
+  const { _id } = props.user;
+  const { number, registered_place } = props.user.passport;
 
   const [inputValue, setInputValue] = useState({
     number: number,
     registered_place: registered_place,
   });
 
-  function inputChange(e: React.FormEvent<EventTarget>) {
-    const { name, value } = e.target as HTMLInputElement;
+  const updatedData = {
+    id: _id,
+    passport: {
+      number: inputValue.number,
+      registered_place: inputValue.registered_place,
+    },
+  };
 
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
-  }
-
-  function onSubmit(e: React.FormEvent<EventTarget>) {
-    e.preventDefault();
-  }
-  
   return (
     <>
       <HeadGlobal />
@@ -74,53 +65,47 @@ function UserData(props: UserDataProps) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Персональные данные</h5>
-          <form action='' className='user-data' onSubmit={onSubmit}>
-            <InputField
-              id='surname'
-              maxLength=''
-              name=''
+          <form
+            action=''
+            className='user-data'
+            onSubmit={(e) => userDataOnSubmit(e, updateUserData, updatedData)}
+          >
+            <Input
+              type='text'
               value={last_name}
               disabled={true}
               labelText='Фамилия'
             />
-            <InputField
-              id='name'
-              maxLength=''
-              name=''
+            <Input
+              type='text'
               value={first_name}
               disabled={true}
               labelText='Имя'
             />
-            <InputField
-              id='middle_name'
-              maxLength=''
-              name=''
+            <Input
+              type='text'
               value={middle_name}
               disabled={true}
               labelText='Отчество'
             />
-            <InputField
-              id='birth_date'
-              maxLength=''
-              name=''
+            <Input
+              type='text'
               value={`${birthday.day}. ${birthday.month}. ${birthday.year}`}
               disabled={true}
               labelText='Дата рождения'
             />
-
             <h5 className='page-header'>Паспорт</h5>
-            <InputField
-              id='passport'
+            <Input
+              type='text'
               maxLength='11'
               name='number'
               value={inputValue.number ? inputValue.number : number}
               disabled={false}
               labelText='Серия и номер'
-              inputChange={inputChange}
+              handler={(e) => inputChange(e, inputValue, setInputValue)}
             />
-            <InputField
-              id='passport_issued'
-              maxLength=''
+            <Input
+              type='text'
               name='registered_place'
               value={
                 inputValue.registered_place
@@ -129,16 +114,13 @@ function UserData(props: UserDataProps) {
               }
               disabled={false}
               labelText='Кем выдан'
-              inputChange={inputChange}
+              handler={(e) => inputChange(e, inputValue, setInputValue)}
             />
-
-            <button
+            <Button
               className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
               type='submit'
-              name='action'
-            >
-              Сохранить
-            </button>
+              text='Обновить'
+            />
           </form>
         </div>
       </div>

@@ -1,8 +1,53 @@
-import Header from "../components/Header/Header";
-import HeadGlobal from "../components/Head-global/Head-global";
-import Head from "next/head";
+import { useState } from 'react';
+import dbConnect from '../lib/db-connect';
+import getUserById from '../lib/db-get-user-by-id';
+import updateUserData from '../lib/db-update-user-data';
+import Head from 'next/head';
 
-function UserContacts() {
+import UserDataProps from './Interfaces/User-data-props';
+import Header from '../components/Header/Header';
+import HeadGlobal from '../components/Head-global/Head-global';
+import Input from '../components/Ui/Input/Input';
+import Button from '../components/Ui/Button/Button';
+
+import {
+  inputChange,
+  userDataOnSubmit,
+} from '../components/Ui/handlers/handlers';
+
+export async function getServerSideProps() {
+  await dbConnect();
+
+  const user = await getUserById('5fec5250f79e186ea110fb6f');
+
+  return {
+    props: {
+      user,
+    },
+  };
+}
+
+function UserContacts(props: UserDataProps) {
+  const {
+    phone,
+    email
+  } = props.user.contacts;
+
+  const { _id } = props.user;
+
+  const [inputValue, setInputValue] = useState({
+    phone: phone,
+    email: email,
+  });
+
+  const updatedData = {
+    id: _id,
+    contacts: {
+      phone: inputValue.phone,
+      email: inputValue.email,
+    },
+  };
+
   return (
     <>
       <HeadGlobal />
@@ -17,22 +62,32 @@ function UserContacts() {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Контактная информация</h5>
-          <form action='' className='user-data'>
-            <div className='input-field'>
-              <input id='mibile_phone' type='text' className='validate' />
-              <label htmlFor='mibile_phone'>Мобильный телефон</label>
-            </div>
-            <div className='input-field'>
-              <input id='email' type='text' className='validate' />
-              <label htmlFor='email'>Электронная почта</label>
-            </div>
-            <button
+          <form
+            action=''
+            className='user-data'
+            onSubmit={(e) => userDataOnSubmit(e, updateUserData, updatedData)}
+          >
+            <Input
+              type='text'
+              name='phone'
+              value={inputValue.phone ? inputValue.phone : phone}
+              disabled={false}
+              labelText='Мобильный телефон'
+              handler={(e) => inputChange(e, inputValue, setInputValue)}
+            />
+            <Input
+              type='email'
+              name='email'
+              value={inputValue.email ? inputValue.email : email}
+              disabled={false}
+              labelText='Электронная почта'
+              handler={(e) => inputChange(e, inputValue, setInputValue)}
+            />
+            <Button
               className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
               type='submit'
-              name='action'
-            >
-              Сохранить
-            </button>
+              text='Обновить'
+            />
           </form>
         </div>
       </div>

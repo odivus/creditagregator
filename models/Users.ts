@@ -59,7 +59,7 @@ const usersSchema = new Schema({
       type: String,
       required: [true, 'Пожалуйста введите город, в котором вы проживаете'],
     },
-    address: {
+    address_one: {
       type: String,
       required: [true, 'Пожалуйста введите ваш домашний адрес'],
     },
