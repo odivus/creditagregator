@@ -66,7 +66,6 @@ function UserData(props: UserDataProps) {
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Персональные данные</h5>
           <form
-            action=''
             className='user-data'
             onSubmit={(e) => userDataOnSubmit(e, updateUserData, updatedData)}
           >

@@ -35,7 +35,7 @@ function Input(props: InputProps) {
         disabled={disabled}
         onChange={(e) => handler(e)}
       />
-      <label htmlFor={id}>{labelText}</label>
+      <label htmlFor={id} className='active'>{labelText}</label>
     </div>
   );
 }
