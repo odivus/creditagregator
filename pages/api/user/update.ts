@@ -18,8 +18,8 @@ async function saveToDb(data: data) {
 
   try {
     const doc = await Users.findById({_id: id});
-    doc[category] = data[category];
 
+    doc[category] = data[category];
     await doc.save();
   } catch (error) {
     console.log(error.message);
