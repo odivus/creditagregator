@@ -7,8 +7,7 @@ interface data {
 }
 
 async function saveToDb(data: data) {
-  if (!data) return;
-  if (!data.id) return;
+  if (!data || !data.id) return;
 
   const id = data.id;
   const category = Object.keys(data).filter(key => {
