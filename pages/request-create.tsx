@@ -1,4 +1,7 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import dbConnect from '../lib/db-connect';
+import getCategoriesGoods from '../lib/db-get-categories-goods';
+
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
@@ -13,10 +16,28 @@ if (typeof window !== 'undefined'){
 
 import styles from '../components/Steps/Steps.module.scss';
 
-function RequestCreate() {
+export async function getServerSideProps() {
+  await dbConnect();
+
+  // const user = await getUserById('5fec5250f79e186ea110fb6f');
+
+  const categoriesGoods = await getCategoriesGoods();
+
+  return {
+    props: {
+      categoriesGoods,
+      // goods
+    },
+  };
+}
+
+function RequestCreate(props) {
   useEffect(() => {
     customSelect();
   }, []);
+
+  const { categoriesGoods } = props;
+  console.log(JSON.parse(categoriesGoods));
 
   return (
     <>

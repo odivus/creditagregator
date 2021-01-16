@@ -1,17 +1,28 @@
+import Select from '../Ui/Select/Select';
 import styles from './Goods-select.module.scss';
 
 function GoodsSelect() {
-  return (
-    <form className={styles["goods-select"]}>
-      <div className='input-field'>
-        <select className='select-dropdown dropdown-trigger custom-select'>
-          <option value='1'>Планшет</option>
-          <option value='2'>Смартфон</option>
-          <option value='3'>Ноутбук</option>
-        </select>
-        <label>Категория</label>
-      </div>
+  const mockProps = {
+    data: [
+      { id: '1', value: 'tablet', name: 'Планшеты' },
+      { id: '2', value: 'smartphone', name: 'Смартфоны' },
+      { id: '3', value: 'laptop', name: 'Ноутбуки' },
+    ],
+    className: 'select-dropdown dropdown-trigger custom-select',
+    label: 'Категория',
+  };
 
+  const { data, className, label } = mockProps;
+
+  return (
+    <form className={styles['goods-select']}>
+      <Select 
+        data={data} 
+        className={className} 
+        defaultValue='smartphone' 
+        label={label} 
+      />
+      
       <div className='input-field'>
         <select className='select-dropdown dropdown-trigger custom-select'>
           <option value='1'>Apple</option>
