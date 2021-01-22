@@ -5,12 +5,12 @@ import Quantity from '../Quantity/Quantity';
 import cx from 'classnames';
 import styles from './Goods.module.scss';
 
-function Goods() {
+function Goods(props) {
   return (
     <div className='row row_content'>
       <div className='col s12 m5 l5'>
         <div className={cx(styles['goods-select-wrapper'], 'flex-centered')}>
-          <GoodsSelect />
+          <GoodsSelect {...props} />
           <Quantity />
         </div>
         <div className={cx(styles['goods-buttons'], 'flex-centered')}>
@@ -36,11 +36,11 @@ function Goods() {
       </div>
       <div className={cx('col', 's12', 'm7', 'l7', styles.goods)}>
         <div className={cx(styles['goods-wrapper'], 'custom-scroll-bar')}>
-          <GoodsCard />
-          <GoodsCard />
-          <GoodsCard />
-          <GoodsCard />
-          <GoodsCard />
+          <GoodsCard {...props} />
+          {/* <GoodsCard {...props} />
+          <GoodsCard {...props} />
+          <GoodsCard {...props} />
+          <GoodsCard {...props} /> */}
         </div>
       </div>
     </div>

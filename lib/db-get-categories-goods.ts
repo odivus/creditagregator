@@ -8,10 +8,10 @@ async function getCategoriesGoods() {
   try {
     const data = await Smartphones
     .find()
-    .populate({path: 'goods_id', model: Smartphone})
-    .populate({path: 'goods_id', model: Tablet})
-    .populate({path: 'goods_id', model: Laptop})
-    .populate({path: 'goods_id', model: GameConsole});
+    .populate({path: 'goods', model: Smartphone})
+    .populate({path: 'goods', model: Tablet})
+    .populate({path: 'goods', model: Laptop})
+    .populate({path: 'goods', model: GameConsole});
 
     return JSON.stringify(data);
 

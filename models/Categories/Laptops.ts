@@ -6,7 +6,7 @@ const laptopsSchema = new Schema({
   name: String,
   value: String,
   label: String,
-  goods_id: [
+  goods: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Laptop'

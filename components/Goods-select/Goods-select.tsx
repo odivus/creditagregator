@@ -1,29 +1,44 @@
+import {useState} from 'react';
 import Select from '../Ui/Select/Select';
 import styles from './Goods-select.module.scss';
 
-function GoodsSelect() {
-  const mockProps = {
-    data: [
-      { id: '1', value: 'tablet', name: 'Планшеты' },
-      { id: '2', value: 'smartphone', name: 'Смартфоны' },
-      { id: '3', value: 'laptop', name: 'Ноутбуки' },
-    ],
-    className: 'select-dropdown dropdown-trigger custom-select',
-    label: 'Категория',
-  };
-
-  const { data, className, label } = mockProps;
+function GoodsSelect(props) {
+  const {
+    categories,
+    brands,
+    models,
+    changeCategories,
+    changeBrands,
+    // changeModels,
+    selectedBrand,
+  } = props;
+  const className = 'select-dropdown dropdown-trigger custom-select';
 
   return (
     <form className={styles['goods-select']}>
-      <Select 
-        data={data} 
-        className={className} 
-        defaultValue='smartphone' 
-        label={label} 
+      <Select
+        data={categories}
+        className={className}
+        // defaultValue={categories[0]}
+        label='Категория'
+        onChange={changeCategories}
       />
-      
-      <div className='input-field'>
+      <Select
+        data={brands}
+        className={className}
+        // defaultValue={selectedBrand}
+        label='Бренд'
+        onChange={changeBrands}
+      />
+      <Select
+        data={models}
+        className={className}
+        // defaultValue={models[0]}
+        label='Модель'
+        onChange={(e) => console.log(e.target.value)}
+      />
+
+      {/* <div className='input-field'>
         <select className='select-dropdown dropdown-trigger custom-select'>
           <option value='1'>Apple</option>
           <option value='2'>Samsung</option>
@@ -39,7 +54,7 @@ function GoodsSelect() {
           <option value='3'>Mega Plus</option>
         </select>
         <label>Модель</label>
-      </div>
+      </div> */}
     </form>
   );
 }

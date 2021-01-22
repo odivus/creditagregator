@@ -9,25 +9,23 @@ interface SelectProps {
   label: string;
 }
 
-function Select(props: SelectProps) {
-  const { 
-    data, 
-    className,
-    defaultValue,
-    label 
-  } = props;
+function Select(props) {
+  const { data, className, defaultValue, label, onChange } = props;
 
   return (
     <div className='input-field'>
-      <select className={className} defaultValue={defaultValue}>
-        {data.map((item) => (
-          <option
-            key={item.id} 
-            value={item.value} 
-          >
-            {item.name}
+      <select
+        className={className}
+        // defaultValue={defaultValue}
+        onChange={(e) => onChange(e)}
+      >
+        {data.map((item, index) => {
+          return (
+          <option key={index} value={item}>
+            {item}
           </option>
-        ))}
+          )
+        })}
       </select>
       <label>{label}</label>
     </div>
