@@ -1,17 +1,18 @@
-import {useState} from 'react';
 import Select from '../Ui/Select/Select';
 import styles from './Goods-select.module.scss';
 
 function GoodsSelect(props) {
   const {
+    selectedCategory,
+    selectedBrand,
+    selectedModel,
+    changeCategories,
+    changeBrands,
     categories,
     brands,
     models,
-    changeCategories,
-    changeBrands,
-    // changeModels,
-    selectedBrand,
   } = props;
+
   const className = 'select-dropdown dropdown-trigger custom-select';
 
   return (
@@ -19,42 +20,24 @@ function GoodsSelect(props) {
       <Select
         data={categories}
         className={className}
-        // defaultValue={categories[0]}
+        defaultValue={selectedCategory}
         label='Категория'
         onChange={changeCategories}
       />
       <Select
         data={brands}
         className={className}
-        // defaultValue={selectedBrand}
+        defaultValue={selectedBrand}
         label='Бренд'
         onChange={changeBrands}
       />
       <Select
         data={models}
         className={className}
-        // defaultValue={models[0]}
+        defaultValue={selectedModel}
         label='Модель'
         onChange={(e) => console.log(e.target.value)}
       />
-
-      {/* <div className='input-field'>
-        <select className='select-dropdown dropdown-trigger custom-select'>
-          <option value='1'>Apple</option>
-          <option value='2'>Samsung</option>
-          <option value='3'>Huaway</option>
-        </select>
-        <label>Бренд</label>
-      </div>
-
-      <div className='input-field'>
-        <select className='select-dropdown dropdown-trigger custom-select'>
-          <option value='1'>iPad</option>
-          <option value='2'>Galaxy Tab</option>
-          <option value='3'>Mega Plus</option>
-        </select>
-        <label>Модель</label>
-      </div> */}
     </form>
   );
 }

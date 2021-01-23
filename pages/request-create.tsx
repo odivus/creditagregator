@@ -47,41 +47,45 @@ function RequestCreate(props) {
     },
   };
 
-  const [categories, setCategories] = useState(Object.keys(selectData));
+  const [categories] = useState(Object.keys(selectData));
   const [brands, setBrands] = useState(Object.keys(selectData[categories[0]]));
   const [models, setModels] = useState(selectData[categories[0]][brands[0]]);
 
-  const [selectedCategory, setSelectedCategory] = useState(
-    categories[0]
-  );
-  const [selectedBrand, setSelectedBrand] = useState(brands[0]);
+  const [
+    selectedCategory, 
+    setSelectedCategory
+  ] = useState(categories[0]);
+
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedModel, setSelectedModel] = useState('');
 
   function changeCategories(e) {
     const { value } = e.target;
+    const brands = Object.keys(selectData[value]);
+    const models = selectData[value][brands[0]];
 
-    setModels(selectData[value][brands[0]]);
-    setSelectedBrand(brands[0]);
-    setBrands(Object.keys(selectData[value]));
+    setBrands(brands);
+    setModels(models);
+
     setSelectedCategory(value);
-
+    setSelectedBrand(brands[0]);
+    setSelectedModel(models[0]);
   }
-
-    console.log(brands[0]);
-    console.log(selectedCategory);
-    console.log(selectedBrand);
 
   function changeBrands(e) {
     const { value } = e.target;
+    const models = selectData[selectedCategory][value];
 
+    setModels(models);
     setSelectedBrand(value);
-    setModels(selectData[selectedCategory][value]);
-
   }
 
   const pageProps = {
-    changeCategories,
     changeBrands,
+    changeCategories,
+    selectedCategory,
     selectedBrand,
+    selectedModel,
     categories,
     brands,
     models,

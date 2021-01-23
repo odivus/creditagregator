@@ -11,12 +11,12 @@ interface SelectProps {
 
 function Select(props) {
   const { data, className, defaultValue, label, onChange } = props;
-
+  
   return (
     <div className='input-field'>
       <select
         className={className}
-        // defaultValue={defaultValue}
+        value={defaultValue}
         onChange={(e) => onChange(e)}
       >
         {data.map((item, index) => {
