@@ -8,11 +8,12 @@ function GoodsSelect(props) {
     selectedModel,
     changeCategories,
     changeBrands,
+    changeModels,
     categories,
     brands,
     models,
   } = props;
-
+  
   const className = 'select-dropdown dropdown-trigger custom-select';
 
   return (
@@ -36,7 +37,7 @@ function GoodsSelect(props) {
         className={className}
         defaultValue={selectedModel}
         label='Модель'
-        onChange={(e) => console.log(e.target.value)}
+        onChange={changeModels}
       />
     </form>
   );
