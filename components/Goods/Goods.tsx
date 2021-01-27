@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import GoodsSelect from '../Goods-select/Goods-select';
 import GoodsCard from '../Goods-card/Goods-card';
 import Quantity from '../Quantity/Quantity';
@@ -6,12 +7,24 @@ import cx from 'classnames';
 import styles from './Goods.module.scss';
 
 function Goods(props) {
+  const { selectedFullModel } = props;
+  const [quantity, setQuantity] = useState(1);
+
+  const changedPropsQuantity = {
+    ...selectedFullModel,
+    quantity: quantity,
+  };
+  // console.log(selectedFullModel);
+  // console.log(changedPropsQuantity);
+
+  // if (quantity > 1) selectedModel.quantity = quantity;
+
   return (
     <div className='row row_content'>
       <div className='col s12 m5 l5'>
         <div className={cx(styles['goods-select-wrapper'], 'flex-centered')}>
           <GoodsSelect {...props} />
-          <Quantity />
+          <Quantity quantity={quantity} setQuantity={setQuantity} />
         </div>
         <div className={cx(styles['goods-buttons'], 'flex-centered')}>
           <button className='waves-effect waves-light btn btn-large-custom btn-custom_blue'>
@@ -36,7 +49,7 @@ function Goods(props) {
       </div>
       <div className={cx('col', 's12', 'm7', 'l7', styles.goods)}>
         <div className={cx(styles['goods-wrapper'], 'custom-scroll-bar')}>
-          <GoodsCard {...props} />
+          <GoodsCard {...changedPropsQuantity} />
           {/* <GoodsCard {...props} />
           <GoodsCard {...props} />
           <GoodsCard {...props} />

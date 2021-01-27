@@ -56,7 +56,7 @@ function RequestCreate(props) {
     },
     Планшеты: {
       Apple: [
-        { model: 'iPad Micro', price: 40000, quantity: 2, _id: '12353' },
+        { model: 'iPad Micro', price: 40000, quantity: 1, _id: '12353' },
         { model: 'iPad Mini', price: 69000, quantity: 1, _id: '12354' },
         { model: 'iPad Pro', price: 135000, quantity: 1, _id: '12355' },
       ],
@@ -96,14 +96,6 @@ function RequestCreate(props) {
 
   const [selectedFullModel, setSelectedFullModel] = useState(firstModel);
 
-  const selectedGoodsItem = {
-    Категория: selectedCategory,
-    Брэнд: selectedBrand,
-    Модель: selectedFullModel,
-  };
-
-  console.log(selectedGoodsItem);
-
   const pageProps = {
     changeBrands,
     changeModels,
@@ -114,6 +106,11 @@ function RequestCreate(props) {
     categories,
     brands,
     models: models.map((item) => item.model),
+    selectedFullModel: {
+      ...selectedFullModel, 
+      category: selectedCategory,
+      brand: selectedBrand,
+    },
   };
 
   function changeCategories(e) {
@@ -154,9 +151,10 @@ function RequestCreate(props) {
     setSelectedFullModel(model);
   }
 
-  console.log(selectedCategory);
-  console.log(selectedBrand);
-  console.log(selectedModel);
+  // console.log(selectedCategory);
+  // console.log(selectedBrand);
+  // console.log(selectedModel);
+  // console.log(selectedFullModel);
 
   return (
     <>

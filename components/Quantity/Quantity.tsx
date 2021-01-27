@@ -1,11 +1,15 @@
 import styles from './Quantity.module.scss';
 
-function Quantity() {
+function Quantity({ quantity, setQuantity }) {
+  function checkSetQuantity(quantity) {
+    (quantity <= 1) ? setQuantity(1) : setQuantity(--quantity);
+  }
+
   return (
     <div className={`${styles.quantity} flex-centered`}>
-      <span>&ndash;</span>
-      <span>1</span>
-      <span>&#43;</span>
+      <span onClick={() => checkSetQuantity(quantity)}>&ndash;</span>
+      <span>{quantity}</span>
+      <span onClick={() => setQuantity(++quantity)}>&#43;</span>
     </div>
   );
 }
