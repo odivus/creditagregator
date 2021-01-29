@@ -25,6 +25,12 @@
   width: 100%;
 }
 
+.goods-card__content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .goods-card__cost {
   font-weight: 500;
 

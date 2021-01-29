@@ -9,15 +9,56 @@ import styles from './Goods.module.scss';
 function Goods(props) {
   const { selectedFullModel } = props;
   const [quantity, setQuantity] = useState(1);
+  const [goodsAdded, setGoodsAdded] = useState([]);
 
-  const changedPropsQuantity = {
-    ...selectedFullModel,
-    quantity: quantity,
-  };
+  function showGoodsCards() {
+    return goodsAdded
+      .map((goodsItem, index) => (
+        <GoodsCard 
+          key={goodsItem._id} 
+          {
+            ...{
+              index: ++index, 
+              ...goodsItem,
+            }
+          } 
+        />
+      ))
+      .reverse();
+  }
+
+  function addGoods() {
+    const findDuplicate = goodsAdded.find(
+      (item) => item._id === selectedFullModel._id
+    );
+    // const findDuplicate = goodsAdded.find(
+    //   item => (item._id === selectedFullModel._id) && 
+    //           (item.quantity === quantity)
+    // );
+
+    const addedItem = [
+      ...goodsAdded,
+      {
+        ...selectedFullModel,
+        quantity: quantity,
+      },
+    ];
+
+    if (findDuplicate) return;
+    // console.log(addedItem);
+
+    // const itemWithMaxQuantity = addedItem.reduce((current, next) => {
+    //   if (next.quantity > current.quantity) return next;
+    // });
+
+    // console.log(itemWithMaxQuantity);
+
+    setGoodsAdded(addedItem);
+  }
+
+  console.log(goodsAdded);
   // console.log(selectedFullModel);
   // console.log(changedPropsQuantity);
-
-  // if (quantity > 1) selectedModel.quantity = quantity;
 
   return (
     <div className='row row_content'>
@@ -27,7 +68,13 @@ function Goods(props) {
           <Quantity quantity={quantity} setQuantity={setQuantity} />
         </div>
         <div className={cx(styles['goods-buttons'], 'flex-centered')}>
-          <button className='waves-effect waves-light btn btn-large-custom btn-custom_blue'>
+          <button
+            className='waves-effect waves-light btn btn-large-custom btn-custom_blue'
+            onClick={() => {
+              addGoods();
+              setQuantity(1);
+            }}
+          >
             Добавить товар
           </button>
           <button className='waves-effect waves-light btn btn-large-custom btn-custom_green'>
@@ -49,7 +96,8 @@ function Goods(props) {
       </div>
       <div className={cx('col', 's12', 'm7', 'l7', styles.goods)}>
         <div className={cx(styles['goods-wrapper'], 'custom-scroll-bar')}>
-          <GoodsCard {...changedPropsQuantity} />
+          {showGoodsCards()}
+          {/* <GoodsCard {...goodsAdded} /> */}
           {/* <GoodsCard {...props} />
           <GoodsCard {...props} />
           <GoodsCard {...props} />
