@@ -3,108 +3,50 @@ import styles from './Quantity.module.scss';
 
 function Quantity(props) {
   const {
-    quantity,
-    totalGoods,
-    setTotalGoods,
-    setQuantity,
-    setGoodsAdded,
+    goodsItemQuantity,
+    setGoodsItemQuantity,
     goodsAdded,
-    selectedFullModel,
-    id,
+    quantityReset,
+    setQuantityReset,
+    goodsItemId,
   } = props;
 
-  console.log(quantity);
+  // console.log('goodsItemQuantity: ' + goodsItemQuantity);
+  // console.log(quantityReset);
+  // console.log(goodsItemId);
 
-  // const [totalQuantity, setTotalQuantity] = useState({});
+  const qurrentGoodsItem = goodsAdded.find(item => item._id === goodsItemId);
+  console.log(qurrentGoodsItem);
 
-  const goodsItem = goodsAdded.find((item) => item._id === id);
-  const goodsItemModify = totalGoods.find(item => item.id === id);
-  const { _id, price } = selectedFullModel;
-  const totalGoodsModify = [];
+  const [quantity, setQuantity] = useState(
+    qurrentGoodsItem ? qurrentGoodsItem.quantity : 1
+  );
 
+  useEffect(() => {
+    if (quantityReset) {
+      setQuantity(1);
+      setQuantityReset(false);
+    }
 
-  // console.log(totalQuantity);
+    // if (goodsItemQuantity) setQuantity(goodsItemQuantity);
+  });
 
   function increase() {
     const increaseQuantity = quantity + 1;
 
-
     setQuantity(increaseQuantity);
-    setGoodsAdded([...goodsAdded]);
-
-    
-    if (goodsAdded.length < 1) {
-      // console.log(goodsAdded.length);
-      // return setTotalGoods([
-      //   { id: selectedFullModel._id, 
-      //     price: selectedFullModel.price,
-      //     quantity: increaseQuantity, 
-      //   },
-      // ]);
-    };
-
-    if (goodsAdded.length === 1) {
-      // В массиве предыдущий добавленный элемент, а текущего еще нет
-      // console.log(totalGoods); 
-      console.log(goodsAdded); 
-      console.log(goodsItemModify); // undefined
-      // console.log(id);
-
-      if (!goodsItemModify) {
-        return setTotalGoods([...totalGoods]);
-      }
-
-      setTotalGoods([
-        { ...goodsItemModify, quantity: increaseQuantity },
-      ]);
-    }
-
-    if (goodsAdded.length > 1) {
-      console.log(totalGoods);
-      totalGoods.forEach(item => {
-        totalGoodsModify.push({
-          id: item.id,
-          price: item.price,
-          quantity: item.quantity,
-        })
-      });
-
-      console.log(totalGoodsModify);
-      
-      const totalGoodsModifyItemIndex = totalGoodsModify
-      .findIndex(item => item.id === id);
-      
-      // console.log(totalGoodsModifyItemIndex);
-
-      if (totalGoodsModifyItemIndex !== -1) {
-        totalGoodsModify[totalGoodsModifyItemIndex].quantity = increaseQuantity;
-      }
-
-
-      // console.log(totalGoodsModify);
-      
-      setTotalGoods(totalGoodsModify);
-
-    }
-    
-    console.log('Total Goods: ');
-    console.log(totalGoods);
-
+    setGoodsItemQuantity(increaseQuantity);
   }
-
+  
   function decrease() {
-    const doCheck = checkSetQuantity(quantity);
     const decreaseQuantity = quantity - 1;
 
-    doCheck ? setQuantity(decreaseQuantity) : setQuantity(1);
-    if (goodsItem) {
-      
-      setGoodsAdded(goodsAdded);
+    if (decreaseQuantity < 1) {
+      setQuantity(1);
+    } else {
+      setQuantity(decreaseQuantity);
+      setGoodsItemQuantity(decreaseQuantity);
     }
-  }
-
-  function checkSetQuantity(quantity): boolean {
-    return quantity <= 1 ? false : true;
   }
  
   return (

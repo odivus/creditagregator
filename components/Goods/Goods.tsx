@@ -9,14 +9,12 @@ import styles from './Goods.module.scss';
 function Goods(props) {
   console.log(props);
 
-  const { selectedFullModel } = props;
-  const [quantity, setQuantity] = useState(1);
   const [goodsAdded, setGoodsAdded] = useState([]);
-  const [totalGoods, setTotalGoods] = useState([]);
+  const [quantityReset, setQuantityReset] = useState(false);
+  const [goodsItemQuantity, setGoodsItemQuantity] = useState(1);
 
   console.log(goodsAdded);
-  console.log(totalGoods);
-  console.log(selectedFullModel);
+  // console.log('goodsItemQuantity: ' + goodsItemQuantity);
 
   function showGoodsCards() {
     return goodsAdded
@@ -28,12 +26,8 @@ function Goods(props) {
             ...goodsItem,
             removeItem: removeGoods,
             goodsAdded,
-            setGoodsAdded,
-            totalGoods,
-            setTotalGoods,
-            selectedFullModel,
-            // totalQuantity,
-            // setTotalQuantity,
+            goodsItemQuantity,
+            setGoodsItemQuantity,
           }}
         />
       ))
@@ -41,11 +35,12 @@ function Goods(props) {
   }
 
   function addGoods() {
+    const { selectedFullModel } = props;
     const addedItem = [
       ...goodsAdded,
       {
         ...selectedFullModel,
-        quantity: quantity,
+        quantity: goodsItemQuantity,
       },
     ];
 
@@ -53,31 +48,22 @@ function Goods(props) {
       (item) => item._id === selectedFullModel._id
     );
 
-    const totalGoodsItem = {
-      id: selectedFullModel._id,
-      price: selectedFullModel.price,
-      quantity: quantity,
-    };
-
-    if (findDuplicate) return;
-   
-    setGoodsAdded(addedItem);
+    if (findDuplicate) return setQuantityReset(true);
 
     if (goodsAdded.length === 0) {
-      setTotalGoods([totalGoodsItem]);
-      return;
+      setGoodsAdded([{
+        ...selectedFullModel,
+        quantity: goodsItemQuantity,
+      }]);
+
+      setGoodsItemQuantity(1);
+
+      return setQuantityReset(true);
     }
-    
-    if (goodsAdded.length > 0) {
-      setTotalGoods([
-        ...totalGoods,
-        {
-          id: selectedFullModel._id,
-          price: selectedFullModel.price,
-          quantity: quantity,
-        },
-      ]);
-    }
+
+    setGoodsAdded(addedItem);
+    setGoodsItemQuantity(1);
+    setQuantityReset(true);
   }
 
   function removeGoods(id: string) {
@@ -93,16 +79,10 @@ function Goods(props) {
         <div className={cx(styles['goods-select-wrapper'], 'flex-centered')}>
           <GoodsSelect {...props} />
           <Quantity
-            quantity={quantity}
-            // totalQuantity={totalQuantity}
-            // setTotalQuantity={setTotalQuantity}
-            selectedFullModel={selectedFullModel}
-            totalGoods={totalGoods}
-            setTotalGoods={setTotalGoods}
-            setQuantity={setQuantity}
-            setGoodsAdded={setGoodsAdded}
+            setGoodsItemQuantity={setGoodsItemQuantity}
             goodsAdded={goodsAdded}
-            id={selectedFullModel._id}
+            quantityReset={quantityReset}
+            setQuantityReset={setQuantityReset}
           />
         </div>
         <div className={cx(styles['goods-buttons'], 'flex-centered')}>
@@ -110,7 +90,6 @@ function Goods(props) {
             className='waves-effect waves-light btn btn-large-custom btn-custom_blue'
             onClick={() => {
               addGoods();
-              setQuantity(1);
             }}
           >
             Добавить товар

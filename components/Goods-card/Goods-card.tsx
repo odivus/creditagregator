@@ -12,19 +12,17 @@ function GoodsCard(props) {
     brand,
     model,
     price,
-    quantity,
     goodsAdded,
-    setGoodsAdded,
-    setTotalGoods,
-    totalGoods,
-    selectedFullModel,
-    // totalQuantity,
-    // setTotalQuantity,
+    goodsItemQuantity,
+    setGoodsItemQuantity,
+    quantityReset,
     index,
     _id,
   } = props;
 
-  const [goodsQuantity, setGoodsQuantity] = useState(quantity);
+  // console.log(_id);
+
+  // const [goodsQuantity, setGoodsQuantity] = useState(quantity);
   // console.log('Goods-card, cards: ' + goodsQuantity)
 
   return (
@@ -51,22 +49,17 @@ function GoodsCard(props) {
           </div>
         </div>
         <Quantity
-          quantity={goodsQuantity}
-          setQuantity={setGoodsQuantity}
-          setGoodsAdded={setGoodsAdded}
-          setTotalGoods={setTotalGoods}
-          totalGoods={totalGoods}
-          selectedFullModel={selectedFullModel}
-          // totalQuantity={totalQuantity}
-          // setTotalQuantity={setTotalQuantity}
+          goodsItemQuantity={goodsItemQuantity}
+          setGoodsItemQuantity={setGoodsItemQuantity}
           goodsAdded={goodsAdded}
-          id={_id}
+          quantityReset={quantityReset}
+          goodsItemId={_id}
         />
       </div>
       <div className={styles['goods-card__cost']}>
         Цена&nbsp;
         <span className={styles['cost-number']}>
-          {price * goodsQuantity}&nbsp;&#8381;
+          {price * 1}&nbsp;&#8381;
         </span>
       </div>
     </div>
