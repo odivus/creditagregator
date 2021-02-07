@@ -14,7 +14,7 @@ function Goods(props) {
   const [goodsItemQuantity, setGoodsItemQuantity] = useState(1);
 
   console.log(goodsAdded);
-  // console.log('goodsItemQuantity: ' + goodsItemQuantity);
+  console.log('goodsItemQuantity: ' + goodsItemQuantity);
 
   function showGoodsCards() {
     return goodsAdded
@@ -27,6 +27,7 @@ function Goods(props) {
             removeItem: removeGoods,
             goodsAdded,
             goodsItemQuantity,
+            setGoodsAdded,
             setGoodsItemQuantity,
           }}
         />
@@ -56,13 +57,10 @@ function Goods(props) {
         quantity: goodsItemQuantity,
       }]);
 
-      setGoodsItemQuantity(1);
-
       return setQuantityReset(true);
     }
 
     setGoodsAdded(addedItem);
-    setGoodsItemQuantity(1);
     setQuantityReset(true);
   }
 
@@ -70,8 +68,6 @@ function Goods(props) {
     const filteredItems = goodsAdded.filter(item => item._id !== id);
     setGoodsAdded(filteredItems);
   }
-
-  // console.log(goodsAdded);
 
   return (
     <div className='row row_content'>

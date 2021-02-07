@@ -13,6 +13,7 @@ function GoodsCard(props) {
     model,
     price,
     goodsAdded,
+    setGoodsAdded,
     goodsItemQuantity,
     setGoodsItemQuantity,
     quantityReset,
@@ -52,6 +53,7 @@ function GoodsCard(props) {
           goodsItemQuantity={goodsItemQuantity}
           setGoodsItemQuantity={setGoodsItemQuantity}
           goodsAdded={goodsAdded}
+          setGoodsAdded={setGoodsAdded}
           quantityReset={quantityReset}
           goodsItemId={_id}
         />

@@ -8,31 +8,42 @@ function Quantity(props) {
     goodsAdded,
     quantityReset,
     setQuantityReset,
+    setGoodsAdded,
     goodsItemId,
   } = props;
-
-  // console.log('goodsItemQuantity: ' + goodsItemQuantity);
-  // console.log(quantityReset);
-  // console.log(goodsItemId);
 
   const qurrentGoodsItem = goodsAdded.find(item => item._id === goodsItemId);
   console.log(qurrentGoodsItem);
 
-  const [quantity, setQuantity] = useState(
-    qurrentGoodsItem ? qurrentGoodsItem.quantity : 1
-  );
+  const qurrentQuantity = qurrentGoodsItem 
+                        ? qurrentGoodsItem.quantity 
+                        : goodsItemQuantity;
 
+  const [quantity, setQuantity] = useState(qurrentQuantity || 1);
+ 
   useEffect(() => {
     if (quantityReset) {
       setQuantity(1);
       setQuantityReset(false);
+      setGoodsItemQuantity(1);
     }
-
-    // if (goodsItemQuantity) setQuantity(goodsItemQuantity);
   });
 
   function increase() {
     const increaseQuantity = quantity + 1;
+    
+    if (setGoodsAdded) {
+      const filteredGoodsAdded = goodsAdded.filter(item => item._id !==  qurrentGoodsItem._id);
+      setGoodsAdded([
+      ...filteredGoodsAdded,
+      {
+        ...qurrentGoodsItem,
+        quantity: increaseQuantity,
+      },
+    ]);
+    setQuantity(increaseQuantity);
+    return setGoodsItemQuantity(1);
+  }
 
     setQuantity(increaseQuantity);
     setGoodsItemQuantity(increaseQuantity);
