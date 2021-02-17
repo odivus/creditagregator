@@ -19,3 +19,17 @@ export function userDataOnSubmit(
   e.preventDefault();
   updateUserData(data);
 }
+
+export function increase(setQuantity, quantity: number) {
+  setQuantity(quantity + 1);
+}
+
+export function decrease(setQuantity, quantity: number) {
+  const decreaseQuantity = quantity - 1;
+
+  if (decreaseQuantity < 1) {
+    setQuantity(1);
+  } else {
+    setQuantity(decreaseQuantity);
+  }
+}

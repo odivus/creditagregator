@@ -1,30 +1,30 @@
-import {useState, useEffect} from 'react';
-import Quantity from '../Quantity/Quantity';
+import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
 
 import cx from 'classnames';
 import styles from './Goods-card.module.scss';
 
 function GoodsCard(props) {
-  // console.log(props);
   const {
+    currentCardItemQuantity,
+    setCurrentCardItemQuantity,
+    goodsAddedItemQuantity,
+    totalGoodsAdded,
     removeItem,
     category,
+    quantity,
     brand,
     model,
     price,
-    goodsAdded,
-    setGoodsAdded,
-    goodsItemQuantity,
-    setGoodsItemQuantity,
-    quantityReset,
     index,
     _id,
   } = props;
 
   // console.log(_id);
-
-  // const [goodsQuantity, setGoodsQuantity] = useState(quantity);
-  // console.log('Goods-card, cards: ' + goodsQuantity)
+  console.log(currentCardItemQuantity);
+  
+  // const totalGoodsItemQuantity = totalGoodsAdded.find(item => {
+  //   return item._id === _id.toString();
+  // });
 
   return (
     <div className={cx(styles['card-wrapper'], 'flex-centered')}>
@@ -49,19 +49,16 @@ function GoodsCard(props) {
             </div>
           </div>
         </div>
-        <Quantity
-          goodsItemQuantity={goodsItemQuantity}
-          setGoodsItemQuantity={setGoodsItemQuantity}
-          goodsAdded={goodsAdded}
-          setGoodsAdded={setGoodsAdded}
-          quantityReset={quantityReset}
-          goodsItemId={_id}
+        <ChangeGoodsAddedQuantity
+          goodsCurrentItem={{category, brand, model, price, quantity, _id}}
+          goodsAddedItemQuantity={goodsAddedItemQuantity}
+          setCurrentCardItemQuantity={setCurrentCardItemQuantity}
         />
       </div>
       <div className={styles['goods-card__cost']}>
         Цена&nbsp;
         <span className={styles['cost-number']}>
-          {price * 1}&nbsp;&#8381;
+          {price * (currentCardItemQuantity ? currentCardItemQuantity.quantity : goodsAddedItemQuantity)}&nbsp;&#8381;
         </span>
       </div>
     </div>

@@ -2,29 +2,29 @@ import { useState, useEffect } from 'react';
 import styles from './Quantity.module.scss';
 
 function Quantity(props) {
-  const {
-    goodsQuantity,
-    goodsQuantityReset,
-    setgoodsQuantityReset,
+  const { 
+    goodsQuantity, 
     setAddGoodsQuantity,
     setGoodsCardQuantity,
   } = props;
 
   const [quantity, setQuantity] = useState(goodsQuantity);
-
-  console.log(goodsQuantityReset);
+  const [resetQuantity, setResetQuantity] = useState(false);
+  console.log(goodsQuantity);
+  console.log(resetQuantity);
 
   useEffect(() => {
-    if (goodsQuantityReset) {
-      setgoodsQuantityReset(false);
-      return setQuantity(1);
-    }
-
-    if (quantity !== 1) {
+    if (setAddGoodsQuantity && setGoodsCardQuantity) {
       setAddGoodsQuantity(quantity);
       setGoodsCardQuantity(quantity);
+
+      if (goodsQuantity === 1) setResetQuantity(true);
     }
-  }, [quantity, goodsQuantityReset]);
+    
+    if (!setAddGoodsQuantity) {
+      setGoodsCardQuantity(quantity);
+    }
+  }, [quantity]);
 
   function increase() {
     setQuantity(quantity + 1);

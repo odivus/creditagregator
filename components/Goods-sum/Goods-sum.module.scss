@@ -1,0 +1,20 @@
+.goods-sum {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.goods-sum__text, .goods-sum__price {
+  margin: 0 auto;
+}
+
+.goods-sum__price {
+  margin-top: 2px;
+  font-size: 1.8rem;
+  
+  @media(max-width: 400px) {
+    font-size: 1.5rem;
+  }
+}
