@@ -14,39 +14,31 @@ function GoodsWorking(props) {
     selectedFullModel, 
   } = props;
 
+  
   const [addGoodsQuantity, setAddGoodsQuantity] = useState(1);
   const [goodsQuantityReset, setgoodsQuantityReset] = useState(false);
-  const [currentCardItemQuantity, setCurrentCardItemQuantity] = useState(null);
+  const [goodsPriceSum, setGoodsPriceSum] = useState(0);
   
-  const [totalGoodsAdded, setTotalGoodsAdded] = useState([]);
-  const [sum, setSum] = useState(0);
+  const calcCreditClassName = cx({
+    'waves-effect waves-light btn btn-large-custom btn-custom_green': goodsPriceSum > 0,
+    'btn btn-large-custom disabled': goodsPriceSum === 0
+  });
 
   useEffect(() => {
-    if (currentCardItemQuantity) {
-      const goodsAddedFiltered = totalGoodsAdded.filter(item => {
-        item._id !== currentCardItemQuantity._id;
-      });
-      
-      setTotalGoodsAdded([
-        ...goodsAddedFiltered,
-        currentCardItemQuantity
-      ]);
-    }
-  },[goodsAdded, currentCardItemQuantity]);
-
-  useEffect(() => {
-    const length = totalGoodsAdded.length;
+    const length = goodsAdded.length;
 
     if (length === 0) return;
 
     if (length === 1) {
-      return setSum(totalGoodsAdded[0].price * totalGoodsAdded[0].quantity);
+      return setGoodsPriceSum(goodsAdded[0].price * goodsAdded[0].quantity);
     }
 
-    setSum(totalGoodsAdded.reduce((acc, item) => {
-      return acc.price * acc.quantity + item.price * item.quantity;
-    }));
-  });
+    setGoodsPriceSum(
+      goodsAdded.reduce((acc, item) => {
+        return acc.price * acc.quantity + item.price * item.quantity
+      })
+    );
+  }, [goodsAdded]);
 
   function addGoods() {
     if (goodsAdded.length === 0) {
@@ -54,13 +46,6 @@ function GoodsWorking(props) {
         ...selectedFullModel,
         quantity: addGoodsQuantity,
       }]);
-
-      setTotalGoodsAdded([
-        {
-          ...selectedFullModel,
-          quantity: addGoodsQuantity,
-        }
-      ]);
 
       setgoodsQuantityReset(true);
       return setAddGoodsQuantity(1);
@@ -84,14 +69,6 @@ function GoodsWorking(props) {
         },
       ]);
 
-      setTotalGoodsAdded([
-      ...totalGoodsAdded,
-      {
-        ...selectedFullModel,
-        quantity: addGoodsQuantity,
-      }
-    ]);
-
       setAddGoodsQuantity(1);
       setgoodsQuantityReset(true);
     }
@@ -103,23 +80,16 @@ function GoodsWorking(props) {
         <GoodsCard
           key={goodsItem._id}
           {...{
-            index: index + 1,
+            goodsAddedIndex: index + 1,
             ...goodsItem,
-            removeItem: removeGoods,
-            goodsAddedItemQuantity: goodsItem.quantity,
-            goodsAddedIndex: index,
-            currentCardItemQuantity,
-            setCurrentCardItemQuantity,
-            totalGoodsAdded,
+            index,
+            goodsAdded,
+            setGoodsAdded,
+            setGoodsPriceSum,
           }}
         />
       ))
       .reverse();
-  }
-
-  function removeGoods(id: string) {
-    const filteredItems = goodsAdded.filter(item => item._id !== id);
-    setGoodsAdded(filteredItems);
   }
 
   return (
@@ -132,8 +102,6 @@ function GoodsWorking(props) {
             setgoodsQuantityReset={setgoodsQuantityReset}
             goodsQuantity={addGoodsQuantity}
             setAddGoodsQuantity={setAddGoodsQuantity}
-            totalGoodsAdded={totalGoodsAdded}
-            setTotalGoodsAdded={setTotalGoodsAdded}
             goodsAddedId={selectedFullModel._id}
           />
         </div>
@@ -146,16 +114,15 @@ function GoodsWorking(props) {
           >
             Добавить товар
           </button>
-          <button className='waves-effect waves-light btn btn-large-custom btn-custom_green'>
+          <button className={calcCreditClassName}>
             Рассчитать кредит
           </button>
         </div>
         <GoodsSum 
-          totalGoodsAdded={totalGoodsAdded}
-          sum={sum} 
+          goodsPriceSum={goodsPriceSum} 
+          goodsQuantity={goodsAdded.length}
         />
       </div>
-
       <div className={cx('col', 's12', 'm7', 'l7', styles.goods)}>
         <div className={cx(styles['goods-wrapper'], 'custom-scroll-bar')}>
           {showGoodsCards()}

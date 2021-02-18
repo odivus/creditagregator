@@ -5,11 +5,10 @@ import styles from './Goods-card.module.scss';
 
 function GoodsCard(props) {
   const {
-    currentCardItemQuantity,
-    setCurrentCardItemQuantity,
-    goodsAddedItemQuantity,
-    totalGoodsAdded,
-    removeItem,
+    goodsAdded,
+    setGoodsAdded,
+    setGoodsPriceSum,
+    goodsAddedIndex,
     category,
     quantity,
     brand,
@@ -19,24 +18,35 @@ function GoodsCard(props) {
     _id,
   } = props;
 
-  // console.log(_id);
-  console.log(currentCardItemQuantity);
-  
-  // const totalGoodsItemQuantity = totalGoodsAdded.find(item => {
-  //   return item._id === _id.toString();
-  // });
+  const filteredCurrentItem = goodsAdded.filter(item => item._id !== _id);
+
+  function changeGoodsItemQuantity(quantity: number) {
+    const changedGoodsAdded = [...goodsAdded];
+    const itemChangedQuantity = goodsAdded[index] = {
+      ...goodsAdded[index],
+      quantity
+    }
+
+    changedGoodsAdded[index] = itemChangedQuantity;
+    setGoodsAdded(changedGoodsAdded);
+  }
+
+  function removeGoodsItem() {
+    setGoodsAdded(filteredCurrentItem);
+    setGoodsPriceSum(0);
+  }
 
   return (
     <div className={cx(styles['card-wrapper'], 'flex-centered')}>
       <i
-        onClick={() => removeItem(_id)}
+        onClick={() => removeGoodsItem()}
         className={cx('small', 'material-icons', styles.close)}
       >
         delete
       </i>
       <div className={cx(styles['goods-card'], 'flex-centered')}>
         <div className={cx(styles['goods-card__item'], 'flex-centered')}>
-          <div className={styles['goods-card__number']}>{index}</div>
+          <div className={styles['goods-card__number']}>{goodsAddedIndex}</div>
           <div className={styles['goods-card__content']}>
             <div>
               Категория: <p>{category}</p>
@@ -50,15 +60,14 @@ function GoodsCard(props) {
           </div>
         </div>
         <ChangeGoodsAddedQuantity
-          goodsCurrentItem={{category, brand, model, price, quantity, _id}}
-          goodsAddedItemQuantity={goodsAddedItemQuantity}
-          setCurrentCardItemQuantity={setCurrentCardItemQuantity}
+          quantity={quantity} 
+          changeGoodsItemQuantity={changeGoodsItemQuantity}
         />
       </div>
       <div className={styles['goods-card__cost']}>
         Цена&nbsp;
         <span className={styles['cost-number']}>
-          {price * (currentCardItemQuantity ? currentCardItemQuantity.quantity : goodsAddedItemQuantity)}&nbsp;&#8381;
+          {price * quantity}&nbsp;&#8381;
         </span>
       </div>
     </div>

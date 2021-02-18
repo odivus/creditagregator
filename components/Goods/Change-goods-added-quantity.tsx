@@ -1,29 +1,14 @@
-import {useState, useEffect} from 'react';
 import Quantity from '../Ui/Quantity/Quantity';
 
 function ChangeGoodsAddedQuantity(props) {
   const {
-    goodsCurrentItem,
-    goodsAddedItemQuantity, 
-    setCurrentCardItemQuantity,
-    // currentCardItemQuantity,
-    // totalGoodsAdded,
-    // setTotalGoodsAdded,
-    // goodsAddedId,
+    quantity,
+    changeGoodsItemQuantity
   } = props;
-
-  const [quantity, setQuantity] = useState(goodsAddedItemQuantity);
-  // prop goodsCurrentItem ЗАЦИКЛИВАЕТ
-  useEffect(() => {
-    setCurrentCardItemQuantity({
-      ...goodsCurrentItem,
-      quantity,
-    });
-  }, [quantity, goodsAddedItemQuantity]);
 
   return (
     <Quantity
-      setQuantity={setQuantity}
+      setQuantity={changeGoodsItemQuantity}
       quantity={quantity}
     />
   );
