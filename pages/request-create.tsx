@@ -9,11 +9,12 @@ import Goods from '../components/Goods/Goods';
 import Head from 'next/head';
 
 import customSelect from '../utilities/custom-select';
-import cx from 'classnames';
+
 if (typeof window !== 'undefined'){
   const M = require("materialize-css/dist/js/materialize.min.js");
 }
 
+import cx from 'classnames';
 import styles from '../components/Steps/Steps.module.scss';
 
 export async function getServerSideProps() {
@@ -32,10 +33,7 @@ function RequestCreate(props) {
   useEffect( () => customSelect() );
 
   const { categoriesGoods } = props;
-  // console.log(categoriesGoods);
-
-  // Здесь же получать добавленные юзером товары и передавать их по дереву вниз
-  // Apple: [{model: 'MacBook Pro 13', price, quantity, _id:''12345 }, {...}]
+  console.log(categoriesGoods);
 
   const selectData = {
     Ноутбуки: {
@@ -67,18 +65,7 @@ function RequestCreate(props) {
       ],
     },
   };
-  // const selectData = {
-  //   Ноутбуки: {
-  //     Apple: ['MacBook Pro 13', 'MacBook Pro 16'],
-  //     Asus: ['ZenBook 13', 'ZenBook 15', 'VivoBook'],
-  //     Dell: ['XPS 13', 'XPS 15', 'Latitude'],
-  //   },
-  //   Планшеты: {
-  //     Apple: ['iPad Micro', 'iPad Mini', 'iPad Pro'],
-  //     Samsung: ['Galaxy Tab 10', 'Galaxy Tab 7', 'Galaxy ProTab 12'],
-  //   },
-  // };
-
+ 
   const [categories] = useState(Object.keys(selectData));
   const firstCategory = categories[0];
 
@@ -113,8 +100,8 @@ function RequestCreate(props) {
     },
   };
 
-  function changeCategories(e) {
-    const { value } = e.target;
+  function changeCategories(e: React.FormEvent<EventTarget>) {
+    const { value } = e.target as HTMLInputElement;
 
     const brands = Object.keys(selectData[value]);
     const firstBrand = brands[0];
@@ -131,8 +118,8 @@ function RequestCreate(props) {
     setSelectedFullModel(firstModel);
   }
 
-  function changeBrands(e) {
-    const { value } = e.target;
+  function changeBrands(e: React.FormEvent<EventTarget>) {
+    const { value } = e.target as HTMLInputElement;
 
     const models = selectData[selectedCategory][value];
     const firstModel = models[0];
