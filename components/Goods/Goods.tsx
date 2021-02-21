@@ -29,11 +29,12 @@ function Goods(props) {
       return setGoodsPriceSum(goodsAdded[0].price * goodsAdded[0].quantity);
     }
 
-    setGoodsPriceSum(
-      goodsAdded.reduce((acc, item) => {
-        return acc.price * acc.quantity + item.price * item.quantity
-      })
-    );
+    const sum = goodsAdded.reduce((acc, currentValue) => {
+      const { price, quantity } = currentValue;
+      return acc + (price * quantity);
+    }, 0);
+      
+    setGoodsPriceSum(sum);
   }, [goodsAdded]);
 
   function addGoods() {

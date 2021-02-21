@@ -33,39 +33,42 @@ function RequestCreate(props) {
   useEffect( () => customSelect() );
 
   const { categoriesGoods } = props;
-  console.log(categoriesGoods);
 
-  const selectData = {
-    Ноутбуки: {
-      Apple: [
-        { model: 'MacBook Pro 13', price: 145000, quantity: 1, _id: '12345' },
-        { model: 'MacBook Pro 16', price: 283000, quantity: 1, _id: '12346' },
-      ],
-      Asus: [
-        { model: 'ZenBook 13', price: 109000, quantity: 1, _id: '12347' },
-        { model: 'ZenBook 15', price: 130000, quantity: 1, _id: '12348' },
-        { model: 'VivoBook', price: 78000, quantity: 1, _id: '12349' },
-      ],
-      Dell: [
-        { model: 'XPS 13', price: 135000, quantity: 1, _id: '12350' },
-        { model: 'XPS 15', price: 178000, quantity: 1, _id: '12351' },
-        { model: 'Latitude', price: 72000, quantity: 1, _id: '12352' },
-      ],
-    },
-    Планшеты: {
-      Apple: [
-        { model: 'iPad Micro', price: 40000, quantity: 1, _id: '12353' },
-        { model: 'iPad Mini', price: 69000, quantity: 1, _id: '12354' },
-        { model: 'iPad Pro', price: 135000, quantity: 1, _id: '12355' },
-      ],
-      Samsung: [
-        { model: 'Galaxy Tab 10', price: 68000, quantity: 1, _id: '12356' },
-        { model: 'Galaxy Tab 7', price: 52000, quantity: 1, _id: '12357' },
-        { model: 'Galaxy ProTab 12', price: 99000, quantity: 1, _id: '12358' },
-      ],
-    },
-  };
- 
+  function convertCategoriesGoodsData(categoriesGoods) {
+    let data,
+        convertedData = {};
+  
+    categoriesGoods.forEach(item => {
+      return data = {
+        ...data,
+        [item.name]: item.goods.map(goodsItem => {
+          return [goodsItem.brand, goodsItem]
+        })
+      }
+    });  
+
+    for (let key in data) {
+      let modifyData = {};
+
+      data[key].forEach(item => {
+        if (item[0] in modifyData) {
+          modifyData[item[0]].push(item[1]);
+        } else {
+          modifyData[item[0]] = [item[1]];
+        }
+      });
+
+      convertedData = {
+        ...convertedData,
+        [key]: modifyData
+      }
+    }
+
+    return convertedData;
+  }
+
+  const selectData = convertCategoriesGoodsData(categoriesGoods);
+
   const [categories] = useState(Object.keys(selectData));
   const firstCategory = categories[0];
 
@@ -137,11 +140,6 @@ function RequestCreate(props) {
     setSelectedModel(value);
     setSelectedFullModel(model);
   }
-
-  // console.log(selectedCategory);
-  // console.log(selectedBrand);
-  // console.log(selectedModel);
-  // console.log(selectedFullModel);
 
   return (
     <>
