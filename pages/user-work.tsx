@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import dbConnect from '../lib/db-connect';
-import getUserById from '../lib/db-get-user-by-id';
-import updateUserData from '../lib/db-update-user-data';
+import dbConnect from '../database/db-connect';
+import getUserById from '../database/db-get-user-by-id';
+import updateUserData from '../database/db-update-user-data';
 import Head from 'next/head';
 
 import UserDataProps from './Interfaces/User-data-props';

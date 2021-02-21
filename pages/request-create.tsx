@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import dbConnect from '../lib/db-connect';
-import getCategoriesGoods from '../lib/db-get-categories-goods';
+import dbConnect from '../database/db-connect';
+import getCategoriesGoods from '../database/db-get-categories-goods';
 
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
@@ -9,6 +9,7 @@ import Goods from '../components/Goods/Goods';
 import Head from 'next/head';
 
 import customSelect from '../utilities/custom-select';
+import convertCategoriesGoodsData from '../utilities/convert-categories-goods-data';
 
 if (typeof window !== 'undefined'){
   const M = require("materialize-css/dist/js/materialize.min.js");
@@ -33,39 +34,6 @@ function RequestCreate(props) {
   useEffect( () => customSelect() );
 
   const { categoriesGoods } = props;
-
-  function convertCategoriesGoodsData(categoriesGoods) {
-    let data,
-        convertedData = {};
-  
-    categoriesGoods.forEach(item => {
-      return data = {
-        ...data,
-        [item.name]: item.goods.map(goodsItem => {
-          return [goodsItem.brand, goodsItem]
-        })
-      }
-    });  
-
-    for (let key in data) {
-      let modifyData = {};
-
-      data[key].forEach(item => {
-        if (item[0] in modifyData) {
-          modifyData[item[0]].push(item[1]);
-        } else {
-          modifyData[item[0]] = [item[1]];
-        }
-      });
-
-      convertedData = {
-        ...convertedData,
-        [key]: modifyData
-      }
-    }
-
-    return convertedData;
-  }
 
   const selectData = convertCategoriesGoodsData(categoriesGoods);
 

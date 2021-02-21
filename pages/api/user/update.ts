@@ -1,5 +1,5 @@
 import Users from '../../../models/Users';
-import dbConnect from '../../../lib/db-connect';
+import dbConnect from '../../../database/db-connect';
 import { Request, Response } from 'express';
 
 interface data {
