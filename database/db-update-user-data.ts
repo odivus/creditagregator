@@ -1,4 +1,4 @@
-async function updateUserData(formData: object) {
+async function updateUserData(data: object) {
   try {
       const res = await fetch(`/api/user/update`, {
         method: 'PUT',
@@ -6,7 +6,7 @@ async function updateUserData(formData: object) {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (!res.ok) {

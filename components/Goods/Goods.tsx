@@ -20,6 +20,8 @@ function Goods(props) {
     'btn btn-large-custom disabled': goodsPriceSum === 0
   });
 
+  console.log(goodsAdded);
+
   useEffect(() => {
     const length = goodsAdded.length;
 

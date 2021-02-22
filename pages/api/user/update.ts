@@ -11,7 +11,7 @@ async function saveToDb(data: data) {
 
   const id = data.id;
   const category = Object.keys(data).filter(key => {
-    if(key !== 'id') return key;
+    if (key !== 'id') return key;
   })[0];
 
   await dbConnect();
