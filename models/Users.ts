@@ -77,7 +77,17 @@ const usersSchema = new Schema({
       type: String,
       required: [true, 'Пожалуйста введите ваш ежемесячный доход'],
     },
-  }
+  },
+  selected_goods: [
+    {
+      _id: Schema.Types.ObjectId,
+      category: String,
+      brand: String,
+      model: String,
+      price: Number,
+      quantity: Number,
+    }
+  ],
 });
 
 export default mongoose.models.Users || mongoose.model('Users', usersSchema, 'users');

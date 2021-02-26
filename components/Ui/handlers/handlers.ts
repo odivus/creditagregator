@@ -13,11 +13,11 @@ export function inputChange(
 
 export function userDataOnSubmit(
   e: React.FormEvent<EventTarget>, 
-  updateUserData,
+  dbUpdateUserData,
   data: object
 ) {
   e.preventDefault();
-  updateUserData(data);
+  dbUpdateUserData(data);
 }
 
 export function increase(setQuantity, quantity: number) {

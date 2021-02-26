@@ -27,8 +27,16 @@ interface UserDataProps {
       company: string;
       position: string;
       income: string;
-    }
-  }
+    },
+    selected_goods: [
+      _id: string,
+      category: string,
+      brand: string,
+      model: string,
+      price: number,
+      quantity: number,
+    ],
+  },
 }
 
 export default UserDataProps;

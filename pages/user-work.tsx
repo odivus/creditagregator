@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import dbConnect from '../database/db-connect';
 import getUserById from '../database/db-get-user-by-id';
-import updateUserData from '../database/db-update-user-data';
+import dbUpdateUserData from '../database/db-update-user-data';
 import Head from 'next/head';
 
 import UserDataProps from './Interfaces/User-data-props';
@@ -63,7 +63,7 @@ function UserWork(props: UserDataProps) {
           <h5 className='page-header'>Работа</h5>
           <form
             className='user-data'
-            onSubmit={(e) => userDataOnSubmit(e, updateUserData, updatedData)}
+            onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
           >
             <Input
               type='text'

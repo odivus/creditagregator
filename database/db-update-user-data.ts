@@ -1,4 +1,4 @@
-async function updateUserData(data: object) {
+async function dbUpdateUserData(data: object) {
   try {
       const res = await fetch(`/api/user/update`, {
         method: 'PUT',
@@ -18,4 +18,4 @@ async function updateUserData(data: object) {
     }
 }
 
-export default updateUserData;
+export default dbUpdateUserData;

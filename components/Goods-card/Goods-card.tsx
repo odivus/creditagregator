@@ -1,4 +1,5 @@
 import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
+import dbUpdateUserData from '../../database/db-update-user-data';
 
 import cx from 'classnames';
 import styles from './Goods-card.module.scss';
@@ -6,6 +7,7 @@ import styles from './Goods-card.module.scss';
 function GoodsCard(props) {
   const {
     goodsAdded,
+    userGoodsAdded,
     setGoodsAdded,
     setGoodsPriceSum,
     goodsAddedIndex,
@@ -29,11 +31,19 @@ function GoodsCard(props) {
 
     changedGoodsAdded[index] = itemChangedQuantity;
     setGoodsAdded(changedGoodsAdded);
+    dbUpdateUserData(userGoodsAdded);
   }
 
   function removeGoodsItem() {
+    const { id } = userGoodsAdded;
+
     setGoodsAdded(filteredCurrentItem);
     setGoodsPriceSum(0);
+    
+    dbUpdateUserData({
+      id,
+      selected_goods: filteredCurrentItem,
+    });
   }
 
   return (

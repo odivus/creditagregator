@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import dbConnect from '../database/db-connect';
 import getCategoriesGoods from '../database/db-get-categories-goods';
+import getUserById from '../database/db-get-user-by-id';
 
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
@@ -22,10 +23,13 @@ export async function getServerSideProps() {
   await dbConnect();
 
   const categoriesGoods = await getCategoriesGoods();
+  const user = await getUserById('5fec5250f79e186ea110fb6f');
+  const { selected_goods } = user;
 
   return {
     props: {
       categoriesGoods: JSON.parse(categoriesGoods),
+      fromDbUserGoodsAdded: selected_goods,
     },
   };
 }
@@ -33,7 +37,7 @@ export async function getServerSideProps() {
 function RequestCreate(props) {
   useEffect( () => customSelect() );
 
-  const { categoriesGoods } = props;
+  const { categoriesGoods, fromDbUserGoodsAdded } = props;
 
   const selectData = convertCategoriesGoodsData(categoriesGoods);
 
@@ -53,8 +57,9 @@ function RequestCreate(props) {
   );
 
   const [selectedFullModel, setSelectedFullModel] = useState(firstModel);
-
+  
   const pageProps = {
+    fromDbUserGoodsAdded,
     changeBrands,
     changeModels,
     changeCategories,
