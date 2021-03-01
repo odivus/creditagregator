@@ -1,7 +1,14 @@
 import {useState, useEffect} from 'react';
 import Quantity from '../Ui/Quantity/Quantity';
 
-function AddGoodsQuantity(props) {
+interface Props {
+  goodsQuantityReset: boolean;
+  setgoodsQuantityReset: (state: boolean) => void;
+  goodsQuantity: number; 
+  setAddGoodsQuantity: (state: number) => void;
+}
+
+function AddGoodsQuantity(props: Props) {
   const { 
       goodsQuantityReset,
       setgoodsQuantityReset,

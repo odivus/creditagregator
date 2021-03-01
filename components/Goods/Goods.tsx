@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import dbUpdateUserData from '../../database/db-update-user-data';
 
+import GoodsProps from '../../Interfaces/Goods-props';
 import GoodsSelect from '../Goods-select/Goods-select';
 import GoodsSum from '../Goods-sum/Goods-sum';
 import GoodsCard from '../Goods-card/Goods-card';
@@ -9,7 +10,7 @@ import AddGoodsQuantity from './Add-goods-quantity';
 import cx from 'classnames';
 import styles from './Goods.module.scss';
 
-function Goods(props) {
+function Goods(props: GoodsProps) {
   const { 
     selectedFullModel, 
     fromDbUserGoodsAdded, 
@@ -97,8 +98,8 @@ function Goods(props) {
 
   function showGoodsCards() {
     return goodsAdded
-      .map((goodsItem, index) => (
-        <GoodsCard
+      .map((goodsItem, index) => {
+        return <GoodsCard
           key={goodsItem._id}
           {...{
             goodsAddedIndex: index + 1,
@@ -110,7 +111,7 @@ function Goods(props) {
             setGoodsPriceSum,
           }}
         />
-      ))
+      })
       .reverse();
   }
 
@@ -124,7 +125,6 @@ function Goods(props) {
             setgoodsQuantityReset={setgoodsQuantityReset}
             goodsQuantity={addGoodsQuantity}
             setAddGoodsQuantity={setAddGoodsQuantity}
-            goodsAddedId={selectedFullModel._id}
           />
         </div>
         <div className={cx(styles['goods-buttons'], 'flex-centered')}>

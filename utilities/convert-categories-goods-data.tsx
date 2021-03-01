@@ -1,13 +1,19 @@
-export default function convertCategoriesGoodsData(categoriesGoods) {
-  let data,
-      convertedData = {};
+import CategoriesGoods from '../Interfaces/Categories-goods';
+
+function convertCategoriesGoodsData(categoriesGoods: Array<CategoriesGoods>) {
+  let convertedData = {};
+  let data: {
+    name: string,
+    brand: string,
+    goods: []
+  };
 
   if (!categoriesGoods) return null;
 
   categoriesGoods.forEach(item => {
     return data = {
       ...data,
-      [item.name]: item.goods.map(goodsItem => {
+      [item.name]: item.goods.map((goodsItem: { brand: string }) => {
         return [goodsItem.brand, goodsItem]
       })
     }
@@ -16,7 +22,7 @@ export default function convertCategoriesGoodsData(categoriesGoods) {
   for (let key in data) {
     let modifyData = {};
 
-    data[key].forEach(item => {
+    data[key].forEach((item: string) => {
       if (item[0] in modifyData) {
         modifyData[item[0]].push(item[1]);
       } else {
@@ -32,3 +38,5 @@ export default function convertCategoriesGoodsData(categoriesGoods) {
 
   return convertedData;
 }
+
+export default convertCategoriesGoodsData;

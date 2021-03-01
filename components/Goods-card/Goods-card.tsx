@@ -1,10 +1,11 @@
+import GoodsCardProps from '../../Interfaces/Goods-card-props';
 import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
 import dbUpdateUserData from '../../database/db-update-user-data';
 
 import cx from 'classnames';
 import styles from './Goods-card.module.scss';
 
-function GoodsCard(props) {
+function GoodsCard(props: GoodsCardProps) {
   const {
     goodsAdded,
     userGoodsAdded,
@@ -20,7 +21,9 @@ function GoodsCard(props) {
     _id,
   } = props;
 
-  const filteredCurrentItem = goodsAdded.filter(item => item._id !== _id);
+  const filteredCurrentItem = goodsAdded.filter((item: {_id: string}) => {
+    item._id !== _id;
+  });
 
   function changeGoodsItemQuantity(quantity: number) {
     const changedGoodsAdded = [...goodsAdded];

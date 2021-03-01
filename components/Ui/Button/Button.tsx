@@ -1,4 +1,14 @@
-function Button({ className, type, text }) {
+type type = 'submit' | 'reset' | 'button';
+
+interface Props {
+  className: string;
+  text: string;
+  type: type;
+}
+
+function Button(props: Props) {
+  const { className, type, text } = props;
+
   return (
     <button
       className={className}

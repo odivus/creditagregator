@@ -1,7 +1,14 @@
 import {increase, decrease} from '../handlers/handlers';
 import styles from './Quantity.module.scss';
 
-function Quantity({ setQuantity, quantity }) {
+interface Props {
+  quantity: number;
+  setQuantity: (state: number) => void;
+}
+
+function Quantity(props: Props) {
+  const { setQuantity, quantity } = props;
+  
   return (
     <div className={`${styles.quantity} flex-centered`}>
       <span onClick={() => decrease(setQuantity, quantity)}>&ndash;</span>

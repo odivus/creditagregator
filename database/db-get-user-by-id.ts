@@ -1,10 +1,9 @@
 import Users from '../models/Users';
-import UserDataProps from '../pages/Interfaces/User-data-props';
+import UserDataProps from '../Interfaces/User-data-props';
 
 interface UserDataObject extends UserDataProps {
   _id: string;
-  selected_goods: Array<{}>;
-  timestamp: string;
+  selected_goods: Array<object>;
 }
 
 async function getUserById(id: string) {
@@ -14,7 +13,9 @@ async function getUserById(id: string) {
 
     user._id = user._id.toString();
     if (user.selected_goods) {
-      user.selected_goods.forEach(item => item._id = item._id.toString());
+      user.selected_goods.forEach((item: {_id: object | string}) => {
+        item._id = item._id.toString();
+      });
     }
 
     return user;

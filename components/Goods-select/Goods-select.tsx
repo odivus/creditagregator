@@ -1,7 +1,8 @@
+import GoodsProps from '../../Interfaces/Goods-props';
 import Select from '../Ui/Select/Select';
 import styles from './Goods-select.module.scss';
 
-function GoodsSelect(props) {
+function GoodsSelect(props: GoodsProps) {
   const {
     selectedCategory,
     selectedBrand,

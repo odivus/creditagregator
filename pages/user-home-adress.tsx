@@ -4,7 +4,7 @@ import getUserById from '../database/db-get-user-by-id';
 import dbUpdateUserData from '../database/db-update-user-data';
 import Head from 'next/head';
 
-import UserDataProps from './Interfaces/User-data-props';
+import UserDataProps from '../Interfaces/User-data-props';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Input from '../components/Ui/Input/Input';

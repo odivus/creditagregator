@@ -1,6 +1,11 @@
 import Quantity from '../Ui/Quantity/Quantity';
 
-function ChangeGoodsAddedQuantity(props) {
+interface Props {
+  quantity: number;
+  changeGoodsItemQuantity: any;
+}
+
+function ChangeGoodsAddedQuantity(props: Props) {
   const {
     quantity,
     changeGoodsItemQuantity

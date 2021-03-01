@@ -3,6 +3,8 @@ import dbConnect from '../database/db-connect';
 import getCategoriesGoods from '../database/db-get-categories-goods';
 import getUserById from '../database/db-get-user-by-id';
 
+import RequestCreateProps from '../Interfaces/Request-create-props';
+import CategoriesGoods from '../Interfaces/Categories-goods';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
@@ -19,6 +21,10 @@ if (typeof window !== 'undefined'){
 import cx from 'classnames';
 import styles from '../components/Steps/Steps.module.scss';
 
+interface Props extends RequestCreateProps {
+  categoriesGoods: Array<CategoriesGoods>;
+};
+
 export async function getServerSideProps() {
   await dbConnect();
 
@@ -34,7 +40,7 @@ export async function getServerSideProps() {
   };
 }
 
-function RequestCreate(props) {
+function RequestCreate(props: Props) {
   useEffect( () => customSelect() );
 
   const { categoriesGoods, fromDbUserGoodsAdded } = props;
@@ -57,7 +63,7 @@ function RequestCreate(props) {
   );
 
   const [selectedFullModel, setSelectedFullModel] = useState(firstModel);
-  
+
   const pageProps = {
     fromDbUserGoodsAdded,
     changeBrands,
@@ -68,7 +74,7 @@ function RequestCreate(props) {
     selectedModel,
     categories,
     brands,
-    models: models.map((item) => item.model),
+    models: models.map((item: {model: string}) => item.model),
     selectedFullModel: {
       ...selectedFullModel, 
       category: selectedCategory,
@@ -106,9 +112,9 @@ function RequestCreate(props) {
     setSelectedFullModel(firstModel);
   }
 
-  function changeModels(e) {
-    const { value } = e.target;
-    const model = models.find((item) => item.model === value);
+  function changeModels(e: React.FormEvent<EventTarget>) {
+    const { value } = e.target as HTMLInputElement;
+    const model = models.find((item: {model: string}) => item.model === value);
 
     setSelectedModel(value);
     setSelectedFullModel(model);

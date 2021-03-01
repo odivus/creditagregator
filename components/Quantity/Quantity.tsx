@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import styles from './Quantity.module.scss';
 
-function Quantity(props) {
+interface Props {
+  goodsQuantity: number;
+  goodsQuantityReset: boolean;
+  setgoodsQuantityReset: (state: boolean) => void;
+  setAddGoodsQuantity: (state: number) => void;
+  setGoodsCardQuantity: (state: number) => void;
+}
+
+function Quantity(props: Props) {
   const {
     goodsQuantity,
     goodsQuantityReset,
@@ -11,8 +19,6 @@ function Quantity(props) {
   } = props;
 
   const [quantity, setQuantity] = useState(goodsQuantity);
-
-  console.log(goodsQuantityReset);
 
   useEffect(() => {
     if (goodsQuantityReset) {

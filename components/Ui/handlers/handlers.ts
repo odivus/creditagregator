@@ -1,7 +1,9 @@
+type setQuantity = (state: number) => void;
+
 export function inputChange(
   e: React.FormEvent<EventTarget>, 
   inputValue: object, 
-  setInputValue
+  setInputValue: (state: object) => void
 ) {
   const { name, value } = e.target as HTMLInputElement;
 
@@ -13,18 +15,18 @@ export function inputChange(
 
 export function userDataOnSubmit(
   e: React.FormEvent<EventTarget>, 
-  dbUpdateUserData,
+  dbUpdateUserData: (data: object) => void,
   data: object
 ) {
   e.preventDefault();
   dbUpdateUserData(data);
 }
 
-export function increase(setQuantity, quantity: number) {
+export function increase(setQuantity: setQuantity, quantity: number) {
   setQuantity(quantity + 1);
 }
 
-export function decrease(setQuantity, quantity: number) {
+export function decrease(setQuantity: setQuantity, quantity: number) {
   const decreaseQuantity = quantity - 1;
 
   if (decreaseQuantity < 1) {

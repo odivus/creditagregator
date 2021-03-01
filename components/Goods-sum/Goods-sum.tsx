@@ -1,7 +1,13 @@
 import cx from 'classnames';
 import styles from './Goods-sum.module.scss';
 
-function GoodsSum({ goodsPriceSum, goodsQuantity }) {
+interface Props {
+  goodsPriceSum: number;
+  goodsQuantity: number;
+}
+
+function GoodsSum(props: Props) {
+  const { goodsPriceSum, goodsQuantity } = props;
   const goodsSumClassName = cx({
     'goods-sum': goodsQuantity > 0,
     'goods-sum_visibility_hidden': goodsQuantity === 0,
