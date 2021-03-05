@@ -14,10 +14,6 @@ function Calculator() {
       <HeadGlobal />
       <Head>
         <title>Калькулятор</title>
-        {/* <script
-          defer
-          src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'
-        ></script> */}
       </Head>
       <Header />
       <div className={cx(styles["steps-header"], "flex-centered")}>
