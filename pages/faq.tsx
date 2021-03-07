@@ -17,7 +17,7 @@ function Faq() {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <article className='faq block-centered'>
-            <h5 className='page-header'>Вопросы и&nbsp;ответы</h5>
+            <h5 className='h5-page'>Вопросы и&nbsp;ответы</h5>
             <h6>
               Лишился работы из-за длительного карантина. Могу
               я&nbsp;не&nbsp;платить кредит?

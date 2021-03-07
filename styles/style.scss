@@ -27,11 +27,19 @@ h4 {
 }
 
 h5 {
-  font-size: 1.64rem;
+  font-size: 1.8rem;
   font-weight: 500;
   line-height: 2rem;
   width: fit-content;
-  margin: 30px auto;
+  margin: 0 auto;
+}
+
+.h5-calculator-page {
+  margin-top: 6px;
+}
+
+.h5-page {
+  margin-top: 40px;
 }
 
 h6 {
@@ -307,7 +315,7 @@ article {
 
   & > ul {
     flex: 0 1 40%;
-    padding: 1.1rem;
+    padding: 0 1.1rem 24px;
     min-width: 240px;
 
     & :first-child {

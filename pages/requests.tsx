@@ -13,8 +13,8 @@ function Requests() {
       <Header />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
-          <h5 className='page-header'>Заявки на получение кредита</h5>
-          <form action='' className='custom-radio'>
+          <h5 className='h5-page'>Заявки на получение кредита</h5>
+          <form className='custom-radio'>
             <label>
               <input
                 className='with-gap'
