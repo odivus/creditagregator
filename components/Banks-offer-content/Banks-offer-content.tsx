@@ -3,8 +3,10 @@ import scrollTop from '../../utilities/scroll-top';
 import cx from 'classnames';
 import styles from './Banks-offer-content.module.scss';
 
-function BanksOfferContent() {
-  const data =[
+function BanksOfferContent({ banks }) {
+  console.log(banks);
+
+  const data = [
     {
       'card-content__header': 'Срок, мес',
       'card-content__text': 9,
@@ -18,7 +20,7 @@ function BanksOfferContent() {
       'card-content__text': 1.9,
     },
     {
-      'card-content__header': 'Общая сумма выплат',
+      'card-content__header': 'Общая сумма выплат &nbsp;&#8381;',
       'card-content__text': 14352180.36,
     },
   ];

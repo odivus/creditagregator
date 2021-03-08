@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import Banks from '../../Interfaces/Banks';
 import BanksOfferContent from '../Banks-offer-content/Banks-offer-content';
 
-function BanksOffer() {
+function BanksOffer(props: {banks: Array<Banks>}) {
   return (
     <div className='row row_content'>
       <div className='col s12 m12 l12'>
       <h5 className="h5-calculator-page">Предложения банков</h5>
-      <BanksOfferContent />
+      <BanksOfferContent {...props} />
         <div className='footer-back'>
           <i className='material-icons'>chevron_left</i>
           <a className='footer-link' href='/request-create'>

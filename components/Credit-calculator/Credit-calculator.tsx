@@ -1,20 +1,31 @@
 import {useState, useEffect} from 'react';
 
+import Banks from '../../Interfaces/Banks';
+
 import RangeSlider from '../Ui/Range-slider/Range-slider';
 import styles from './Credit-calculator.module.scss';
 
-function CreditCalculator() {
+interface Props {
+  setMonthQuantity: (state: number) => void;
+}
+
+function CreditCalculator(props: Props) {
   const [goodsPriceSum, setGoodsPriceSum] = useState(278000);
   const [monthlyPayment, setMonthlyPayment] = useState(
     Math.round(goodsPriceSum / 12)
   );
   const [firstPayment, setFirstPayment] = useState(10);
+
   const totalFirstPayment = (goodsPriceSum * firstPayment) / 100;
   const total = goodsPriceSum - totalFirstPayment;
 
+  const { setMonthQuantity } = props;
+
   function calcMonthlyPayment(inputValue: number): void {
     const result: number = Math.round(goodsPriceSum / inputValue);
+
     setMonthlyPayment(result);
+    setMonthQuantity(inputValue);
   }
 
   return (

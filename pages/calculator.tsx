@@ -1,3 +1,9 @@
+import {useState, useEffect} from 'react';
+
+import dbConnect from '../database/db-connect';
+import getBanks from '../database/db-get-banks';
+
+import Banks from '../Interfaces/Banks';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import BanksOffer from '../components/Banks-offer/Banks-offer';
@@ -8,7 +14,27 @@ import Head from 'next/head';
 import cx from "classnames";
 import styles from "../components/Steps/Steps.module.scss";
 
-function Calculator() {
+export async function getServerSideProps() {
+  await dbConnect();
+  const banks = await getBanks();
+
+  return {
+    props: {
+      banks: JSON.parse(banks),
+    },
+  };
+}
+
+function Calculator(props: {banks: Array<Banks>}) {
+  const [monthQuantity, setMonthQuantity] = useState(1);
+
+  const { banks } = props;
+  const filteredBanks = banks.filter(bank => {
+    if (bank.term === monthQuantity) return bank;
+  });
+
+  console.log(filteredBanks);
+
   return (
     <>
       <HeadGlobal />
@@ -26,8 +52,10 @@ function Calculator() {
         </h5>
       </div>
       <Steps />
-      <CreditCalculator />
-      <BanksOffer />
+      <CreditCalculator 
+        setMonthQuantity={setMonthQuantity} 
+      />
+      <BanksOffer {...props} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import CategoriesGoods from '../Interfaces/Categories-goods';
 
-function convertCategoriesGoodsData(categoriesGoods: Array<CategoriesGoods>) {
+function convertCategoriesGoodsData(categoriesGoods: Array<CategoriesGoods>): {} {
   let convertedData = {};
   let data: {
     name: string,
