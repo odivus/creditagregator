@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import { useRouter } from 'next/router';
 
 import dbConnect from '../database/db-connect';
 import getBanks from '../database/db-get-banks';
@@ -26,14 +27,27 @@ export async function getServerSideProps() {
 }
 
 function Calculator(props: {banks: Array<Banks>}) {
+  const router = useRouter();
+  const [goodsPriceSum, setGoodsPriceSum] = useState(1);
+ 
   const [monthQuantity, setMonthQuantity] = useState(1);
+  const [parentMonthlyPayment, setParentMonthlyPayment] = useState(
+    Math.round(goodsPriceSum / 12)
+  );
 
   const { banks } = props;
   const filteredBanks = banks.filter(bank => {
     if (bank.term === monthQuantity) return bank;
   });
 
-  console.log(filteredBanks);
+  useEffect(() => {
+    if (!window.sessionStorage.goodsPriceSum) {
+      router.push('/request-create');
+    } else {
+      setGoodsPriceSum(parseInt(sessionStorage.getItem('goodsPriceSum'), 10));
+      setParentMonthlyPayment(Math.round(goodsPriceSum / 12));
+    }
+  }, [goodsPriceSum]);
 
   return (
     <>
@@ -52,10 +66,15 @@ function Calculator(props: {banks: Array<Banks>}) {
         </h5>
       </div>
       <Steps />
-      <CreditCalculator 
-        setMonthQuantity={setMonthQuantity} 
+      <CreditCalculator
+        goodsPriceSum={goodsPriceSum}
+        setMonthQuantity={setMonthQuantity}
+        setParentMonthlyPayment={setParentMonthlyPayment}
       />
-      <BanksOffer {...props} />
+      <BanksOffer 
+        banks={filteredBanks}
+        parentMonthlyPayment={parentMonthlyPayment}
+      />
     </>
   );
 }

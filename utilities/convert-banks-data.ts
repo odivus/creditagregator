@@ -6,9 +6,15 @@ interface ConvertedBanks {
 }
 
 function convertBanksData (bank: Banks): Array<ConvertedBanks> {
-  const objKeys = Object.keys(bank);
+  const entries = Object.entries(bank);
+  const filteredEntries = entries.filter(item => {
+    return item[0] !== '_id' && item[0] !== 'name';
+  });
+  
+  const filteredBank = Object.fromEntries(filteredEntries);
+  const filteredBankKeys = Object.keys(filteredBank);
 
-  return objKeys.map(key => {
+  return filteredBankKeys.map(key => {
     let header: string;
 
     if (key === 'rate') header = 'Ставка, %';

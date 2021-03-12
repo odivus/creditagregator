@@ -7,7 +7,7 @@ interface Props {
   }>;
 }
 
-function InfoCard(props: Props) {
+function CardItems(props: Props) {
   const { data } = props;
   return (
     <>
@@ -32,4 +32,4 @@ function InfoCard(props: Props) {
   );
 }
 
-export default InfoCard;
+export default CardItems;

@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import dbUpdateUserData from '../../database/db-update-user-data';
+import { useRouter } from 'next/router';
 
 import GoodsProps from '../../Interfaces/Goods-props';
 import GoodsSelect from '../Goods-select/Goods-select';
@@ -11,6 +12,7 @@ import cx from 'classnames';
 import styles from './Goods.module.scss';
 
 function Goods(props: GoodsProps) {
+  const router = useRouter();
   const { 
     selectedFullModel, 
     fromDbUserGoodsAdded, 
@@ -136,7 +138,14 @@ function Goods(props: GoodsProps) {
           >
             Добавить товар
           </button>
-          <button className={calcCreditClassName}>
+          <button 
+            className={calcCreditClassName}
+            onClick={() => {
+              // router.push(`/calculator?sum=${goodsPriceSum}`)
+              router.push('/calculator')
+              sessionStorage.setItem('goodsPriceSum', goodsPriceSum.toString());
+            }}
+          >
             Рассчитать кредит
           </button>
         </div>
