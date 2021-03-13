@@ -141,8 +141,7 @@ function Goods(props: GoodsProps) {
           <button 
             className={calcCreditClassName}
             onClick={() => {
-              // router.push(`/calculator?sum=${goodsPriceSum}`)
-              router.push('/calculator')
+              router.push('/calculator');
               sessionStorage.setItem('goodsPriceSum', goodsPriceSum.toString());
             }}
           >

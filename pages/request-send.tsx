@@ -1,10 +1,41 @@
-import Header from "../components/Header/Header";
-import HeadGlobal from "../components/Head-global/Head-global";
-import RequestSendContent from '../components/Request-send-content/Request-send-content';
-import Steps from "../components/Steps/Steps";
-import Head from "next/head";
+import {useState, useEffect} from 'react';
+import dbConnect from '../database/db-connect';
+import getUserById from '../database/db-get-user-by-id';
 
-function RequestSend() {
+import Header from '../components/Header/Header';
+import HeadGlobal from '../components/Head-global/Head-global';
+import RequestSendContent from '../components/Request-send-content/Request-send-content';
+import CardsRequestSend from '../components/Cards-request-send/Cards-request-send';
+import ContentWrapper from '../components/Content-wrapper/Content-wrapper';
+import BankSelected from '../components/Bank-selected/Bank-selected';
+import Steps from '../components/Steps/Steps';
+import Head from 'next/head';
+
+export async function getServerSideProps() {
+  await dbConnect();
+
+  const user = await getUserById('5fec5250f79e186ea110fb6f');
+  const { selected_goods } = user;
+
+  return {
+    props: {
+      fromDbUserGoodsAdded: selected_goods,
+    },
+  };
+}
+
+function RequestSend({ fromDbUserGoodsAdded }) {
+  const [ selectedBank, setSelectedBank ] = useState(null);
+
+  useEffect(() => {
+    if (window.sessionStorage) {
+      const selectedBank = sessionStorage.getItem('selectedBank');
+      if (selectedBank) setSelectedBank(JSON.parse(selectedBank));
+    }
+  }, []);
+
+  console.dir(selectedBank);
+
   return (
     <>
       <HeadGlobal />
@@ -32,9 +63,24 @@ function RequestSend() {
               электронной почты и&nbsp;будет доступен в&nbsp;разделе &laquo;
               <a href='/requests'>Заявки</a>&raquo;.
             </p>
-            <h5>Выбранный товар</h5>
           </article>
-          <RequestSendContent />
+          <h5>Выбранный Банк</h5>
+          <div className='content-wrap conten-wrap_bank-selected'>
+            <div className='content-wrapper content-wrapper_bank-selected'>
+              {
+                selectedBank 
+                ? <BankSelected selectedBank={selectedBank} /> 
+                : null 
+              }
+            </div>
+          </div>
+          <h5>Выбранный товар</h5>
+          <ContentWrapper 
+            props={{
+              fromDbUserGoodsAdded
+            }}
+            CardsComponent={CardsRequestSend}
+          />
           <div className='footer-back'>
             <i className='material-icons'>chevron_left</i>
             <a className='footer-link' href='/calculator'>

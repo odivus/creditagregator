@@ -1,15 +1,11 @@
-import ContentCard from '../Content-card/Content-card';
 import scrollTop from '../../utilities/scroll-top';
 
-function BanksOfferContent({ banks, parentMonthlyPayment }) {
+function ContentWrapper({ props, CardsComponent }) {
   return (
     <>
       <div className='content-wrap content-wrap_paddings'>
         <div className='content-wrapper'>
-          <ContentCard 
-            data={banks}
-            parentMonthlyPayment={parentMonthlyPayment} 
-          />
+          <CardsComponent {...props} />
         </div>
         <a href='#' className='scroll-up' onClick={scrollTop}>
           <i className='small material-icons'>arrow_drop_up</i>
@@ -19,4 +15,4 @@ function BanksOfferContent({ banks, parentMonthlyPayment }) {
   );
 }
 
-export default BanksOfferContent;
+export default ContentWrapper;

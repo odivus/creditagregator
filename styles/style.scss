@@ -294,6 +294,10 @@ article {
   background-color: #ffffff;
 }
 
+.conten-wrap_bank-selected {
+  padding: 0;
+}
+
 .content-wrap_paddings {
   padding-top: 25px !important;
   padding-bottom: 40px !important;
@@ -317,7 +321,7 @@ article {
     flex: 0 1 40%;
     padding: 0 1.1rem 24px;
     min-width: 240px;
-
+    
     & :first-child {
       padding-top: 0;
     }
@@ -326,9 +330,27 @@ article {
     }
   }
 
+  & > ul.bank-selected {
+    flex: 0 0 0;
+    padding: 0;
+    margin: 0;
+    width: fit-content;
+    min-width: fit-content;
+
+    & h6 {
+      margin: 0 0 12px 0;
+      padding: 0;
+    }
+  }
+
   @media(min-width: 360px) {
     margin-bottom: 18px;
   }
+}
+
+.content-wrapper_bank-selected {
+  padding: 1.6rem 0;
+  margin: 0;
 }
 
 .scroll-up {

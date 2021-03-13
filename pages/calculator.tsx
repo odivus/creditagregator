@@ -7,7 +7,8 @@ import getBanks from '../database/db-get-banks';
 import Banks from '../Interfaces/Banks';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
-import BanksOffer from '../components/Banks-offer/Banks-offer';
+import ContentWrapper from '../components/Content-wrapper/Content-wrapper';
+import CardsCalculator from '../components/Cards-calculator/Cards-calculator';
 import CreditCalculator from '../components/Credit-calculator/Credit-calculator';
 import Steps from '../components/Steps/Steps';
 import Head from 'next/head';
@@ -71,10 +72,24 @@ function Calculator(props: {banks: Array<Banks>}) {
         setMonthQuantity={setMonthQuantity}
         setParentMonthlyPayment={setParentMonthlyPayment}
       />
-      <BanksOffer 
-        banks={filteredBanks}
-        parentMonthlyPayment={parentMonthlyPayment}
-      />
+      <div className='row row_content'>
+        <div className='col s12 m12 l12'>
+          <h5 className="h5-calculator-page">Предложения банков</h5>
+          <ContentWrapper 
+            props={{
+              parentMonthlyPayment,
+              filteredBanks,
+            }} 
+            CardsComponent={CardsCalculator}
+          />
+          <div className='footer-back'>
+            <i className='material-icons'>chevron_left</i>
+            <a className='footer-link' href='/request-create'>
+              Вернуться к&nbsp;выбору товаров
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
