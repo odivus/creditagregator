@@ -32,9 +32,10 @@ function Calculator(props: {banks: Array<Banks>}) {
   const [goodsPriceSum, setGoodsPriceSum] = useState(1);
  
   const [monthQuantity, setMonthQuantity] = useState(1);
-  const [parentMonthlyPayment, setParentMonthlyPayment] = useState(
-    Math.round(goodsPriceSum / 12)
-  );
+  const [
+    parentMonthlyPayment, 
+    setParentMonthlyPayment
+  ] = useState(goodsPriceSum);
 
   const { banks } = props;
   const filteredBanks = banks.filter(bank => {
@@ -42,13 +43,22 @@ function Calculator(props: {banks: Array<Banks>}) {
   });
 
   useEffect(() => {
-    if (!window.sessionStorage.goodsPriceSum) {
+    const goodsPriceSum = sessionStorage.getItem('goodsPriceSum');
+
+    if (!goodsPriceSum) {
       router.push('/request-create');
     } else {
-      setGoodsPriceSum(parseInt(sessionStorage.getItem('goodsPriceSum'), 10));
-      setParentMonthlyPayment(Math.round(goodsPriceSum / 12));
+      const goodsPriceSumNumber = parseInt(goodsPriceSum, 10);
+      
+      setGoodsPriceSum(goodsPriceSumNumber);
+      setParentMonthlyPayment(goodsPriceSumNumber);
     }
-  }, [goodsPriceSum]);
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem('monthQuantity', monthQuantity.toString());
+    sessionStorage.setItem('monthlyPayment', parentMonthlyPayment.toString());
+  }, [monthQuantity, parentMonthlyPayment]);
 
   return (
     <>

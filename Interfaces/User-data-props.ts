@@ -36,6 +36,15 @@ interface UserDataProps {
       price: number,
       quantity: number,
     ],
+    requests: [{
+      selectedBank: string,
+      requestStatus: boolean,
+      monthlyPayment: number,
+      monthQuantity: number,
+      rate: number,
+      commission: number,
+      totalSum: number,
+    }],
   },
 }
 

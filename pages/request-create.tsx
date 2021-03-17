@@ -30,13 +30,19 @@ export async function getServerSideProps() {
 
   const categoriesGoods = await getCategoriesGoods();
   const user = await getUserById('5fec5250f79e186ea110fb6f');
-  const { selected_goods } = user;
 
-  return {
+  if (categoriesGoods && user) return {
     props: {
       categoriesGoods: JSON.parse(categoriesGoods),
-      fromDbUserGoodsAdded: selected_goods,
-    },
+      fromDbUserGoodsAdded: user.selected_goods,
+    }
+  };
+  
+  if (!categoriesGoods || !user) return {
+    props: {
+      categoriesGoods: null,
+      fromDbUserGoodsAdded: null,
+    }
   };
 }
 

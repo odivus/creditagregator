@@ -33,7 +33,7 @@ function CardsCalculator({ filteredBanks, parentMonthlyPayment }) {
       }
 
       return <ul 
-        key={item._id}
+        key={item._id + Date.now() + Math.random()}
         className={cx(
           styles['card-content'],
           styles['color-shaddow-hover']

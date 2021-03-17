@@ -40,23 +40,19 @@ function CardsRequestSend({ fromDbUserGoodsAdded }) {
             {item.model}
           </li>
           <li className={cx(styles['card-content__header'])}>
-            Цена,&nbsp;&#8381;
-          </li>
-          <li className={cx(styles['card-content__text'])}>
-            {
-              item.quantity > 1 
-              ? `${item.price}&nbsp;&times;${item.quantity}`
-              : item.price
-            }
-          </li>
-          <li className={cx(styles['card-content__header'])}>
             Количество
           </li>
           <li className={cx(styles['card-content__text'])}>
             {item.quantity}
           </li>
           <li className={cx(styles['card-content__header'])}>
-            Сумма,&nbsp;&#8381;
+            Цена
+            {
+              item.quantity > 1 
+              ? ` \u00D7 ${item.quantity}`
+              : ''
+            }
+            , &#8381;
           </li>
           <li className={cx(styles['card-content__text'])}>
             {item.price * item.quantity}

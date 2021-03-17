@@ -253,6 +253,11 @@ article {
   margin: 40px auto;
 }
 
+.btn-custom_request-send {
+  margin-top: 24px;
+  margin-bottom: 54px;
+}
+
 .row_content {
   padding: 0 .75rem;
 
@@ -340,6 +345,7 @@ article {
     & h6 {
       margin: 0 0 12px 0;
       padding: 0;
+      color: #c7b301;
     }
   }
 
@@ -351,6 +357,7 @@ article {
 .content-wrapper_bank-selected {
   padding: 1.6rem 0;
   margin: 0;
+  border: solid 1px #E7DB71;
 }
 
 .scroll-up {

@@ -88,6 +88,18 @@ const usersSchema = new Schema({
       quantity: Number,
     }
   ],
+  requests: [
+    {
+      _id: Schema.Types.ObjectId,
+      selectedBank: String,
+      requestStatus: Boolean,
+      monthlyPayment: Number,
+      monthQuantity: Number,
+      rate: Number,
+      commission: Number,
+      totalSum: Number,
+    }
+  ],
 });
 
 export default mongoose.models.Users || mongoose.model('Users', usersSchema, 'users');

@@ -1,40 +1,108 @@
 import {useState, useEffect} from 'react';
+import { useRouter } from 'next/router';
+
 import dbConnect from '../database/db-connect';
 import getUserById from '../database/db-get-user-by-id';
+import dbUpdateUserData from '../database/db-update-user-data';
+
+import UserDataProps from '../Interfaces/User-data-props';
 
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
-import RequestSendContent from '../components/Request-send-content/Request-send-content';
 import CardsRequestSend from '../components/Cards-request-send/Cards-request-send';
 import ContentWrapper from '../components/Content-wrapper/Content-wrapper';
 import BankSelected from '../components/Bank-selected/Bank-selected';
+import TotalGoodsSum from '../components/Goods-sum/Total-goods-sum';
 import Steps from '../components/Steps/Steps';
 import Head from 'next/head';
 
 export async function getServerSideProps() {
   await dbConnect();
-
   const user = await getUserById('5fec5250f79e186ea110fb6f');
-  const { selected_goods } = user;
 
-  return {
+  if (user) return {
     props: {
-      fromDbUserGoodsAdded: selected_goods,
-    },
+      fromDbUserGoodsAdded: user.selected_goods,
+      requests: user.requests,
+    }
+  };
+
+  if (!user) return {
+    props: {
+      fromDbUserGoodsAdded: null,
+    }
   };
 }
 
-function RequestSend({ fromDbUserGoodsAdded }) {
+function RequestSend({ fromDbUserGoodsAdded, requests }) {
+  const router = useRouter();
+
   const [ selectedBank, setSelectedBank ] = useState(null);
+  const [ totalSum, setTotalSum ] = useState(0);
+
+  const [ monthlyPayment, setMonthlyPayment ] = useState(0);
+  const [ monthQuantity, setMonthQuantity ] = useState(0);
+
+  const [ userRequestsData,  setUserRequestsData ] = useState(null);
+ 
+  useEffect( () => window.scrollTo(0, 0) );
 
   useEffect(() => {
-    if (window.sessionStorage) {
-      const selectedBank = sessionStorage.getItem('selectedBank');
-      if (selectedBank) setSelectedBank(JSON.parse(selectedBank));
+    const bank = sessionStorage.getItem('selectedBank');
+    
+    if (!bank) {
+      router.push('/request-create');
+    } else {
+      setSelectedBank(JSON.parse(bank));
     }
   }, []);
 
-  console.dir(selectedBank);
+  useEffect(() => {
+    const goodsPriceSum = sessionStorage.getItem('goodsPriceSum');
+    
+    const monthlyPayment = sessionStorage.getItem('monthlyPayment');
+    const monthQuantity = sessionStorage.getItem('monthQuantity');
+
+    if (monthlyPayment) setMonthlyPayment(parseInt(monthlyPayment, 10));
+    if (monthQuantity) setMonthQuantity(parseInt(monthQuantity, 10));
+
+    if (goodsPriceSum && selectedBank) {
+      const { commission, rate } = selectedBank;
+      const goodsSum = parseInt(goodsPriceSum, 10);
+
+      const goodsTotalSum = goodsSum + (goodsSum * rate / 100) 
+                          + (goodsSum * commission / 100);
+
+      setTotalSum(goodsTotalSum);
+    };
+  });
+
+  useEffect(() => {
+    if (monthlyPayment > 0 && monthQuantity > 0) {
+      setUserRequestsData({
+        id: '5fec5250f79e186ea110fb6f',
+        requests: [
+          ...requests,
+          {
+            selectedBank: selectedBank.name,
+            requestStatus: true,
+            rate: selectedBank.rate,
+            commission: selectedBank.commission,
+            monthlyPayment,
+            monthQuantity,
+            totalSum,
+          },
+        ],
+      });
+    }
+  }, [selectedBank, monthlyPayment, monthQuantity, totalSum]);
+
+  function updateUserRequestsData() {
+    if (userRequestsData) {
+      dbUpdateUserData(userRequestsData);
+      router.push('/requests');
+    };
+  }
 
   return (
     <>
@@ -81,6 +149,19 @@ function RequestSend({ fromDbUserGoodsAdded }) {
             }}
             CardsComponent={CardsRequestSend}
           />
+          {
+            selectedBank 
+            ? <TotalGoodsSum totalSum={totalSum} />
+            : null
+          }
+
+          <button 
+            className='btn btn-large-custom waves-effect waves-light btn-custom_green btn-custom_request-send block-centered'
+            onClick={updateUserRequestsData}
+          >
+            Отправить заявку
+          </button>
+          
           <div className='footer-back'>
             <i className='material-icons'>chevron_left</i>
             <a className='footer-link' href='/calculator'>
