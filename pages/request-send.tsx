@@ -6,7 +6,6 @@ import getUserById from '../database/db-get-user-by-id';
 import dbUpdateUserData from '../database/db-update-user-data';
 
 import UserDataProps from '../Interfaces/User-data-props';
-
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import CardsRequestSend from '../components/Cards-request-send/Cards-request-send';
@@ -20,21 +19,16 @@ export async function getServerSideProps() {
   await dbConnect();
   const user = await getUserById('5fec5250f79e186ea110fb6f');
 
+  if (!user) return null;
   if (user) return {
     props: {
-      fromDbUserGoodsAdded: user.selected_goods,
-      requests: user.requests,
-    }
-  };
-
-  if (!user) return {
-    props: {
-      fromDbUserGoodsAdded: null,
-    }
+      user,
+    },
   };
 }
 
-function RequestSend({ fromDbUserGoodsAdded, requests }) {
+function RequestSend(props: UserDataProps) {
+  const { selected_goods, requests } = props.user;
   const router = useRouter();
 
   const [ selectedBank, setSelectedBank ] = useState(null);
@@ -55,7 +49,7 @@ function RequestSend({ fromDbUserGoodsAdded, requests }) {
     } else {
       setSelectedBank(JSON.parse(bank));
     }
-  }, []);
+  }, [selectedBank]);
 
   useEffect(() => {
     const goodsPriceSum = sessionStorage.getItem('goodsPriceSum');
@@ -78,22 +72,24 @@ function RequestSend({ fromDbUserGoodsAdded, requests }) {
   });
 
   useEffect(() => {
-    if (monthlyPayment > 0 && monthQuantity > 0) {
-      setUserRequestsData({
-        id: '5fec5250f79e186ea110fb6f',
-        requests: [
-          ...requests,
-          {
-            selectedBank: selectedBank.name,
-            requestStatus: true,
-            rate: selectedBank.rate,
-            commission: selectedBank.commission,
-            monthlyPayment,
-            monthQuantity,
-            totalSum,
-          },
-        ],
-      });
+    if (selectedBank) {
+      if (monthlyPayment > 0 && monthQuantity > 0) {
+        setUserRequestsData({
+          id: '5fec5250f79e186ea110fb6f',
+          requests: [
+            ...requests,
+            {
+              selectedBank: selectedBank.name,
+              requestStatus: true,
+              rate: selectedBank.rate,
+              commission: selectedBank.commission,
+              monthlyPayment,
+              monthQuantity,
+              totalSum,
+            },
+          ],
+        });
+      }
     }
   }, [selectedBank, monthlyPayment, monthQuantity, totalSum]);
 
@@ -145,7 +141,7 @@ function RequestSend({ fromDbUserGoodsAdded, requests }) {
           <h5>Выбранный товар</h5>
           <ContentWrapper 
             props={{
-              fromDbUserGoodsAdded
+              selected_goods
             }}
             CardsComponent={CardsRequestSend}
           />

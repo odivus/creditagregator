@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import styles from '../Banks-offer-content/Banks-offer-content.module.scss';
 
-function CardsRequestSend({ fromDbUserGoodsAdded }) {
+function CardsRequestSend({ selected_goods }) {
   interface DataItem {
     _id: string;
     brand: string;
@@ -12,7 +12,7 @@ function CardsRequestSend({ fromDbUserGoodsAdded }) {
   }
 
   return (
-    fromDbUserGoodsAdded.map((item: DataItem) => {
+    selected_goods.map((item: DataItem) => {
       return (
         <ul
           key={item._id}

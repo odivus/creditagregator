@@ -17,14 +17,19 @@ import {
 
 export async function getServerSideProps() {
   await dbConnect();
-
   const user = await getUserById('5fec5250f79e186ea110fb6f');
 
-  return {
+  if (!user) return {
     props: {
-      user
-    }
-  }
+      user: null
+    },
+  };
+
+  if (user) return {
+    props: {
+      user,
+    },
+  };
 }
 
 function UserData(props: UserDataProps) {
