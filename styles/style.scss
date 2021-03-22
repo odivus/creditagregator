@@ -80,6 +80,8 @@ article {
 .custom-radio {
   display: flex;
   flex-wrap: wrap;
+  width: fit-content;
+  margin: 0 auto;
 
   & label {
     line-height: 2.4rem;

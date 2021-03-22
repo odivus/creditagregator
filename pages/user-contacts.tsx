@@ -10,6 +10,9 @@ import HeadGlobal from '../components/Head-global/Head-global';
 import Input from '../components/Ui/Input/Input';
 import Button from '../components/Ui/Button/Button';
 
+import Error from '../components/Error/Error';
+import {userDataUnavailable} from '../components/Error/error-messages';
+
 import {
   inputChange,
   userDataOnSubmit,
@@ -21,24 +24,36 @@ export async function getServerSideProps() {
 
   if (!user) return {
     props: {
-      user: null
+      error: true,
+      user: {
+        _id: '',
+        contacts: {
+          phone: '',
+          email: '',
+        },
+      },
     },
   };
 
-  if (user) return {
+  return {
     props: {
+      error: false,
       user,
     },
   };
 }
 
-function UserContacts(props: UserDataProps) {
+interface Props extends UserDataProps {
+  error: boolean;
+}
+
+function UserContacts(props: Props) {
   const {
     phone,
     email
   } = props.user.contacts;
-
   const { _id } = props.user;
+  const { error } = props;
 
   const [inputValue, setInputValue] = useState({
     phone: phone,
@@ -67,32 +82,36 @@ function UserContacts(props: UserDataProps) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Контактная информация</h5>
-          <form
-            className='user-data'
-            onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
-          >
-            <Input
-              type='text'
-              name='phone'
-              value={inputValue.phone ? inputValue.phone : phone}
-              disabled={false}
-              labelText='Мобильный телефон'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Input
-              type='email'
-              name='email'
-              value={inputValue.email ? inputValue.email : email}
-              disabled={false}
-              labelText='Электронная почта'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Button
-              className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
-              type='submit'
-              text='Обновить'
-            />
-          </form>
+          {
+            error 
+            ? <Error errorMessage={userDataUnavailable} />
+            : <form
+                className='user-data'
+                onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
+              >
+                <Input
+                  type='text'
+                  name='phone'
+                  value={inputValue.phone ? inputValue.phone : phone}
+                  disabled={false}
+                  labelText='Мобильный телефон'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Input
+                  type='email'
+                  name='email'
+                  value={inputValue.email ? inputValue.email : email}
+                  disabled={false}
+                  labelText='Электронная почта'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Button
+                  className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
+                  type='submit'
+                  text='Обновить'
+                />
+              </form>
+          }
         </div>
       </div>
     </>

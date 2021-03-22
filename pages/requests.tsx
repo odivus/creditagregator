@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import Link from 'next/link';
 import dbConnect from '../database/db-connect';
 import getUserById from '../database/db-get-user-by-id';
 import filterByRequestStatus from '../utilities/filter-by-request-status';
@@ -24,7 +25,7 @@ export async function getServerSideProps() {
     },
   };
 
-  if (user) return {
+  return {
     props: {
       error: false,
       user,
@@ -38,11 +39,15 @@ interface Props extends UserDataProps {
 
 function ShowContent({ error, requests, filteredByStatusRequests }) {
   if (error) return (
-    <p>Данные о заявках недоступны. Пожалуйста, попробуйте позже.</p>
+    <article className='block-centered'>
+      <p>Данные о заявках недоступны. Пожалуйста, попробуйте позже.</p>
+    </article>
   );
 
   if (requests && requests.length === 0) return (
-    <p>У вас пока нет заявок. Их можно оформить в разделе &laquo;Оформить заявку&raquo;</p>
+    <article className='block-centered'>
+      <p>У вас пока нет заявок. Их можно оформить в разделе <Link href='/request-create'><a>&laquo;Оформить заявку&raquo;</a></Link></p>
+    </article>  
   );
 
   return (
@@ -69,7 +74,11 @@ function Requests(props: Props) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='h5-page'>Заявки на получение кредита</h5>
-          <RequestFilter setRequestFilter={setRequestFilter} />
+          {
+            !requests || requests.length as number === 0 
+            ? null
+            : <RequestFilter setRequestFilter={setRequestFilter} /> 
+          }
           <ShowContent 
             error={error}
             requests={requests}

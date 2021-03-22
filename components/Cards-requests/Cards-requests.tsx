@@ -3,16 +3,6 @@ import cx from 'classnames';
 import styles from '../Banks-offer-content/Banks-offer-content.module.scss';
 
 function CardsRequests({ requests }) {
-  // interface DataItem {
-  //   selectedBank: string,
-  //   requestStatus: boolean,
-  //   monthlyPayment: number,
-  //   monthQuantity: number,
-  //   rate: number,
-  //   commission: number,
-  //   totalSum: number,
-  // }
-
   return (
     requests.map((item: UserRequests, index: number) => {
       const {
