@@ -1,7 +1,12 @@
 interface CategoriesGoods {
   name: string,
   brand: string,
-  goods: [],
+  goods: [{
+    brand: string,
+    model: string,
+    price: number,
+    _id: string,
+  }],
 };
 
 export default CategoriesGoods;

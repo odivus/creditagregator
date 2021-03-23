@@ -1,6 +1,8 @@
 import CategoriesGoods from '../Interfaces/Categories-goods';
 
-function convertCategoriesGoodsData(categoriesGoods: Array<CategoriesGoods>): {} {
+function convertCategoriesGoodsData(
+  categoriesGoods: Array<CategoriesGoods>
+): {} {
   let convertedData = {};
   let data: {
     name: string,
@@ -8,7 +10,18 @@ function convertCategoriesGoodsData(categoriesGoods: Array<CategoriesGoods>): {}
     goods: []
   };
 
-  if (!categoriesGoods) return null;
+  if (!categoriesGoods || categoriesGoods.length <= 1) {
+    return {
+      category: {
+        brand: [{
+          brand: '',
+          model: '',
+          price: 0,
+          _id: '',
+        }]
+      }
+    }
+  };
 
   categoriesGoods.forEach(item => {
     return data = {

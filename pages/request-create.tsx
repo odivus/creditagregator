@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import dbConnect from '../database/db-connect';
 import getCategoriesGoods from '../database/db-get-categories-goods';
 import getUserById from '../database/db-get-user-by-id';
+import Head from 'next/head';
 
 import RequestCreateProps from '../Interfaces/Request-create-props';
 import CategoriesGoods from '../Interfaces/Categories-goods';
@@ -9,7 +10,9 @@ import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
 import Goods from '../components/Goods/Goods';
-import Head from 'next/head';
+
+import Error from '../components/Error/Error';
+import {userDataUnavailable} from '../components/Error/error-messages';
 
 import customSelect from '../utilities/custom-select';
 import convertCategoriesGoodsData from '../utilities/convert-categories-goods-data';
@@ -21,36 +24,50 @@ if (typeof window !== 'undefined'){
 import cx from 'classnames';
 import styles from '../components/Steps/Steps.module.scss';
 
-interface Props extends RequestCreateProps {
-  categoriesGoods: Array<CategoriesGoods>;
-};
-
 export async function getServerSideProps() {
   await dbConnect();
 
   const categoriesGoods = await getCategoriesGoods();
   const user = await getUserById('5fec5250f79e186ea110fb6f');
 
-  if (categoriesGoods && user) return {
+  if (!categoriesGoods || !user) return {
     props: {
+      error: true,
+      categoriesGoods: [{
+        name: '',
+        brand: '',
+        goods: [
+          {
+            brand: '',
+            model: '',
+            price: 0,
+            _id: '',
+          },
+        ],
+      }],
+      fromDbUserGoodsAdded: null,
+    }
+  };
+
+  return {
+    props: {
+     error: false,
       categoriesGoods: JSON.parse(categoriesGoods),
       fromDbUserGoodsAdded: user.selected_goods,
     }
   };
-  
-  if (!categoriesGoods || !user) return {
-    props: {
-      categoriesGoods: null,
-      fromDbUserGoodsAdded: null,
-    }
-  };
 }
+
+interface Props extends RequestCreateProps {
+  categoriesGoods: Array<CategoriesGoods>;
+  error: string;
+};
 
 function RequestCreate(props: Props) {
   useEffect( () => customSelect() );
 
-  const { categoriesGoods, fromDbUserGoodsAdded } = props;
-
+  const { categoriesGoods, fromDbUserGoodsAdded, error } = props;
+  
   const selectData = convertCategoriesGoodsData(categoriesGoods);
 
   const [categories] = useState(Object.keys(selectData));
@@ -59,7 +76,7 @@ function RequestCreate(props: Props) {
   const [brands, setBrands] = useState(Object.keys(selectData[firstCategory]));
   const firstBrand = brands[0];
 
-  const [models, setModels] = useState(selectData[firstCategory][firstBrand]);
+  const [ models, setModels] = useState(selectData[firstCategory][firstBrand]);
   const firstModel = models[0];
 
   const [selectedCategory, setSelectedCategory] = useState(firstCategory);
@@ -146,8 +163,14 @@ function RequestCreate(props: Props) {
           </a>
         </h5>
       </div>
-      <Steps />
-      <Goods {...pageProps} />
+      {
+        error
+        ? <Error errorMessage={userDataUnavailable} />
+        : <>
+            <Steps />
+            <Goods {...pageProps} />
+          </>
+      }
     </>
   );
 }

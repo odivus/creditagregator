@@ -13,6 +13,9 @@ import CreditCalculator from '../components/Credit-calculator/Credit-calculator'
 import Steps from '../components/Steps/Steps';
 import Head from 'next/head';
 
+import Error from '../components/Error/Error';
+import {userDataUnavailable} from '../components/Error/error-messages';
+
 import cx from "classnames";
 import styles from "../components/Steps/Steps.module.scss";
 
@@ -20,8 +23,16 @@ export async function getServerSideProps() {
   await dbConnect();
   const banks = await getBanks();
 
+  if (!banks) return {
+    props: {
+      error: true,
+      banks: null,
+    },
+  }
+
   return {
     props: {
+      error: false,
       banks: JSON.parse(banks),
     },
   };
