@@ -10,6 +10,9 @@ import HeadGlobal from '../components/Head-global/Head-global';
 import Input from '../components/Ui/Input/Input';
 import Button from '../components/Ui/Button/Button';
 
+import Error from '../components/Error/Error';
+import {userDataUnavailable} from '../components/Error/error-messages';
+
 import {
   inputChange,
   userDataOnSubmit,
@@ -19,20 +22,38 @@ export async function getServerSideProps() {
   await dbConnect();
   const user = await getUserById('5fec5250f79e186ea110fb6f');
 
-  if (!user) return {
+ if (!user) return {
     props: {
-      user: null
+      error: true,
+      user: {
+        _id: '',
+        personal: {
+          first_name: '',
+          last_name: '',
+          middle_name: '',
+          birthday: '',
+        },
+        passport: {
+          number: '',
+          registered_place: '',
+        }
+      },
     },
   };
 
-  if (user) return {
+  return {
     props: {
+      error: false,
       user,
     },
   };
 }
 
-function UserData(props: UserDataProps) {
+interface Props extends UserDataProps {
+  error: boolean;
+}
+
+function UserData(props: Props) {
   const {
     first_name,
     middle_name,
@@ -42,6 +63,7 @@ function UserData(props: UserDataProps) {
 
   const { _id } = props.user;
   const { number, registered_place } = props.user.passport;
+  const { error } = props;
 
   const [inputValue, setInputValue] = useState({
     number: number,
@@ -70,62 +92,66 @@ function UserData(props: UserDataProps) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Персональные данные</h5>
-          <form
-            className='user-data'
-            onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
-          >
-            <Input
-              type='text'
-              value={last_name}
-              disabled={true}
-              labelText='Фамилия'
-            />
-            <Input
-              type='text'
-              value={first_name}
-              disabled={true}
-              labelText='Имя'
-            />
-            <Input
-              type='text'
-              value={middle_name}
-              disabled={true}
-              labelText='Отчество'
-            />
-            <Input
-              type='text'
-              value={`${birthday.day}. ${birthday.month}. ${birthday.year}`}
-              disabled={true}
-              labelText='Дата рождения'
-            />
-            <h5 className='page-header'>Паспорт</h5>
-            <Input
-              type='text'
-              maxLength='11'
-              name='number'
-              value={inputValue.number ? inputValue.number : number}
-              disabled={false}
-              labelText='Серия и номер'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Input
-              type='text'
-              name='registered_place'
-              value={
-                inputValue.registered_place
-                  ? inputValue.registered_place
-                  : registered_place
-              }
-              disabled={false}
-              labelText='Кем выдан'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Button
-              className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
-              type='submit'
-              text='Обновить'
-            />
-          </form>
+          {
+            error
+            ? <Error errorMessage={userDataUnavailable} />
+            : <form
+              className='user-data'
+              onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
+            >
+              <Input
+                type='text'
+                value={last_name}
+                disabled={true}
+                labelText='Фамилия'
+              />
+              <Input
+                type='text'
+                value={first_name}
+                disabled={true}
+                labelText='Имя'
+              />
+              <Input
+                type='text'
+                value={middle_name}
+                disabled={true}
+                labelText='Отчество'
+              />
+              <Input
+                type='text'
+                value={`${birthday.day}. ${birthday.month}. ${birthday.year}`}
+                disabled={true}
+                labelText='Дата рождения'
+              />
+              <h5 className='page-header'>Паспорт</h5>
+              <Input
+                type='text'
+                maxLength='11'
+                name='number'
+                value={inputValue.number ? inputValue.number : number}
+                disabled={false}
+                labelText='Серия и номер'
+                handler={(e) => inputChange(e, inputValue, setInputValue)}
+              />
+              <Input
+                type='text'
+                name='registered_place'
+                value={
+                  inputValue.registered_place
+                    ? inputValue.registered_place
+                    : registered_place
+                }
+                disabled={false}
+                labelText='Кем выдан'
+                handler={(e) => inputChange(e, inputValue, setInputValue)}
+              />
+              <Button
+                className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
+                type='submit'
+                text='Обновить'
+              />
+            </form>
+          }
         </div>
       </div>
     </>

@@ -24,7 +24,7 @@ function User() {
           </Link>
         </li>
         <li>
-          <Link href='/user-home-adress'>
+          <Link href='/user-home-address'>
             <a>Домашний адрес</a>
           </Link>
         </li>

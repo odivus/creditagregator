@@ -10,6 +10,9 @@ import HeadGlobal from '../components/Head-global/Head-global';
 import Input from '../components/Ui/Input/Input';
 import Button from '../components/Ui/Button/Button';
 
+import Error from '../components/Error/Error';
+import {userDataUnavailable} from '../components/Error/error-messages';
+
 import {
   inputChange,
   userDataOnSubmit,
@@ -21,21 +24,35 @@ export async function getServerSideProps() {
 
   if (!user) return {
     props: {
-      user: null
+      error: true,
+      user: {
+        _id: '',
+        work: {
+          company: '',
+          position: '',
+          income: '',
+        },
+      },
     },
   };
 
-  if (user) return {
+  return {
     props: {
+      error: false,
       user,
     },
   };
 }
 
-function UserWork(props: UserDataProps) {
+interface Props extends UserDataProps {
+  error: boolean;
+}
+
+function UserWork(props: Props) {
   const { company, position, income } = props.user.work;
 
   const { _id } = props.user;
+  const { error } = props;
 
   const [inputValue, setInputValue] = useState({
     company: company,
@@ -66,40 +83,44 @@ function UserWork(props: UserDataProps) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Работа</h5>
-          <form
-            className='user-data'
-            onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
-          >
-            <Input
-              type='text'
-              name='company'
-              value={inputValue.company ? inputValue.company : company}
-              disabled={false}
-              labelText='Место работы'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Input
-              type='text'
-              name='position'
-              value={inputValue.position ? inputValue.position : position}
-              disabled={false}
-              labelText='Должность'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Input
-              type='text'
-              name='income'
-              value={inputValue.income ? inputValue.income : income}
-              disabled={false}
-              labelText='Доход, &#8381;/мес.'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Button
-              className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
-              type='submit'
-              text='Обновить'
-            />
-          </form>
+          {
+            error
+            ? <Error errorMessage={userDataUnavailable} />
+            : <form
+                className='user-data'
+                onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
+              >
+                <Input
+                  type='text'
+                  name='company'
+                  value={inputValue.company ? inputValue.company : company}
+                  disabled={false}
+                  labelText='Место работы'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Input
+                  type='text'
+                  name='position'
+                  value={inputValue.position ? inputValue.position : position}
+                  disabled={false}
+                  labelText='Должность'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Input
+                  type='text'
+                  name='income'
+                  value={inputValue.income ? inputValue.income : income}
+                  disabled={false}
+                  labelText='Доход, &#8381;/мес.'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Button
+                  className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
+                  type='submit'
+                  text='Обновить'
+                />
+              </form>
+          }
         </div>
       </div>
     </>

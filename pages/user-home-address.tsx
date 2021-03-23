@@ -10,6 +10,9 @@ import HeadGlobal from '../components/Head-global/Head-global';
 import Input from '../components/Ui/Input/Input';
 import Button from '../components/Ui/Button/Button';
 
+import Error from '../components/Error/Error';
+import {userDataUnavailable} from '../components/Error/error-messages';
+
 import {
   inputChange,
   userDataOnSubmit,
@@ -21,24 +24,37 @@ export async function getServerSideProps() {
 
   if (!user) return {
     props: {
-      user: null
+      error: true,
+      user: {
+        _id: '',
+        home_address: {
+          city: '',
+          address_One: '',
+        },
+      },
     },
   };
 
-  if (user) return {
+  return {
     props: {
+      error: false,
       user,
     },
   };
 }
 
-function UserHomeAdress(props: UserDataProps) {
+interface Props extends UserDataProps {
+  error: boolean;
+}
+
+function UserHomeAdress(props: Props) {
   const {
     city,
     address_one
   } = props.user.home_address;
 
   const { _id } = props.user;
+  const { error } = props;
 
   const [inputValue, setInputValue] = useState({
     city: city,
@@ -67,34 +83,38 @@ function UserHomeAdress(props: UserDataProps) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Домашний адрес</h5>
-          <form
-            className='user-data'
-            onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
-          >
-            <Input
-              type='text'
-              name='city'
-              value={inputValue.city ? inputValue.city : city}
-              disabled={false}
-              labelText='Город'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Input
-              type='text'
-              name='address_one'
-              value={
-                inputValue.address_one ? inputValue.address_one : address_one
-              }
-              disabled={false}
-              labelText='адрес 1'
-              handler={(e) => inputChange(e, inputValue, setInputValue)}
-            />
-            <Button
-              className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
-              type='submit'
-              text='Обновить'
-            />
-          </form>
+          {
+            error
+            ? <Error errorMessage={userDataUnavailable} />
+            : <form
+                className='user-data'
+                onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
+              >
+                <Input
+                  type='text'
+                  name='city'
+                  value={inputValue.city ? inputValue.city : city}
+                  disabled={false}
+                  labelText='Город'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Input
+                  type='text'
+                  name='address_one'
+                  value={
+                    inputValue.address_one ? inputValue.address_one : address_one
+                  }
+                  disabled={false}
+                  labelText='адрес 1'
+                  handler={(e) => inputChange(e, inputValue, setInputValue)}
+                />
+                <Button
+                  className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
+                  type='submit'
+                  text='Обновить'
+                />
+              </form>
+          }
         </div>
       </div>
     </>
