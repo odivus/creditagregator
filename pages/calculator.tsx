@@ -26,7 +26,11 @@ export async function getServerSideProps() {
   if (!banks) return {
     props: {
       error: true,
-      banks: null,
+      banks: [
+        {
+          _id: '',
+        },
+      ],
     },
   }
 
@@ -38,7 +42,12 @@ export async function getServerSideProps() {
   };
 }
 
-function Calculator(props: {banks: Array<Banks>}) {
+interface Props {
+  banks: Array<Banks>; 
+  error: boolean;
+}
+
+function Calculator(props: Props) {
   const router = useRouter();
   const [goodsPriceSum, setGoodsPriceSum] = useState(1);
  
@@ -48,7 +57,8 @@ function Calculator(props: {banks: Array<Banks>}) {
     setParentMonthlyPayment
   ] = useState(goodsPriceSum);
 
-  const { banks } = props;
+  const { banks, error } = props;
+
   const filteredBanks = banks.filter(bank => {
     if (bank.term === monthQuantity) return bank;
   });
@@ -78,39 +88,45 @@ function Calculator(props: {banks: Array<Banks>}) {
         <title>Калькулятор</title>
       </Head>
       <Header />
-      <div className={cx(styles["steps-header"], "flex-centered")}>
-        <h5>
-          <a href='#' className='header-link'>
-            <span className='text-link_dashed header-link_dashed'>
-              Калькулятор
-            </span>
-          </a>
-        </h5>
-      </div>
-      <Steps />
-      <CreditCalculator
-        goodsPriceSum={goodsPriceSum}
-        setMonthQuantity={setMonthQuantity}
-        setParentMonthlyPayment={setParentMonthlyPayment}
-      />
-      <div className='row row_content'>
-        <div className='col s12 m12 l12'>
-          <h5 className="h5-calculator-page">Предложения банков</h5>
-          <ContentWrapper 
-            props={{
-              parentMonthlyPayment,
-              filteredBanks,
-            }} 
-            CardsComponent={CardsCalculator}
-          />
-          <div className='footer-back'>
-            <i className='material-icons'>chevron_left</i>
-            <a className='footer-link' href='/request-create'>
-              Вернуться к&nbsp;выбору товаров
-            </a>
-          </div>
-        </div>
-      </div>
+      {
+        error
+          ? <Error errorMessage={userDataUnavailable} />
+          : <>
+              <div className={cx(styles["steps-header"], "flex-centered")}>
+                <h5>
+                  <a href='#' className='header-link'>
+                    <span className='text-link_dashed header-link_dashed'>
+                      Калькулятор
+                    </span>
+                  </a>
+                </h5>
+              </div>
+              <Steps />
+              <CreditCalculator
+                goodsPriceSum={goodsPriceSum}
+                setMonthQuantity={setMonthQuantity}
+                setParentMonthlyPayment={setParentMonthlyPayment}
+              />
+              <div className='row row_content'>
+                <div className='col s12 m12 l12'>
+                  <h5 className="h5-calculator-page">Предложения банков</h5>
+                  <ContentWrapper 
+                    props={{
+                      parentMonthlyPayment,
+                      filteredBanks,
+                    }} 
+                    CardsComponent={CardsCalculator}
+                  />
+                  <div className='footer-back'>
+                    <i className='material-icons'>chevron_left</i>
+                    <a className='footer-link' href='/request-create'>
+                      Вернуться к&nbsp;выбору товаров
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </>
+      }
     </>
   );
 }

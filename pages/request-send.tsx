@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import dbConnect from '../database/db-connect';
 import getUserById from '../database/db-get-user-by-id';
@@ -11,7 +12,9 @@ import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
 import RequestSendContent from '../components/Request-send-content/Request-send-content';
-import Head from 'next/head';
+
+import Error from '../components/Error/Error';
+import {requestNotSend} from '../components/Error/error-messages';
 
 export async function getServerSideProps() {
   await dbConnect();
@@ -20,7 +23,27 @@ export async function getServerSideProps() {
   if (!user) return {
     props: {
       error: true,
-      user: null,
+      user: {
+        selected_goods: [
+          {
+            _id: '',
+            category: '',
+            brand: '',
+            model: '',
+            price: 0,
+            quantity: 0,
+          },
+        ],
+        requests: [{
+          selectedBank: '',
+          requestStatus: false,
+          montHlyPayment: 0,
+          monthQuantity: 0,
+          rate: 0,
+          commission: 0,
+          totalSum: 0,
+        }],
+      },
     },
   };
 
@@ -38,9 +61,7 @@ interface Props extends UserDataProps {
 
 function RequestSendMessage({ error }) {
   if (error) return (
-    <article className="block-centered">
-      <p>Заявка не отправлена, пожалуйста попробуйте позже.</p>
-    </article>
+    <Error errorMessage={requestNotSend} />
   );
 
   return (
@@ -121,7 +142,13 @@ function RequestSend(props: Props) {
 
   function updateUserRequestsData() {
     if (userRequestsData) {
-      dbUpdateUserData(userRequestsData);
+      const dbUserRequests = props.user.requests;
+      const duplicates = dbUserRequests.filter(requests => {
+        return requests.selectedBank === selectedBank.name && 
+          requests.monthQuantity === monthQuantity
+      });
+
+      if (duplicates.length === 0) dbUpdateUserData(userRequestsData);
       window.sessionStorage.clear();
     };
   }
@@ -141,7 +168,7 @@ function RequestSend(props: Props) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           {
-            requestSendDone 
+            requestSendDone || error
             ? <RequestSendMessage error={error} /> 
             : <>
                 <RequestSendContent 

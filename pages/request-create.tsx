@@ -6,6 +6,7 @@ import Head from 'next/head';
 
 import RequestCreateProps from '../Interfaces/Request-create-props';
 import CategoriesGoods from '../Interfaces/Categories-goods';
+
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
@@ -60,7 +61,7 @@ export async function getServerSideProps() {
 
 interface Props extends RequestCreateProps {
   categoriesGoods: Array<CategoriesGoods>;
-  error: string;
+  error: boolean;
 };
 
 function RequestCreate(props: Props) {
