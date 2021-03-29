@@ -9,13 +9,13 @@ async function dbUpdateUserData(data: object) {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) {
-        throw new Error(res.status.toString());
-      }
-
-    } catch (error) {
-      console.log('Failed to update user data');
-    }
+      if (!res.ok) throw new Error( res.status.toString() );
+      
+      return res.ok;
+      
+  } catch (error) {
+    console.error(error + ' Failed to update user data');
+  }
 }
 
 export default dbUpdateUserData;

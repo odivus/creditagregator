@@ -8,7 +8,7 @@ import UserDataProps from '../Interfaces/User-data-props';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Input from '../components/Ui/Input/Input';
-import Button from '../components/Ui/Button/Button';
+import ButtonUpdate from '../components/Button-update/Button-update';
 
 import Error from '../components/Error/Error';
 import {userDataUnavailable} from '../components/Error/error-messages';
@@ -61,6 +61,8 @@ function UserHomeAdress(props: Props) {
     address_one: address_one,
   });
 
+  const [updateStatus, setUpdateStatus] = useState(false);
+
   const updatedData = {
     id: _id,
     home_address: {
@@ -88,7 +90,7 @@ function UserHomeAdress(props: Props) {
             ? <Error errorMessage={userDataUnavailable} />
             : <form
                 className='user-data'
-                onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, updatedData)}
+                onSubmit={(e) => userDataOnSubmit(e, dbUpdateUserData, setUpdateStatus, updatedData)}
               >
                 <Input
                   type='text'
@@ -108,10 +110,9 @@ function UserHomeAdress(props: Props) {
                   labelText='адрес 1'
                   handler={(e) => inputChange(e, inputValue, setInputValue)}
                 />
-                <Button
-                  className='btn waves-effect waves-light block-centered btn-custom_submit btn-custom_green'
-                  type='submit'
-                  text='Обновить'
+                <ButtonUpdate 
+                  updateStatus={updateStatus} 
+                  setUpdateStatus={setUpdateStatus}
                 />
               </form>
           }

@@ -1,0 +1,18 @@
+.update {
+  position: relative;
+}
+
+.update__icon {
+  position: absolute;
+  top: -4px;
+  right: 130px;
+}
+
+.update__icon_visibility_show {
+  opacity: 1;
+}
+
+.update__icon_visibility_hide {
+  transform: scale(0);
+  transition: transform .8s;
+}

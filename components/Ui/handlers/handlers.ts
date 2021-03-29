@@ -15,11 +15,16 @@ export function inputChange(
 
 export function userDataOnSubmit(
   e: React.FormEvent<EventTarget>, 
-  dbUpdateUserData: (data: object) => void,
-  data: object
+  dbUpdateUserData: (updatedData: object) => Promise<boolean>,
+  setUpdateStatus: (state: boolean) => void,
+  updatedData: object
 ) {
   e.preventDefault();
-  dbUpdateUserData(data);
+
+  dbUpdateUserData(updatedData)
+    .then(result => {
+      if (result) setUpdateStatus(true);
+    })
 }
 
 export function increase(setQuantity: setQuantity, quantity: number) {
