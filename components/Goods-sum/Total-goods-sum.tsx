@@ -9,7 +9,7 @@ function TotalGoodsSum({ totalSum }) {
         Итого:
       </div>
       <div className={styles['goods-sum__price']}>
-        {totalSum}&nbsp;&#8381;
+        {Math.round(totalSum)}&nbsp;&#8381;
       </div>
     </div>
   );

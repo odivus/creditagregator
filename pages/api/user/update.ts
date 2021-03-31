@@ -13,14 +13,14 @@ async function saveToDb(data: data) {
   const category = Object.keys(data).filter(key => {
     if (key !== 'id') return key;
   })[0];
-
+  
   await dbConnect();
   
   try {
     const doc = await Users.findById({_id: id});
-    
-    doc[category] = data[category];
-    await doc.save();
+    await doc.updateOne({
+      [category]: data[category],
+    });
 
   } catch (error) {
     console.log(error.message);

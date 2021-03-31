@@ -64,7 +64,7 @@ function CardsRequests({ requests }) {
             Общая сумма выплат,&nbsp;&#8381;
           </li>
           <li className={styles['card-content__text']}>
-            {totalSum}
+            {Math.round(totalSum)}
           </li>
         </ul>
       );

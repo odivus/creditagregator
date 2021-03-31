@@ -24,6 +24,7 @@ export async function getServerSideProps() {
     props: {
       error: true,
       user: {
+        _id: '',
         selected_goods: [
           {
             _id: '',
@@ -85,6 +86,8 @@ function RequestSend(props: Props) {
 
   const [userRequestsData,  setUserRequestsData] = useState(null);
   const [requestSendDone, setRequestSendDone] = useState(false);
+
+  const { _id } = props.user;
  
   useEffect( () => window.scrollTo(0, 0) );
 
@@ -122,7 +125,7 @@ function RequestSend(props: Props) {
     if (selectedBank) {
       if (monthlyPayment > 0 && monthQuantity > 0) {
         setUserRequestsData({
-          id: '5fec5250f79e186ea110fb6f',
+          id: _id,
           requests: [
             ...requests,
             {
@@ -144,12 +147,27 @@ function RequestSend(props: Props) {
     if (userRequestsData) {
       const dbUserRequests = props.user.requests;
       const duplicates = dbUserRequests.filter(requests => {
-        return requests.selectedBank === selectedBank.name && 
-          requests.monthQuantity === monthQuantity
+        return requests.selectedBank === selectedBank.name 
+               && requests.monthQuantity === monthQuantity
+               && requests.totalSum === totalSum
       });
 
-      if (duplicates.length === 0) dbUpdateUserData(userRequestsData);
-      window.sessionStorage.clear();
+      if (duplicates.length === 0) {
+        dbUpdateUserData(userRequestsData)
+          .then(result => {
+            if (result) dbUpdateUserData({
+              id: _id,
+              selected_goods: [],
+            })
+          })
+        window.sessionStorage.clear();
+      } else {
+        dbUpdateUserData({
+          id: _id,
+          selected_goods: [],
+        });
+        window.sessionStorage.clear();
+      }
     };
   }
 
