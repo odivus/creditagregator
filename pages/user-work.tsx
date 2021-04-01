@@ -25,6 +25,7 @@ export async function getServerSideProps() {
   if (!user) return {
     props: {
       error: true,
+      requestsLength: 0,
       user: {
         _id: '',
         work: {
@@ -39,6 +40,7 @@ export async function getServerSideProps() {
   return {
     props: {
       error: false,
+      requestsLength: user.requests.length,
       user,
     },
   };
@@ -46,13 +48,14 @@ export async function getServerSideProps() {
 
 interface Props extends UserDataProps {
   error: boolean;
+  requestsLength: number;
 }
 
 function UserWork(props: Props) {
   const { company, position, income } = props.user.work;
 
   const { _id } = props.user;
-  const { error } = props;
+  const { error, requestsLength } = props;
 
   const [inputValue, setInputValue] = useState({
     company: company,
@@ -81,7 +84,7 @@ function UserWork(props: Props) {
         ></script>
         <title>Работа</title>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Работа</h5>

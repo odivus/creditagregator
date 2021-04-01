@@ -25,6 +25,7 @@ export async function getServerSideProps() {
   if (!user) return {
     props: {
       error: true,
+      requestsLength: 0,
       user: {
         _id: '',
         home_address: {
@@ -38,6 +39,7 @@ export async function getServerSideProps() {
   return {
     props: {
       error: false,
+      requestsLength: user.requests.length,
       user,
     },
   };
@@ -45,6 +47,7 @@ export async function getServerSideProps() {
 
 interface Props extends UserDataProps {
   error: boolean;
+  requestsLength: number;
 }
 
 function UserHomeAdress(props: Props) {
@@ -54,7 +57,7 @@ function UserHomeAdress(props: Props) {
   } = props.user.home_address;
 
   const { _id } = props.user;
-  const { error } = props;
+  const { error, requestsLength } = props;
 
   const [inputValue, setInputValue] = useState({
     city: city,
@@ -81,7 +84,7 @@ function UserHomeAdress(props: Props) {
         ></script>
         <title>Домашний адрес</title>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Домашний адрес</h5>

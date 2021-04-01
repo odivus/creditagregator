@@ -51,12 +51,14 @@ export async function getServerSideProps() {
   return {
     props: {
       error: false,
+      requestsLength: user.requests.length,
       user,
     },
   };
 }
 
 interface Props extends UserDataProps {
+  requestsLength: number;
   error: boolean;
 }
 
@@ -75,7 +77,7 @@ function RequestSendMessage({ error }) {
 
 function RequestSend(props: Props) {
   const { selected_goods, requests } = props.user;
-  const { error } = props;
+  const { error, requestsLength } = props;
   const router = useRouter();
 
   const [selectedBank, setSelectedBank] = useState(null);
@@ -181,7 +183,7 @@ function RequestSend(props: Props) {
           src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'
         ></script>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       <Steps />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>

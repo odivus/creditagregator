@@ -28,6 +28,7 @@ export async function getServerSideProps() {
   return {
     props: {
       error: false,
+      requestsLength: user.requests.length,
       user,
     },
   };
@@ -35,32 +36,37 @@ export async function getServerSideProps() {
 
 interface Props extends UserDataProps {
   error: boolean;
+  requestsLength: number;
 }
 
-function ShowContent({ error, requests, filteredByStatusRequests }) {
-  if (error) return (
-    <article className='block-centered'>
-      <p>Данные о заявках недоступны. Пожалуйста, попробуйте позже.</p>
-    </article>
-  );
+function ShowContent(
+  { error, 
+    requests, 
+    filteredByStatusRequests 
+  }) {
+    if (error) return (
+      <article className='block-centered'>
+        <p>Данные о заявках недоступны. Пожалуйста, попробуйте позже.</p>
+      </article>
+    );
 
-  if (requests && requests.length === 0) return (
-    <article className='block-centered'>
-      <p>У вас пока нет заявок. Их можно оформить в разделе <Link href='/request-create'><a>&laquo;Оформить заявку&raquo;</a></Link></p>
-    </article>  
-  );
+    if (requests && requests.length === 0) return (
+      <article className='block-centered'>
+        <p>У вас пока нет заявок. Их можно оформить в разделе <Link href='/request-create'><a>&laquo;Оформить заявку&raquo;</a></Link></p>
+      </article>  
+    );
 
-  return (
-    <ContentWraper 
-      props={{requests: filteredByStatusRequests}}
-      CardsComponent={CardsRequests}
-    />
-  );
+    return (
+      <ContentWraper 
+        props={{requests: filteredByStatusRequests}}
+        CardsComponent={CardsRequests}
+      />
+    );
 }
 
 function Requests(props: Props) {
   const { requests } = props.user;
-  const { error } = props;
+  const { error, requestsLength } = props;
 
   const [requestFilter, setRequestFilter] = useState('all');
   
@@ -70,7 +76,7 @@ function Requests(props: Props) {
       <Head>
         <title>Заявки</title>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='h5-page'>Заявки на получение кредита</h5>

@@ -34,6 +34,7 @@ export async function getServerSideProps() {
   if (!categoriesGoods || !user) return {
     props: {
       error: true,
+      requestsLength: 0,
       categoriesGoods: [{
         name: '',
         brand: '',
@@ -49,10 +50,11 @@ export async function getServerSideProps() {
       fromDbUserGoodsAdded: null,
     }
   };
-
+  
   return {
     props: {
-     error: false,
+      error: false,
+      requestsLength: user.requests.length,
       categoriesGoods: JSON.parse(categoriesGoods),
       fromDbUserGoodsAdded: user.selected_goods,
     }
@@ -61,13 +63,19 @@ export async function getServerSideProps() {
 
 interface Props extends RequestCreateProps {
   categoriesGoods: Array<CategoriesGoods>;
+  requestsLength: number;
   error: boolean;
 };
 
 function RequestCreate(props: Props) {
   useEffect( () => customSelect() );
-
-  const { categoriesGoods, fromDbUserGoodsAdded, error } = props;
+  
+  const { 
+    categoriesGoods, 
+    fromDbUserGoodsAdded, 
+    requestsLength, 
+    error 
+  } = props;
   
   const selectData = convertCategoriesGoodsData(categoriesGoods);
 
@@ -154,7 +162,7 @@ function RequestCreate(props: Props) {
           src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'
         ></script>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       <div className={cx(styles['steps-header'], 'flex-centered')}>
         <h5>
           <a href='#' className='header-link'>

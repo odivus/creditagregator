@@ -4,11 +4,15 @@ import User from '../User/User';
 
 import styles from './Header.module.scss';
 
-function Header() {
+interface Props {
+  requestsLength: number;
+}
+
+function Header(props: Props) {
   return (
     <header className={styles.header}>
       <Logo />
-      <Menu />
+      <Menu {...props} />
       <User />
     </header>
   );

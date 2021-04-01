@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import dbConnect from '../database/db-connect';
 import getBanks from '../database/db-get-banks';
+import getUserById from '../database/db-get-user-by-id';
 
 import Banks from '../Interfaces/Banks';
 import Header from '../components/Header/Header';
@@ -22,10 +23,13 @@ import styles from "../components/Steps/Steps.module.scss";
 export async function getServerSideProps() {
   await dbConnect();
   const banks = await getBanks();
+  const user = await getUserById('5fec5250f79e186ea110fb6f');
 
-  if (!banks) return {
+
+  if (!banks || !user) return {
     props: {
       error: true,
+      requestsLength: 0,
       banks: [
         {
           _id: '',
@@ -37,13 +41,15 @@ export async function getServerSideProps() {
   return {
     props: {
       error: false,
+      requestsLength: user.requests.length,
       banks: JSON.parse(banks),
     },
   };
 }
 
 interface Props {
-  banks: Array<Banks>; 
+  banks: Array<Banks>;
+  requestsLength: number; 
   error: boolean;
 }
 
@@ -57,7 +63,7 @@ function Calculator(props: Props) {
     setParentMonthlyPayment
   ] = useState(goodsPriceSum);
 
-  const { banks, error } = props;
+  const { banks, error, requestsLength } = props;
 
   const filteredBanks = banks.filter(bank => {
     if (bank.term === monthQuantity) return bank;
@@ -87,7 +93,7 @@ function Calculator(props: Props) {
       <Head>
         <title>Калькулятор</title>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       {
         error
           ? <Error errorMessage={userDataUnavailable} />

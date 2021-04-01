@@ -1,7 +1,9 @@
 import Link from 'next/link';
+
+import cx from 'classnames';
 import styles from './Menu.module.scss';
 
-function Menu() {
+function Menu({ requestsLength }) {
   return (
     <menu className={styles.menu}>
       <li className={styles.menu__item}>
@@ -11,8 +13,11 @@ function Menu() {
       </li>
       <li className={styles.menu__item}>
         <Link href='/requests'>
-          <a className={styles.menu__item_active}>
-            Заявки <span className={styles.application}>99</span>
+          <a className={cx(styles.menu__item_active, 'flex-centered')}>
+            <div>Заявки</div> 
+            <div className={cx(styles.application, 'flex-centered')}>
+              {requestsLength ? requestsLength : 0}
+            </div>
           </a>
         </Link>
       </li>

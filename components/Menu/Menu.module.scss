@@ -37,14 +37,16 @@ $color_menu_noactive: #2B3464;
 }
 
 .menu__item_active, .menu__item_noactive {
-  display: block;
+  display: flex;
   height: 100%;
   width: 100%;
 }
 
 .application {
+  display: flex;
   background-color: #63B297;
   border-radius: 50%;
-  margin-left: 4px;
-  padding: 6px;
+  width: 26px;
+  height: 26px;
+  margin-left: 6px;
 }

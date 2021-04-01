@@ -25,6 +25,7 @@ export async function getServerSideProps() {
  if (!user) return {
     props: {
       error: true,
+      requestsLength: 0,
       user: {
         _id: '',
         personal: {
@@ -44,6 +45,7 @@ export async function getServerSideProps() {
   return {
     props: {
       error: false,
+      requestsLength: user.requests.length,
       user,
     },
   };
@@ -51,6 +53,7 @@ export async function getServerSideProps() {
 
 interface Props extends UserDataProps {
   error: boolean;
+  requestsLength: number;
 }
 
 function UserData(props: Props) {
@@ -63,7 +66,7 @@ function UserData(props: Props) {
 
   const { _id } = props.user;
   const { number, registered_place } = props.user.passport;
-  const { error } = props;
+  const { error, requestsLength } = props;
 
   const [inputValue, setInputValue] = useState({
     number: number,
@@ -90,7 +93,7 @@ function UserData(props: Props) {
         ></script>
         <title>Персональные данные</title>
       </Head>
-      <Header />
+      <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='page-header'>Персональные данные</h5>
