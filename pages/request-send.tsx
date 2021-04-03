@@ -89,6 +89,8 @@ function RequestSend(props: Props) {
   const [userRequestsData,  setUserRequestsData] = useState(null);
   const [requestSendDone, setRequestSendDone] = useState(false);
 
+  const [userRequestsLength, setUserRequestsLength] = useState(requestsLength);
+
   const { _id } = props.user;
  
   useEffect( () => window.scrollTo(0, 0) );
@@ -183,7 +185,7 @@ function RequestSend(props: Props) {
           src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'
         ></script>
       </Head>
-      <Header requestsLength={requestsLength} />
+      <Header requestsLength={userRequestsLength} />
       <Steps />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
@@ -199,6 +201,7 @@ function RequestSend(props: Props) {
                 <button 
                 className='btn btn-large-custom waves-effect waves-light btn-custom_green btn-custom_request-send block-centered'
                 onClick={() => {
+                  setUserRequestsLength(userRequestsLength + 1);
                   updateUserRequestsData();
                   setRequestSendDone(true);
                 }}

@@ -9,10 +9,18 @@ interface Props {
 }
 
 function Header(props: Props) {
+  const { requestsLength } = props;
   return (
     <header className={styles.header}>
       <Logo />
-      <Menu {...props} />
+      <Menu 
+        {
+          ...{
+            requestsLength,
+            ...props,
+          }
+        } 
+      />
       <User />
     </header>
   );

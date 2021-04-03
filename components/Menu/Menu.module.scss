@@ -34,6 +34,7 @@ $color_menu_noactive: #2B3464;
 
 .menu__item_noactive {
   color: $color_menu_noactive;
+  padding: inherit;
 }
 
 .menu__item_active, .menu__item_noactive {
@@ -44,6 +45,7 @@ $color_menu_noactive: #2B3464;
 
 .application {
   display: flex;
+  color: $color_menu_active;
   background-color: #63B297;
   border-radius: 50%;
   width: 26px;
