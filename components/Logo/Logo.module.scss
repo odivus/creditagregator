@@ -11,7 +11,15 @@ $color_menu_logo: #ffffff;
   }
 }
 
+.logo-active {
+  &:hover {
+    transition: .3s;
+    background-color: #67A9C3;
+  }
+}
+
 .header__logo {
   float: left;
+  padding: 0 10px;
   margin: 0 30px 0 0;
 }

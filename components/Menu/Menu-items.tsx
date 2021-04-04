@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import Link from 'next/link';
 
+import useGetDocumentTitle from '../../hooks/use-get-document-title';
 import RequestsIndicator from './Requests-indicator';
 
 import cx from 'classnames';
@@ -18,13 +19,8 @@ function MenuItems(props: menuItemsProps) {
   } = props;
   
   const items = Object.entries(menuItemsUrlText);
-
-  const [documentTitle, setDocumentTitle] = useState('');
-
-  useEffect(() => {
-    setDocumentTitle(document.title);
-  }, []);
-
+  const documentTitle = useGetDocumentTitle();
+ 
   if (!documentTitle) return null;
 
   return (
