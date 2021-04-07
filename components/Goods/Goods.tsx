@@ -154,8 +154,10 @@ function Goods(props: GoodsProps) {
         />
       </div>
       <div className={cx('col', 's12', 'm7', 'l7', styles.goods)}>
-        <div className={cx(styles['goods-wrapper'], 'custom-scroll-bar')}>
-          {showGoodsCards()}
+        <div className={cx(styles['goods-wrapper'])}>
+          <div className={cx(styles['goods-wrap'],'custom-scroll-bar')}>
+            {showGoodsCards()}
+          </div>
         </div>
       </div>
     </div>

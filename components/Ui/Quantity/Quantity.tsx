@@ -10,7 +10,7 @@ function Quantity(props: Props) {
   const { setQuantity, quantity } = props;
   
   return (
-    <div className={`${styles.quantity} flex-centered`}>
+    <div className={`${styles.quantity} flex-centered no-user-select`}>
       <span onClick={() => decrease(setQuantity, quantity)}>&ndash;</span>
       <span>{quantity}</span>
       <span onClick={() => increase(setQuantity, quantity)}>&#43;</span>

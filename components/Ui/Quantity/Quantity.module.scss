@@ -1,15 +1,15 @@
 .quantity {
   margin-left: 20px;
+  padding: 0 6px;
   display: flex;
   border: 1px solid #767676;
   border-radius: 4px;
-  width: 90px;
   height: 40px;
 
   span {
     font-size: 1.2rem;
     font-weight: 500;
-    padding: 8px;
+    padding: 8px 12px;
 
     &:first-child, &:last-child {
       cursor: pointer;
@@ -17,7 +17,6 @@
   }
 
   @media(max-width: 820px) {
-    width: 86px;
     height: 38px;
  }
 

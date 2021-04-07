@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react';
 import GoodsCardProps from '../../Interfaces/Goods-card-props';
 import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
 import dbUpdateUserData from '../../database/db-update-user-data';
@@ -21,8 +22,29 @@ function GoodsCard(props: GoodsCardProps) {
     _id,
   } = props;
 
+  const[goodsItemRemoved, setGoodsItemRemoved] = useState(false);
+  
+  useEffect(() => {
+    let timer: number;
+    
+    if (goodsItemRemoved) { 
+      timer = window.setTimeout(() => {
+        removeGoodsItem();
+        setGoodsItemRemoved(false);
+      }, 340);
+    }
+    
+    return () => {
+      if (timer) clearTimeout(timer);
+    }
+  }, [goodsItemRemoved]);
+
+  const removeClassName = cx({
+    'card-wrapper_remove_animation': goodsItemRemoved,
+  });
+
   const filteredCurrentItem = goodsAdded.filter((item: {_id: string}) => {
-    item._id !== _id;
+    return item._id !== _id;
   });
 
   function changeGoodsItemQuantity(quantity: number) {
@@ -49,27 +71,29 @@ function GoodsCard(props: GoodsCardProps) {
     });
   }
 
+  function handleClick() {
+    setGoodsItemRemoved(true);
+    // removeGoodsItem();
+  }
+
   return (
-    <div className={cx(styles['card-wrapper'], 'flex-centered')}>
-      <i
-        onClick={() => removeGoodsItem()}
-        className={cx('small', 'material-icons', styles.close)}
-      >
-        delete
-      </i>
+    <div className={cx(styles['card-wrapper'], styles[removeClassName], 'flex-centered')}>
+      <div className={styles['goods-card-header']}>
+        <div className={styles['goods-card-number']}>{goodsAddedIndex}</div>
+        <i
+          onClick={handleClick}
+          className={cx('small', 'material-icons', styles.remove)}
+        >
+          delete
+        </i>
+      </div>
       <div className={cx(styles['goods-card'], 'flex-centered')}>
-        <div className={cx(styles['goods-card__item'], 'flex-centered')}>
-          <div className={styles['goods-card__number']}>{goodsAddedIndex}</div>
-          <div className={styles['goods-card__content']}>
-            <div>
-              Категория: <p>{category}</p>
-            </div>
-            <div>
-              Бренд: <p>{brand}</p>
-            </div>
-            <div>
-              Модель: <p>{model}</p>
-            </div>
+        <div className={cx(styles['goods-card-item'], 'flex-centered')}>
+          <div className={cx(styles['goods-card-item__category'])}>
+            {category}
+          </div>
+          <div className={cx(styles['goods-card-item__brand'])}>
+            {brand} {model}
           </div>
         </div>
         <ChangeGoodsAddedQuantity
