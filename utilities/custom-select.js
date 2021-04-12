@@ -7,12 +7,12 @@ export default function customSelect() {
   let label = document.querySelectorAll('.select-wrapper+label');
 
   for (let i = 0; i < selectItem.length; i++) {
-    selectItem[i].setAttribute('style', 'font-family: Roboto, sans-serif; font-weight: 500; font-size: 16px; color: #000000;');
+    selectItem[i].setAttribute('style', 'font-family: Roboto, sans-serif; font-weight: 500; font-size: 18px; color: #000000;');
   }
   for (let i = 0; i < selectWrapper.length; i++) {
     selectWrapper[i].className = 'custom-select custom-select-wrapper';
   }
   for (let i = 0; i < label.length; i++) {
-    label[i].setAttribute('style', 'font-size: 14px; color: #5f5f5f;');
+    label[i].setAttribute('style', 'font-size: 16px; color: #5f5f5f;');
   }
 }

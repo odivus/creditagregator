@@ -12,8 +12,8 @@ function RequestSendContent(props) {
 
   return (
     <>
-      <article className='block-centered'>
-        <h5 className='page-header-hide'>Отправка заявки</h5>
+      <article className='article-page'>
+        <h5 className='h5-mobile-top h5-mobile-top_hide'>Отправить заявку</h5>
         <p>
           Отправляемая вами заявка в&nbsp;банк будет рассмотрена
           в&nbsp;автоматическом режиме новейшей системой
@@ -26,7 +26,7 @@ function RequestSendContent(props) {
           <a href='/requests'>Заявки</a>&raquo;.
         </p>
       </article>
-      <h5>Выбранный Банк</h5>
+      <h5 className='h5-page'>Выбранный Банк</h5>
       <div className='content-wrap conten-wrap_bank-selected'>
         <div className='content-wrapper content-wrapper_bank-selected'>
           {
@@ -36,7 +36,7 @@ function RequestSendContent(props) {
           }
         </div>
       </div>
-      <h5>Выбранный товар</h5>
+      <h5 className='h5-page'>Выбранный товар</h5>
       <ContentWrapper 
         props={{
           selected_goods

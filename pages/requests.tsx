@@ -67,6 +67,9 @@ function ShowContent(
 function Requests(props: Props) {
   const { requests } = props.user;
   const { error, requestsLength } = props;
+  const requestsStatusRejected = requests.find(request => {
+    return request.requestStatus === false;
+  });
 
   const [requestFilter, setRequestFilter] = useState('all');
   
@@ -79,11 +82,16 @@ function Requests(props: Props) {
       <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
-          <h5 className='h5-page'>Заявки на получение кредита</h5>
+          <h5 className='h5-mobile-top'>
+            Заявки на&nbsp;получение кредита&nbsp;&mdash;&nbsp;
+            <span className='requests-quantity'>
+              {requests.length}
+            </span>
+          </h5>
           {
-            !requests || requests.length as number === 0 
-            ? null
-            : <RequestFilter setRequestFilter={setRequestFilter} /> 
+            !requests || requests.length as number === 0 ||!requestsStatusRejected
+              ? null
+              : <RequestFilter setRequestFilter={setRequestFilter} /> 
           }
           <ShowContent 
             error={error}

@@ -19,7 +19,7 @@ function StepsTitle({ title, itemClassName }) {
 }
 
 function Steps() {
-  const titles = ['Оформить заявку', 'Калькулятор', 'Отправка заявки'];
+  const titles = ['Оформить заявку', 'Калькулятор', 'Отправить заявку'];
   const [documentTitle, setDocumentTitle] = useState('');
 
   useEffect(() => {

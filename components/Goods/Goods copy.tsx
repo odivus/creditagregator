@@ -119,46 +119,44 @@ function Goods(props: GoodsProps) {
 
   return (
     <div className='row row_content'>
-      <div className='col s12 m12 l12'>
-        <div className={styles['goods-content-wrap']}>
-          <div className={styles['goods-select-wrap']}>
-            <div className={cx(styles['goods-select-wrapper'], 'flex-centered')}>
-              <GoodsSelect {...props} /> 
-              <AddGoodsQuantity
-                goodsQuantityReset={goodsQuantityReset} 
-                setgoodsQuantityReset={setgoodsQuantityReset}
-                goodsQuantity={addGoodsQuantity}
-                setAddGoodsQuantity={setAddGoodsQuantity}
-              />
-            </div>
-            <div className={cx(styles['goods-buttons'], 'flex-centered')}>
-              <button
-                className='waves-effect waves-light btn btn-large-custom btn-custom_blue'
-                onClick={() => {
-                  addGoods();
-                }}
-              >
-                Добавить товар
-              </button>
-              <button 
-                className={calcCreditClassName}
-                onClick={() => {
-                  router.push('/calculator');
-                  sessionStorage.setItem('goodsPriceSum', goodsPriceSum.toString());
-                }}
-              >
-                Рассчитать кредит
-              </button>
-            </div>
-            <GoodsSum 
-              goodsPriceSum={goodsPriceSum} 
-              goodsQuantity={goodsAdded.length}
-            />
-          </div>
-          <div className={styles['goods-cards-wrap']}>
-            <div className={cx(styles['goods-cards-wrapper'], 'custom-scroll-bar')}>
-              {showGoodsCards()}
-            </div>
+      <div className='col s12 m5 l5'>
+        <div className={cx(styles['goods-select-wrapper'], 'flex-centered')}>
+          <GoodsSelect {...props} /> 
+          <AddGoodsQuantity
+            goodsQuantityReset={goodsQuantityReset} 
+            setgoodsQuantityReset={setgoodsQuantityReset}
+            goodsQuantity={addGoodsQuantity}
+            setAddGoodsQuantity={setAddGoodsQuantity}
+          />
+        </div>
+        <div className={cx(styles['goods-buttons'], 'flex-centered')}>
+          <button
+            className='waves-effect waves-light btn btn-large-custom btn-custom_blue'
+            onClick={() => {
+              addGoods();
+            }}
+          >
+            Добавить товар
+          </button>
+          <button 
+            className={calcCreditClassName}
+            onClick={() => {
+              router.push('/calculator');
+              sessionStorage.setItem('goodsPriceSum', goodsPriceSum.toString());
+            }}
+          >
+            Рассчитать кредит
+          </button>
+        </div>
+        <GoodsSum 
+          goodsPriceSum={goodsPriceSum} 
+          goodsQuantity={goodsAdded.length}
+        />
+      </div>
+      <div className={cx('col', 's12', 'm7', 'l7', styles.goods)}>
+        <div className={cx(styles['goods-wrapper'])}>
+          <div className={cx(styles['goods-wrap'],'custom-scroll-bar')}>
+            {showGoodsCards()}
           </div>
         </div>
       </div>

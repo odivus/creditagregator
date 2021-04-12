@@ -36,22 +36,22 @@ function CreditCalculator(props: Props) {
   }
 
   return (
-    <div className={styles["credit-calculator-wrapper"]}>
-      <div className={styles["credit-calculator"]}>
-        <div className={styles["credit-calculator-item"]}>
-          <div className={styles["credit-calculator-item__header"]}>
+    <div className={styles['credit-calculator-wrapper']}>
+      <div className={styles['credit-calculator']}>
+        <div className={styles['credit-calculator-item']}>
+          <div className={styles['credit-calculator-item__header']}>
             Стоимость&nbsp;товаров
           </div>
-          <div className={styles["credit-calculator-item__text"]}>
+          <div className={styles['credit-calculator-item__text']}>
             {goodsPriceSum}&nbsp;&#8381;
           </div>
         </div>
 
-        <div className={styles["credit-calculator-item"]}>
-          <div className={styles["credit-calculator-item__header"]}>
+        <div className={styles['credit-calculator-item']}>
+          <div className={styles['credit-calculator-item__header']}>
             Ежемесячный&nbsp;платеж
           </div>
-          <div className={styles["credit-calculator-item__text"]}>
+          <div className={styles['credit-calculator-item__text']}>
             {monthlyPayment}&nbsp;&#8381;
           </div>
           <div className={styles.slidecontainer}>
@@ -64,11 +64,11 @@ function CreditCalculator(props: Props) {
           </div>
         </div>
 
-        <div className={styles["credit-calculator-item"]}>
-          <div className={styles["credit-calculator-item__header"]}>
+        <div className={styles['credit-calculator-item']}>
+          <div className={styles['credit-calculator-item__header']}>
             Первый&nbsp;взнос
           </div>
-          <div className={styles["credit-calculator-item__text"]}>
+          <div className={styles['credit-calculator-item__text']}>
             {firstPayment}%
           </div>
           <div className={styles.slidecontainer}>
@@ -81,10 +81,10 @@ function CreditCalculator(props: Props) {
           </div>
         </div>
 
-        <div className={styles["credit-calculator-item"]}>
-          <div className={styles["credit-calculator-item__header"]}>Итого</div>
-          <div className={styles["credit-calculator-item__text"]}>
-            {total}&nbsp;&#8381;
+        <div className={styles['credit-calculator-item']}>
+          <div className={styles['credit-calculator-item__header']}>Итого</div>
+          <div className={styles['credit-calculator-item__text']}>
+            {Math.floor(total)}&nbsp;&#8381;
           </div>
         </div>
       </div>

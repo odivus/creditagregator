@@ -34,12 +34,26 @@ h5 {
   margin: 0 auto;
 }
 
-.h5-calculator-page {
-  margin-top: 6px;
+input[type=text]:not(.browser-default) {
+  font-size: 18px;
 }
 
 .h5-page {
+  margin-top: 6px;
+}
+
+.h5-mobile-top {
   margin-top: 40px;
+  
+  @media(max-width: 720px) {
+    margin-top: 28px;
+  }
+}
+
+.h5-mobile-top_hide {
+  @media(min-width: 601px) {
+    display: none;
+  }
 }
 
 h6 {
@@ -70,6 +84,10 @@ article {
   }
 }
 
+.article-page {
+  margin: 0 auto 30px;
+}
+
 .no-user-select {
   user-select: none;
   -moz-user-select: none;
@@ -87,15 +105,23 @@ article {
   display: flex;
   flex-wrap: wrap;
   width: fit-content;
-  margin: 0 auto;
+  margin: 16px auto;
 
   & label {
     line-height: 2.4rem;
     padding-right: 2.4rem;
   }
 
+  & :last-child {
+    padding-right: 0;
+  }
+
   @media(max-width: 487px) {
     flex-direction: column;
+
+    & label {
+      padding-right: 0;
+    }
   }
 }
 
@@ -107,6 +133,10 @@ article {
   p {
     margin-top: 0;
   }
+}
+
+.requests-quantity {
+  color: #26a69a;
 }
 
 .page-header {
@@ -209,7 +239,7 @@ article {
 .custom-select {
   font-family: $main_font_family; 
   font-weight: 500; 
-  font-size: 16px; 
+  font-size: 18px; 
   color: #000000; 
 }
 
@@ -266,11 +296,30 @@ article {
   margin-bottom: 54px;
 }
 
+.row-wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.row_custom_bottom {
+  margin-bottom: 14px;
+}
+
 .row_content {
   padding: 0 .75rem;
 
   @media(max-width: 920px) {
     padding: 0;
+  }
+}
+
+.row_calculator {
+  @media(min-width: 721px) {
+    margin: 0;
+  }
+
+  @media(max-width: 721px) {
+    margin-top: 14px;
   }
 }
 
@@ -309,6 +358,7 @@ article {
 
 .conten-wrap_bank-selected {
   padding: 0;
+  margin-bottom: 30px;
 }
 
 .content-wrap_paddings {

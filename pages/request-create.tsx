@@ -163,14 +163,10 @@ function RequestCreate(props: Props) {
         ></script>
       </Head>
       <Header requestsLength={requestsLength} />
-      <div className={cx(styles['steps-header'], 'flex-centered')}>
-        <h5>
-          <a href='#' className='header-link'>
-            <span className='text-link_dashed header-link_dashed'>
-              Выбор товара
-            </span>
-          </a>
-        </h5>
+      <div className='row row_content'>
+        <div className='col s12 m12 l12'>
+          <h5 className='h5-mobile-top h5-mobile-top_hide'>Оформить заявку</h5>
+        </div>
       </div>
       {
         error

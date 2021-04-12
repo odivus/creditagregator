@@ -17,14 +17,13 @@ import Head from 'next/head';
 import Error from '../components/Error/Error';
 import {userDataUnavailable} from '../components/Error/error-messages';
 
-import cx from "classnames";
-import styles from "../components/Steps/Steps.module.scss";
+import cx from 'classnames';
+import styles from '../components/Steps/Steps.module.scss';
 
 export async function getServerSideProps() {
   await dbConnect();
   const banks = await getBanks();
   const user = await getUserById('5fec5250f79e186ea110fb6f');
-
 
   if (!banks || !user) return {
     props: {
@@ -98,24 +97,24 @@ function Calculator(props: Props) {
         error
           ? <Error errorMessage={userDataUnavailable} />
           : <>
-              <div className={cx(styles["steps-header"], "flex-centered")}>
-                <h5>
-                  <a href='#' className='header-link'>
-                    <span className='text-link_dashed header-link_dashed'>
-                      Калькулятор
-                    </span>
-                  </a>
-                </h5>
+              <div className='row row_content row_custom_bottom'>
+                <div className='col s12 m12 l12'>
+                  <h5 className='h5-mobile-top h5-mobile-top_hide'>Калькулятор</h5>
+                </div>
               </div>
               <Steps />
-              <CreditCalculator
-                goodsPriceSum={goodsPriceSum}
-                setMonthQuantity={setMonthQuantity}
-                setParentMonthlyPayment={setParentMonthlyPayment}
-              />
+              <div className='row row_content row_calculator'>
+                <div className='col s12 m12 l12'>
+                  <CreditCalculator
+                    goodsPriceSum={goodsPriceSum}
+                    setMonthQuantity={setMonthQuantity}
+                    setParentMonthlyPayment={setParentMonthlyPayment}
+                  />
+                </div>
+              </div>
               <div className='row row_content'>
                 <div className='col s12 m12 l12'>
-                  <h5 className="h5-calculator-page">Предложения банков</h5>
+                  <h5 className='h5-page'>Предложения банков</h5>
                   <ContentWrapper 
                     props={{
                       parentMonthlyPayment,

@@ -73,7 +73,6 @@ function GoodsCard(props: GoodsCardProps) {
 
   function handleClick() {
     setGoodsItemRemoved(true);
-    // removeGoodsItem();
   }
 
   return (
