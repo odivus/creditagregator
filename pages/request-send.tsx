@@ -12,6 +12,7 @@ import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
 import RequestSendContent from '../components/Request-send-content/Request-send-content';
+import FooterBack from '../components/Footer-back/Footer-back';
 
 import Error from '../components/Error/Error';
 import {requestNotSend} from '../components/Error/error-messages';
@@ -208,6 +209,10 @@ function RequestSend(props: Props) {
                 >
                   Отправить заявку
                 </button>
+                <FooterBack 
+                  href='/calculator'
+                  text='Вернуться к&nbsp;выбору банков'
+                />
               </>
           }
         </div>

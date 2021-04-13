@@ -12,6 +12,7 @@ import ContentWrapper from '../components/Content-wrapper/Content-wrapper';
 import CardsCalculator from '../components/Cards-calculator/Cards-calculator';
 import CreditCalculator from '../components/Credit-calculator/Credit-calculator';
 import Steps from '../components/Steps/Steps';
+import FooterBack from '../components/Footer-back/Footer-back';
 import Head from 'next/head';
 
 import Error from '../components/Error/Error';
@@ -122,12 +123,10 @@ function Calculator(props: Props) {
                     }} 
                     CardsComponent={CardsCalculator}
                   />
-                  <div className='footer-back'>
-                    <i className='material-icons'>chevron_left</i>
-                    <a className='footer-link' href='/request-create'>
-                      Вернуться к&nbsp;выбору товаров
-                    </a>
-                  </div>
+                  <FooterBack 
+                    href='/request-create'
+                    text='Вернуться к&nbsp;выбору товаров'
+                  />
                 </div>
               </div>
             </>

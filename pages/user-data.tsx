@@ -96,7 +96,7 @@ function UserData(props: Props) {
       <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
-          <h5 className='page-header'>Персональные данные</h5>
+          <h5 className='h5-mobile-top'>Персональные данные</h5>
           {
             error
             ? <Error errorMessage={userDataUnavailable} />
@@ -128,7 +128,7 @@ function UserData(props: Props) {
                 disabled={true}
                 labelText='Дата рождения'
               />
-              <h5 className='page-header'>Паспорт</h5>
+              <h5 className='h5-user-info-page'>Паспорт</h5>
               <Input
                 type='text'
                 maxLength='11'

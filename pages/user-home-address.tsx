@@ -87,7 +87,7 @@ function UserHomeAdress(props: Props) {
       <Header requestsLength={requestsLength} />
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
-          <h5 className='page-header'>Домашний адрес</h5>
+          <h5 className='h5-mobile-top'>Домашний адрес</h5>
           {
             error
             ? <Error errorMessage={userDataUnavailable} />

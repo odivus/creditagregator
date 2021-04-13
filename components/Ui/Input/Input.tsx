@@ -24,7 +24,7 @@ function Input(props: InputProps) {
   } = props;
 
   return (
-    <div className='input-field'>
+    <div className='input-field custom-input-field'>
       <input
         id={id}
         maxLength={maxLength}

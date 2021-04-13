@@ -14,7 +14,7 @@ function RequestSendContent(props) {
     <>
       <article className='article-page'>
         <h5 className='h5-mobile-top h5-mobile-top_hide'>Отправить заявку</h5>
-        <p>
+        <p className='p-steps-first'>
           Отправляемая вами заявка в&nbsp;банк будет рассмотрена
           в&nbsp;автоматическом режиме новейшей системой
           с&nbsp;искусственным ителлектом. Принятие решения системой
