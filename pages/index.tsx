@@ -44,7 +44,7 @@ function Index({ requestsLength }) {
               кредитных продуктов.
             </p>
             <h6>Используемые технологии</h6>
-            <p className='p-h6-first'>Nextjs, Mongoosejs, TypeScript, Sass Scss, Materialize</p>
+            <p className='p-h6-first'>Nextjs, Mongoosejs, TypeScript, Scss, Materialize</p>
           </article>
         </div>
       </div>

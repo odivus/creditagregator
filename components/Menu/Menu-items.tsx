@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react';
 import Link from 'next/link';
 
 import useGetDocumentTitle from '../../hooks/use-get-document-title';

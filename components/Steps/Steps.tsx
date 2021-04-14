@@ -1,22 +1,8 @@
 import {useState, useEffect} from 'react';
+import StepsTitle from './Steps-title';
+
 import cx from 'classnames';
 import styles from './Steps.module.scss';
-
-function StepsTitle({ title, itemClassName }) {
-  const className = cx({
-    center: true,
-    [styles['steps__item_content']]: true,
-    [styles[itemClassName]]: true,
-  });
-
-  return (
-    <div className={cx('col', 's4', styles['steps__item'])}>
-      <div className={className}>
-        {title}
-      </div>
-    </div>
-  );
-}
 
 function Steps() {
   const titles = ['Оформить заявку', 'Калькулятор', 'Отправить заявку'];

@@ -106,7 +106,7 @@ article {
   font-size: 1.1rem;
   max-width: 600px;
 
-  & p {
+  p {
     margin-top: 8px;
   }
 }
@@ -134,7 +134,7 @@ article {
   width: fit-content;
   margin: 16px auto;
 
-  & label {
+  label {
     line-height: 2.4rem;
     padding-right: 2.4rem;
   }
@@ -146,7 +146,7 @@ article {
   @media(max-width: 487px) {
     flex-direction: column;
 
-    & label {
+    label {
       padding-right: 0;
     }
   }
@@ -397,7 +397,7 @@ article {
   flex-wrap: wrap;
   justify-content: center;
 
-  & > ul {
+  > ul {
     flex: 0 1 40%;
     padding: 0 1.1rem 24px;
     min-width: 240px;
@@ -410,14 +410,14 @@ article {
     }
   }
 
-  & > ul.bank-selected {
+  > ul.bank-selected {
     flex: 0 0 0;
     padding: 0;
     margin: 0;
     width: fit-content;
     min-width: fit-content;
 
-    & h6 {
+    h6 {
       margin: 0 0 12px 0;
       padding: 0;
       color: #c7b301;
@@ -452,7 +452,7 @@ article {
   user-select: none;
   border: solid 1px #d1d1d1;
 
-  & > i {
+  > i {
     width: inherit;
     height: inherit;
     line-height: inherit; 
@@ -482,11 +482,13 @@ article {
   cursor: pointer;
   width: fit-content;
   margin-bottom: 30px;
-  & i {
+  
+  i {
     color: #5a6ca0;
     float: left;
   }
-  & a {
+  
+  a {
     line-height: 100%;
   }
 }
