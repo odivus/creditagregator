@@ -18,9 +18,6 @@ import Head from 'next/head';
 import Error from '../components/Error/Error';
 import {userDataUnavailable} from '../components/Error/error-messages';
 
-import cx from 'classnames';
-import styles from '../components/Steps/Steps.module.scss';
-
 export async function getServerSideProps() {
   await dbConnect();
   const banks = await getBanks();

@@ -1,4 +1,5 @@
 .user {
+  display: none;
   position: relative;
   height: inherit;
   padding: 0 0 0 10px;
@@ -33,6 +34,10 @@
     &:hover, &:active, &:visited {
       color: #000000;
     }
+  }
+
+  @media(min-width: 821px) {
+    display: block;
   }
 }
 

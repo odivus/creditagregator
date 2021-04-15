@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import UserLinks from './User-links';
 import styles from './User.module.scss';
 
 function User() {
@@ -12,28 +12,9 @@ function User() {
           </i>
         </a>
       </div>
-      <ul className={`${styles['dropdown-user-content']} custom-block-shaddow`}>
-        <li>
-          <Link href='/user-data'>
-            <a>Персональные данные</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/user-contacts'>
-            <a>Контактная информация</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/user-home-address'>
-            <a>Домашний адрес</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/user-work'>
-            <a>Работа</a>
-          </Link>
-        </li>
-      </ul>
+      <UserLinks 
+         className={`${styles['dropdown-user-content']} custom-block-shaddow`}
+      />
     </div>
   );
 }
