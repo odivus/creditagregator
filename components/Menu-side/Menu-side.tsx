@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import Menu from '../Menu/Menu';
 import UserItems from '../User/User-items';
 import SideMenu from '../../Interfaces/Side-menu';
@@ -17,6 +17,7 @@ function MenuSide(props: SideMenu) {
   });
 
   const sideMenuDomElement = useRef(null);
+  const [pageHeight, setPageHeight] = useState('');
   
   function handleOutsideClick(e: Event) {
     if (sideMenuDomElement.current) {
@@ -55,28 +56,39 @@ function MenuSide(props: SideMenu) {
       window.removeEventListener('keyup', escKeyListener as () => void, false);
     }
   });
+
+  useEffect(() => {
+    const offsetHeight = document.documentElement.offsetHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
+
+    if (offsetHeight > scrollHeight) {
+      return setPageHeight(offsetHeight + 'px');
+    }
+    setPageHeight(scrollHeight + 'px');
+  });
+
+  console.log(pageHeight);
   
   return (
     <div 
-      className={className} 
+      className={className}
+      style={{height: pageHeight}} 
       id='side-menu'
-      ref={sideMenuDomElement}
-      >
-      <header className={cx(stylesHeader.header, stylesHeader['header_side-menu_bg'])}>
-        <i 
-          className={cx(styles.close, 'small material-icons')}
-          onClick={() => setShow(false)}
-        >
-          close
-        </i>
-      </header>
-      <Menu 
-        isSideMenu={true}
-        requestsLength={requestsLength}
-      />
-      <UserItems isSideMenu={true} />
+      ref={sideMenuDomElement}>
+        <header className={cx(stylesHeader.header, stylesHeader['header_side-menu_bg'])}>
+          <i 
+            className={cx(styles.close, 'small material-icons')}
+            onClick={() => setShow(false)}>
+              close
+          </i>
+        </header>
+        <Menu 
+          isSideMenu={true}
+          requestsLength={requestsLength}
+        />
+        <UserItems isSideMenu={true} />
     </div>
-  )
+  );
 }
 
 export default MenuSide;
