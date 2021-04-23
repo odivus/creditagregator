@@ -65,10 +65,8 @@ function MenuSide(props: SideMenu) {
       return setPageHeight(offsetHeight + 'px');
     }
     setPageHeight(scrollHeight + 'px');
-  });
+  }, [pageHeight]);
 
-  console.log(pageHeight);
-  
   return (
     <div 
       className={className}
