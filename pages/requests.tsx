@@ -83,7 +83,7 @@ function Requests(props: Props) {
       <div className='row row_content'>
         <div className='col s12 m12 l12'>
           <h5 className='h5-mobile-top'>
-            Заявки на&nbsp;получение кредита&nbsp;&mdash;&nbsp;
+            Заявки на&nbsp;получение кредита
             <span className='requests-quantity'>
               {requests.length}
             </span>

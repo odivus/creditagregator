@@ -2,6 +2,7 @@ $color_menu_active: #ffffff;
 $color_menu_noactive: #2B3464;
 
 .menu {
+  display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -16,7 +17,6 @@ $color_menu_noactive: #2B3464;
 }
 
 .menu__item {
-  float: left;
   text-transform: uppercase;
   padding: 0 10px;
   margin: 0 10px;
@@ -30,7 +30,7 @@ $color_menu_noactive: #2B3464;
   color: $color_menu_active;
   padding: inherit;
   
-    &:hover {
+  &:hover {
     transition: .3s;
     background-color: #67A9C3;
     cursor: pointer;
@@ -48,7 +48,7 @@ $color_menu_noactive: #2B3464;
   width: 100%;
 }
 
-.application {
+.requests {
   display: flex;
   color: $color_menu_active;
   background-color: #63B297;

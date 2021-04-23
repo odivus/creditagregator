@@ -1,9 +1,16 @@
 import cx from 'classnames';
-import styles from './Menu.module.scss';
+import stylesMenuHeader from './Menu.module.scss';
+import stylesMenuSide from './Menu-in-side.module.scss';
 
-function RequestsIndicator({ requestsLength }) {
+function RequestsIndicator({ isSideMenu, requestsLength }) {
+  const className = cx({
+    [stylesMenuSide['requests']]: isSideMenu,
+    [stylesMenuHeader['requests']]: !isSideMenu,
+    ['flex-centered']: !isSideMenu,
+  });
+  
   return (
-    <div className={cx(styles.application, 'flex-centered')}>
+    <div className={className}>
       {requestsLength ? requestsLength : 0}
     </div>
   );

@@ -1,0 +1,27 @@
+.menu-side {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  min-width: 318px;
+  height: 100vh;
+  padding: 0 0 24px 34px;
+  z-index: 99999;
+  // background-color: #ffffff9d;
+  background-color: #ffffff;
+}
+
+.menu-side_show {
+  display: block;
+}
+
+.close {
+  padding: 0 10px;
+  cursor: pointer;
+  color: #c0c0c0;
+
+  &:hover {
+    color: #76B9D3;
+  }
+}

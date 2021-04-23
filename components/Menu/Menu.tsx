@@ -1,14 +1,16 @@
 import MenuItems from './Menu-items';
-import menuItemsUrlText from './menu-items-url-text';
 
-import cx from 'classnames';
-import styles from './Menu.module.scss';
+import stylesMenuHeader from './Menu.module.scss';
+import stylesMenuSide from './Menu-in-side.module.scss';
 
-function Menu({ requestsLength }) {
+function Menu({ isSideMenu, requestsLength }) {
+  const className = isSideMenu 
+                  ? stylesMenuSide.menu
+                  : stylesMenuHeader.menu
   return (
-    <menu className={cx(`${styles.menu} no-user-select`)}>
-      <MenuItems 
-        menuItemsUrlText={menuItemsUrlText}
+    <menu className={className}>
+      <MenuItems
+        isSideMenu={isSideMenu} 
         requestsLength={requestsLength}
       />
     </menu>

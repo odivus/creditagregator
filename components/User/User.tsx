@@ -1,4 +1,4 @@
-import UserLinks from './User-links';
+import UserItems from './User-items';
 import styles from './User.module.scss';
 
 function User() {
@@ -12,9 +12,7 @@ function User() {
           </i>
         </a>
       </div>
-      <UserLinks 
-         className={`${styles['dropdown-user-content']} custom-block-shaddow`}
-      />
+      <UserItems isSideMenu={false} />
     </div>
   );
 }

@@ -7,6 +7,7 @@
   &:hover {
     transition: .3s;
     background-color: #67A9C3;
+
     .dropdown-user-content {
       display: block;
     }
@@ -29,10 +30,10 @@
   }
 
   li a {
-    color: #000000;
+    color: #5a6ca0;
     
     &:hover, &:active, &:visited {
-      color: #000000;
+      color: #5a6ca0;
     }
   }
 
@@ -48,28 +49,52 @@
 .dropdown-user-content {
   display: none;
   position: absolute;
+  
   right: 0;
   min-width: 240px;
   margin: 0;
   z-index: 99;
   line-height: 3rem;
   background-color: #f9f9f9;
-
+  
   li {
     a {
-      box-sizing: border-box;
       padding: 0 18px;
+      
+      &:hover {
+        cursor: pointer;
+        background-color: #e7e7e7;
+        transition: .3s;
+      }
     }
-    
-    &:hover {
-      cursor: pointer;
-      background-color: #e7e7e7;
-      transition: .3s;
+  }
+  
+  li {
+    .noactive {
+      padding: 0 18px;
     }
   }
 
   @media(max-width: 920px) {
     font-size: 14px;
     line-height: 2.4rem;
+  }
+}
+
+.side-menu-user-content {
+  margin-top: 12px;
+  line-height: 1.8rem;
+  width: fit-content;
+
+  li {
+    .noactive {
+      padding: 0 12px;
+    }
+  }
+
+  a {
+    display: block;
+    padding: 0 12px;
+    margin: 8px 0;
   }
 }
