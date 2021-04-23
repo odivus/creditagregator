@@ -65,7 +65,7 @@ function MenuSide(props: SideMenu) {
       return setPageHeight(offsetHeight + 'px');
     }
     setPageHeight(scrollHeight + 'px');
-  }, [pageHeight]);
+  });
 
   return (
     <div 
