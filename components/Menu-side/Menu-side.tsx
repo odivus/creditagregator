@@ -58,12 +58,7 @@ function MenuSide(props: SideMenu) {
   });
 
   useEffect(() => {
-    const offsetHeight = document.documentElement.offsetHeight;
     const scrollHeight = document.documentElement.scrollHeight;
-
-    if (offsetHeight > scrollHeight) {
-      return setPageHeight(offsetHeight + 'px');
-    }
     setPageHeight(scrollHeight + 'px');
   });
 
