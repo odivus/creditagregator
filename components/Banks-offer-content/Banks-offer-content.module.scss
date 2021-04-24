@@ -1,3 +1,5 @@
+@import '../../styles/mixins/drop-shaddow.scss';
+
 .card-content {
   border: solid 1px #b3b3b3;
   max-width: 360px;
@@ -31,8 +33,7 @@
 
 .color-shaddow-hover {
   &:hover {
-    box-shadow: 0px 8px 20px 8px rgba(118, 185, 211, 0.445);
-    transition: .3s;
+    @include drop-shaddow;
   }
 }
 
