@@ -1,4 +1,4 @@
-function getOutsideClick(clickItem: Element, nodeId: string): boolean {
+function isOutsideClick(clickItem: Element, nodeId: string): boolean {
   let target: any = clickItem;
 
   if (target.id === nodeId || target.id === 'menu-burger') {
@@ -14,4 +14,4 @@ function getOutsideClick(clickItem: Element, nodeId: string): boolean {
   return true;
 }
 
-export default getOutsideClick;
+export default isOutsideClick;

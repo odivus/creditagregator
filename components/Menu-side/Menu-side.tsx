@@ -3,7 +3,8 @@ import Menu from '../Menu/Menu';
 import UserItems from '../User/User-items';
 import SideMenu from '../../Interfaces/Side-menu';
 
-import getOutsideClick from '../../utilities/get-outside-click';
+import isOutsideClick from '../../utilities/is-outside-click';
+import getEscClick from '../../utilities/get-esc-click';
 
 import stylesHeader from '../Header/Header.module.scss';
 import styles from './Menu-side.module.scss';
@@ -19,41 +20,25 @@ function MenuSide(props: SideMenu) {
   const sideMenuDomElement = useRef(null);
   const [pageHeight, setPageHeight] = useState('');
   
-  function handleOutsideClick(e: Event) {
+  function outsideClickListener(e: Event) {
     if (sideMenuDomElement.current) {
-      if (getOutsideClick(e.target as HTMLElement, 'side-menu')) {
+      if (isOutsideClick(e.target as HTMLElement, 'side-menu')) {
         setShow(false);
-        document.removeEventListener('click', handleOutsideClick, false);
       }
     }
   }
 
-  function escKeyListener(
-    e: KeyboardEvent, 
-    setShow: (state: boolean) => void
-  ): void {
-    const keys = {
-      27: () => {
-        e.preventDefault();
-        setShow(false);
-        document.removeEventListener('keyup', handleEscKeyListener as () => void, false);
-      },
-    };
-
-    if (keys[e.keyCode]) keys[e.keyCode]();
-  }
-
-  function handleEscKeyListener(e: KeyboardEvent): void {
-    escKeyListener(e, setShow);
+  function escKeyListener(e: KeyboardEvent): void {
+    getEscClick(e, setShow);
   }
 
   useEffect(() => {
-    document.addEventListener('click', handleOutsideClick, false);
-    document.addEventListener('keyup', handleEscKeyListener, false);
+    document.addEventListener('click', outsideClickListener, false);
+    document.addEventListener('keyup', escKeyListener, false);
 
     return () => {
-      document.removeEventListener('click', handleOutsideClick, false);
-      document.removeEventListener('keyup', handleEscKeyListener as () => void, false);
+      document.removeEventListener('click', outsideClickListener, false);
+      document.removeEventListener('keyup', escKeyListener as () => void, false);
     }
   }, []);
 
