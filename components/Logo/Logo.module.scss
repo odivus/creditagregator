@@ -1,23 +1,21 @@
 $color_menu_logo: #ffffff;
 
 .logo {
+  padding: 0 10px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 2rem;
   text-transform: uppercase;
   color: $color_menu_logo;
-
+  
   @media(max-width: 920px) {
     font-size: 1.4rem;
   }
 }
 
-.logo-active {
+.logo_active {
   &:hover {
     transition: .3s;
     background-color: #67A9C3;
+    cursor: pointer;
   }
-}
-
-.header__logo {
-  padding: 0 10px;
 }
