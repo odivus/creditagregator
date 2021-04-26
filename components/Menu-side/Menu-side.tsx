@@ -36,7 +36,7 @@ function MenuSide(props: SideMenu) {
       27: () => {
         e.preventDefault();
         setShow(false);
-        window.removeEventListener('keyup', escKeyListener as () => void, false);
+        document.removeEventListener('keyup', handleEscKeyListener as () => void, false);
       },
     };
 
@@ -49,13 +49,13 @@ function MenuSide(props: SideMenu) {
 
   useEffect(() => {
     document.addEventListener('click', handleOutsideClick, false);
-    window.addEventListener('keyup', handleEscKeyListener, false);
+    document.addEventListener('keyup', handleEscKeyListener, false);
 
     return () => {
       document.removeEventListener('click', handleOutsideClick, false);
-      window.removeEventListener('keyup', escKeyListener as () => void, false);
+      document.removeEventListener('keyup', handleEscKeyListener as () => void, false);
     }
-  });
+  }, []);
 
   useEffect(() => {
     const scrollHeight = document.documentElement.scrollHeight;
