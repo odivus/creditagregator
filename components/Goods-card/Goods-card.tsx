@@ -23,7 +23,7 @@ function GoodsCard(props: GoodsCardProps) {
   } = props;
 
   const[goodsItemRemoved, setGoodsItemRemoved] = useState(false);
-  
+
   useEffect(() => {
     let timer: number;
     
@@ -33,10 +33,9 @@ function GoodsCard(props: GoodsCardProps) {
         setGoodsItemRemoved(false);
       }, 340);
     }
-    
-    return () => {
-      if (timer) clearTimeout(timer);
-    }
+
+    return () => clearTimeout(timer);
+
   }, [goodsItemRemoved]);
 
   const removeClassName = cx({
