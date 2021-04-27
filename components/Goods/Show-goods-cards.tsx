@@ -1,11 +1,12 @@
 import GoodsCard from '../Goods-card/Goods-card';
 
-function showGoodsCards(
-    goodsAdded,
+function showGoodsCards(params) {
+  const [
+    goodsAdded, 
     userGoodsAdded, 
-    setGoodsAdded, 
-    setGoodsPriceSum,
-  ) {
+    setGoodsAdded,
+    setGoodsPriceSum
+  ] = params;
 
   return (
     goodsAdded

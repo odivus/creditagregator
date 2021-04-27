@@ -41,7 +41,14 @@ function Goods(props: GoodsProps) {
     setGoodsAdded,
     setgoodsQuantityReset,
     setAddGoodsQuantity,
-    dbUpdateUserData, 
+    dbUpdateUserData 
+  ];
+
+  const showGoodsCardsParams = [
+    goodsAdded, 
+    userGoodsAdded, 
+    setGoodsAdded,
+    setGoodsPriceSum
   ];
   
   const calcCreditClassName = cx({
@@ -107,10 +114,7 @@ function Goods(props: GoodsProps) {
           <div className={styles['goods-cards-wrap']}>
             <div className={cx(styles['goods-cards-wrapper'], 'custom-scroll-bar')}>
               {
-                showGoodsCards(goodsAdded, 
-                              userGoodsAdded, 
-                              setGoodsAdded,
-                              setGoodsPriceSum)
+                showGoodsCards(showGoodsCardsParams)
               }
             </div>
           </div>
