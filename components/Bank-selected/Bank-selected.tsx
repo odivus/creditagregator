@@ -1,5 +1,14 @@
-function BankSelected({ selectedBank }) {
-  const { name, term, rate, commission } = selectedBank;
+interface Props {
+  selectedBank: {
+    name: string;
+    term:number;
+    rate: number;
+    commission: number;
+  }
+}
+
+function BankSelected(props: Props) {
+  const { name, term, rate, commission } = props.selectedBank;
   return (
     <ul 
       key={Math.random() + Date.now()}

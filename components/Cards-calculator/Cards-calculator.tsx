@@ -6,7 +6,13 @@ import CardItems from '../Card-items/Card-items';
 import cx from 'classnames';
 import styles from '../Banks-offer-content/Banks-offer-content.module.scss';
 
-function CardsCalculator({ filteredBanks, parentMonthlyPayment }) {
+interface Props {
+  filteredBanks: Array<Object>;
+  parentMonthlyPayment: number;
+}
+
+function CardsCalculator(props: Props) {
+  const { filteredBanks, parentMonthlyPayment } = props;
   interface DataItem {
     commission: number;
     name: string;
@@ -18,7 +24,7 @@ function CardsCalculator({ filteredBanks, parentMonthlyPayment }) {
   const router = useRouter();
   
   return (
-    filteredBanks.map((item: DataItem) => {
+    filteredBanks.map((item: DataItem, key: number) => {
       const totalSum = Math.round( 
         (parentMonthlyPayment * item.term) 
       + (parentMonthlyPayment * item.rate / 100) 
@@ -33,7 +39,7 @@ function CardsCalculator({ filteredBanks, parentMonthlyPayment }) {
       }
 
       return <ul 
-        key={item._id + Date.now() + Math.random()}
+        key={key}
         className={cx(
           styles['card-content'],
           styles['color-shaddow-hover']

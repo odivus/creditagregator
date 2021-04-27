@@ -6,13 +6,22 @@ import UpdateIcon from './Update-icon';
 import cx from 'classnames';
 import styles from './Button-update.module.scss';
 
-function ButtonUpdate({ updateStatus, setUpdateStatus }) {
+interface Props {
+  updateStatus: boolean;
+  setUpdateStatus: (state: boolean) => void;
+}
+
+function ButtonUpdate(props: Props) {
+  const { updateStatus, setUpdateStatus } = props;
+  
   useEffect(() => {
-    if (updateStatus === true) {
-      setTimeout(() => {
-        setUpdateStatus(false);
-      }, 3000);
-    }
+    if (!updateStatus) return;
+
+    const timer = setTimeout(() => {
+      setUpdateStatus(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [updateStatus]);
 
   return (

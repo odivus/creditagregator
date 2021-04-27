@@ -6,7 +6,12 @@ import updateAnimation from './update-animation.json';
 import cx from 'classnames';
 import styles from './Button-update.module.scss';
 
-function UpdateIcon({ updateStatus }) {
+interface Props {
+  updateStatus: boolean;
+}
+
+function UpdateIcon(props: Props) {
+  const { updateStatus } = props;
   const className = cx({
     [styles['update__icon']]: true,
     [styles['update__icon_visibility_show']]: updateStatus,

@@ -1,4 +1,9 @@
-function Error({ errorMessage }) {
+interface Props {
+  errorMessage: string;
+}
+
+function Error(props: Props) {
+  const { errorMessage } = props;
   if (!errorMessage) return (
     null
   );

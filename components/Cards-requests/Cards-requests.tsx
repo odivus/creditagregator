@@ -2,7 +2,13 @@ import UserRequests from '../../Interfaces/User-Requests';
 import cx from 'classnames';
 import styles from '../Banks-offer-content/Banks-offer-content.module.scss';
 
-function CardsRequests({ requests }) {
+interface Props {
+  requests: Array<Object>;
+}
+
+function CardsRequests(props: Props) {
+  const { requests } = props;
+  
   return (
     requests.map((item: UserRequests, index: number) => {
       const {

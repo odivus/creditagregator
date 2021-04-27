@@ -4,7 +4,13 @@ import convertBanksData from '../../utilities/convert-banks-data';
 import cx from 'classnames';
 import styles from '../Banks-offer-content/Banks-offer-content.module.scss';
 
-function ContentCard({ data, parentMonthlyPayment }) {
+interface Props {
+  data: Array<Object>;
+  parentMonthlyPayment: number;
+}
+
+function ContentCard(props: Props) {
+  const { data, parentMonthlyPayment } = props;
   interface DataItem {
     commission: number;
     name: string;

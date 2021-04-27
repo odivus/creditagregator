@@ -1,6 +1,6 @@
 import styles from './Goods-sum.module.scss';
 
-function TotalGoodsSum({ totalSum }) {
+function TotalGoodsSum({ totalSum }: {totalSum: number}) {
   return totalSum < 0 
     ? null
     : (

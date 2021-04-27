@@ -1,7 +1,12 @@
 import cx from 'classnames';
 import styles from '../Banks-offer-content/Banks-offer-content.module.scss';
 
-function CardsRequestSend({ selected_goods }) {
+interface Props {
+  selected_goods: Array<Object>;
+}
+
+function CardsRequestSend(props: Props) {
+  const { selected_goods } = props;
   interface DataItem {
     _id: string;
     brand: string;

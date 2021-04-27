@@ -5,8 +5,10 @@ import { useRouter } from 'next/router';
 import GoodsProps from '../../Interfaces/Goods-props';
 import GoodsSelect from '../Goods-select/Goods-select';
 import GoodsSum from '../Goods-sum/Goods-sum';
-import GoodsCard from '../Goods-card/Goods-card';
 import AddGoodsQuantity from './Add-goods-quantity';
+
+import showGoodsCards from './show-goods-cards';
+import addGoods from './add-goods';
 
 import cx from 'classnames';
 import styles from './Goods.module.scss';
@@ -30,6 +32,17 @@ function Goods(props: GoodsProps) {
     id: userId,
     selected_goods: goodsAdded,
   }
+
+  const addGoodsParams = [
+    userId,
+    goodsAdded,
+    selectedFullModel,
+    addGoodsQuantity,
+    setGoodsAdded,
+    setgoodsQuantityReset,
+    setAddGoodsQuantity,
+    dbUpdateUserData, 
+  ];
   
   const calcCreditClassName = cx({
     'waves-effect waves-light btn btn-large-custom btn-custom_green': goodsPriceSum > 0,
@@ -53,70 +66,6 @@ function Goods(props: GoodsProps) {
     setGoodsPriceSum(sum);
   }, [goodsAdded]);
 
-  function addGoods() {
-    if (goodsAdded.length === 0) {
-      const selected_goods = [{
-        ...selectedFullModel,
-        quantity: addGoodsQuantity,
-      }]
-
-      setGoodsAdded(selected_goods);
-      setgoodsQuantityReset(true);
-      setAddGoodsQuantity(1);
-
-      dbUpdateUserData({
-        id: userId,
-        selected_goods,
-      });
-    }
-
-    if (goodsAdded.length > 0) {
-      const findDuplicate = goodsAdded.find(
-        (item) => item._id === selectedFullModel._id
-      );
-      const selected_goods = [
-        ...goodsAdded,
-        {
-          ...selectedFullModel,
-          quantity: addGoodsQuantity,
-        },
-      ];
-
-      if (findDuplicate) {
-        setgoodsQuantityReset(true);
-        return setAddGoodsQuantity(1);
-      }
-    
-      setGoodsAdded(selected_goods);
-      setAddGoodsQuantity(1);
-      setgoodsQuantityReset(true);
-
-      dbUpdateUserData({
-        id: userId,
-        selected_goods,
-      });
-    }
-  }
-
-  function showGoodsCards() {
-    return goodsAdded
-      .map((goodsItem, index) => {
-        return <GoodsCard
-          key={goodsItem._id}
-          {...{
-            goodsAddedIndex: index + 1,
-            ...goodsItem,
-            index,
-            goodsAdded,
-            userGoodsAdded,
-            setGoodsAdded,
-            setGoodsPriceSum,
-          }}
-        />
-      })
-      .reverse();
-  }
-
   return (
     <div className='row row_content'>
       <div className='col s12 m12 l12'>
@@ -135,7 +84,7 @@ function Goods(props: GoodsProps) {
               <button
                 className='waves-effect waves-light btn btn-large-custom btn-custom_blue'
                 onClick={() => {
-                  addGoods();
+                  addGoods(addGoodsParams);
                 }}
               >
                 Добавить товар
@@ -157,7 +106,12 @@ function Goods(props: GoodsProps) {
           </div>
           <div className={styles['goods-cards-wrap']}>
             <div className={cx(styles['goods-cards-wrapper'], 'custom-scroll-bar')}>
-              {showGoodsCards()}
+              {
+                showGoodsCards(goodsAdded, 
+                              userGoodsAdded, 
+                              setGoodsAdded,
+                              setGoodsPriceSum)
+              }
             </div>
           </div>
         </div>

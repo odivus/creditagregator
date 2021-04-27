@@ -1,4 +1,11 @@
-function FooterBack({ href, text }) {
+interface Props {
+  href: string;
+  text: string;
+}
+
+function FooterBack(props: Props) {
+  const { href, text } = props;
+  
   return (
     <div className='footer-back'>
       <i className='material-icons'>chevron_left</i>
