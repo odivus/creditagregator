@@ -1,4 +1,10 @@
-function RequestFilter({ setRequestFilter }) {
+interface Props {
+  setRequestFilter: (state: string) => void;
+}
+
+function RequestFilter(props: Props) {
+  const { setRequestFilter } = props;
+  
   function handleChange(e: React.FormEvent<EventTarget>): void {
     const { value } = e.target as HTMLInputElement;
     setRequestFilter(value);

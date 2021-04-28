@@ -3,7 +3,25 @@ import ContentWrapper from '../../components/Content-wrapper/Content-wrapper';
 import BankSelected from '../../components/Bank-selected/Bank-selected';
 import TotalGoodsSum from '../../components/Goods-sum/Total-goods-sum';
 
-function RequestSendContent(props) {
+interface Props {
+  totalSum: number;
+  selectedBank: {
+    commission: number,
+    name: string,
+    rate: number,
+    term: number
+  };
+  selected_goods: {
+    brand: string,
+    category: string,
+    model: string,
+    price: number,
+    quantity: number,
+    _id: string
+  } [];
+}
+
+function RequestSendContent(props: Props) {
   const {
     totalSum,
     selectedBank,

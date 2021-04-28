@@ -2,7 +2,13 @@ import cx from 'classnames';
 import stylesMenuHeader from './Menu.module.scss';
 import stylesMenuSide from './Menu-in-side.module.scss';
 
-function RequestsIndicator({ isSideMenu, requestsLength }) {
+interface Props {
+  isSideMenu: boolean;
+  requestsLength: number;
+}
+
+function RequestsIndicator(props: Props) {
+  const { isSideMenu, requestsLength } = props;
   const className = cx({
     [stylesMenuSide['requests']]: isSideMenu,
     [stylesMenuHeader['requests']]: !isSideMenu,

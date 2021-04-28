@@ -6,16 +6,9 @@ import MenuBurger from '../Menu-burger/Menu-burger';
 import MenuSide from '../Menu-side/Menu-side';
 import User from '../User/User';
 
-import cx from 'classnames';
 import styles from './Header.module.scss';
-import stylesMenu from '../Menu/Menu.module.scss';
 
-interface Props {
-  requestsLength: number;
-}
-
-function Header(props: Props) {
-  const { requestsLength } = props;
+function Header({ requestsLength }: {requestsLength: number}) {
   const [show, setShow] = useState(false);
 
   return (
