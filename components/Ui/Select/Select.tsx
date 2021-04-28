@@ -7,7 +7,13 @@ interface Props {
 }
 
 function Select(props: Props) {
-  const { data, className, defaultValue, label, onChange } = props;
+  const { 
+    data, 
+    className, 
+    defaultValue, 
+    label, 
+    onChange 
+  } = props;
   
   return (
     <div className='input-field'>
@@ -16,13 +22,15 @@ function Select(props: Props) {
         value={defaultValue}
         onChange={(e: React.FormEvent<EventTarget>) => onChange(e)}
       >
-        {data.map((item: any, index: number) => {
-          return (
-          <option key={index} value={item}>
-            {item}
-          </option>
-          )
-        })}
+        {
+          data.map((item: any, index: number) => {
+            return (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            );
+          })
+        }
       </select>
       <label>{label}</label>
     </div>

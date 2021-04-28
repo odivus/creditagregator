@@ -34,9 +34,7 @@ export function increase(setQuantity: setQuantity, quantity: number) {
 export function decrease(setQuantity: setQuantity, quantity: number) {
   const decreaseQuantity = quantity - 1;
 
-  if (decreaseQuantity < 1) {
-    setQuantity(1);
-  } else {
-    setQuantity(decreaseQuantity);
-  }
+  decreaseQuantity < 1
+    ? setQuantity(1)
+    : setQuantity(decreaseQuantity);
 }

@@ -5,13 +5,7 @@ import userItemsUrlText from './user-items-url-text';
 import cx from 'classnames';
 import styles from './User.module.scss';
 
-
-interface Props {
-  isSideMenu: boolean;
-}
-
-function UserItems(props: Props) {
-  const {isSideMenu} = props;
+function UserItems({ isSideMenu }: {isSideMenu: boolean}) {
   const items = Object.entries(userItemsUrlText);
   const documentTitle = useGetDocumentTitle();
 
