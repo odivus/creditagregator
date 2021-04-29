@@ -2,13 +2,13 @@ import CategoriesGoods from '../Interfaces/Categories-goods';
 
 function convertCategoriesGoodsData(
   categoriesGoods: Array<CategoriesGoods>
-): {} {
-  let convertedData = {};
+): object {
+  let convertedData: object = Object.create(null);
   let data: {
     name: string,
     brand: string,
     goods: []
-  };
+  } = Object.create(null);
 
   if (!categoriesGoods || categoriesGoods.length <= 1) {
     return {
@@ -30,19 +30,18 @@ function convertCategoriesGoodsData(
         return [goodsItem.brand, goodsItem]
       })
     }
-  });  
+  });
 
   for (let key in data) {
-    let modifyData = {};
+    let modifyData = Object.create(null);
 
     data[key].forEach((item: string) => {
       if (item[0] in modifyData) {
-        modifyData[item[0]].push(item[1]);
-      } else {
-        modifyData[item[0]] = [item[1]];
+        return modifyData[item[0]].push(item[1]);
       }
+      modifyData[item[0]] = [item[1]];
     });
-
+   
     convertedData = {
       ...convertedData,
       [key]: modifyData
