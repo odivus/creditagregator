@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import Link from 'next/link';
 import dbConnect from '../database/db-connect';
 import getUserById from '../database/db-get-user-by-id';
 import filterByRequestStatus from '../utilities/filter-by-request-status';
@@ -7,9 +6,8 @@ import filterByRequestStatus from '../utilities/filter-by-request-status';
 import UserDataProps from '../Interfaces/User-data-props';
 import Header from '../components/Header/Header';
 import HeadGlobal from '../components/Head-global/Head-global';
-import ContentWraper from '../components/Content-wrapper/Content-wrapper';
-import CardsRequests from '../components/Cards-requests/Cards-requests';
 import RequestFilter from '../components/Request-filter/Request-filter';
+import RequestsShowContent from '../components/Requests-show-content/Requests-show-content';
 import Head from 'next/head';
 
 export async function getServerSideProps() {
@@ -39,39 +37,17 @@ interface Props extends UserDataProps {
   requestsLength: number;
 }
 
-function ShowContent(
-  { error, 
-    requests, 
-    filteredByStatusRequests 
-  }) {
-    if (error) return (
-      <article className='block-centered'>
-        <p>Данные о заявках недоступны. Пожалуйста, попробуйте позже.</p>
-      </article>
-    );
-
-    if (requests && requests.length === 0) return (
-      <article className='block-centered'>
-        <p>У вас пока нет заявок. Их можно оформить в разделе <Link href='/request-create'><a>&laquo;Оформить заявку&raquo;</a></Link></p>
-      </article>  
-    );
-
-    return (
-      <ContentWraper 
-        props={{requests: filteredByStatusRequests}}
-        CardsComponent={CardsRequests}
-      />
-    );
-}
-
 function Requests(props: Props) {
   const { requests } = props.user;
   const { error, requestsLength } = props;
+
   const requestsStatusRejected = requests.find(request => {
     return request.requestStatus === false;
   });
 
   const [requestFilter, setRequestFilter] = useState('all');
+  
+  const filteredByStatusRequests = filterByRequestStatus(requests, requestFilter);
   
   return (
     <>
@@ -93,12 +69,10 @@ function Requests(props: Props) {
               ? null
               : <RequestFilter setRequestFilter={setRequestFilter} /> 
           }
-          <ShowContent 
+          <RequestsShowContent 
             error={error}
             requests={requests}
-            filteredByStatusRequests={
-              filterByRequestStatus(requests, requestFilter)
-            }
+            filteredByStatusRequests={filteredByStatusRequests}
           />
         </div>
       </div>

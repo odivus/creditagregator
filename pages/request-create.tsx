@@ -22,9 +22,6 @@ if (typeof window !== 'undefined'){
   const M = require("materialize-css/dist/js/materialize.min.js");
 }
 
-import cx from 'classnames';
-import styles from '../components/Steps/Steps.module.scss';
-
 export async function getServerSideProps() {
   await dbConnect();
 

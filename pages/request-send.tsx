@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
-import Link from 'next/link';
 import Head from 'next/head';
 
 import dbConnect from '../database/db-connect';
@@ -13,9 +12,7 @@ import HeadGlobal from '../components/Head-global/Head-global';
 import Steps from '../components/Steps/Steps';
 import RequestSendContent from '../components/Request-send-content/Request-send-content';
 import FooterBack from '../components/Footer-back/Footer-back';
-
-import Error from '../components/Error/Error';
-import {requestNotSend} from '../components/Error/error-messages';
+import RequestSendMessage from '../components/Request-send-message/Request-send-message';
 
 export async function getServerSideProps() {
   await dbConnect();
@@ -61,19 +58,6 @@ export async function getServerSideProps() {
 interface Props extends UserDataProps {
   requestsLength: number;
   error: boolean;
-}
-
-function RequestSendMessage({ error }) {
-  if (error) return (
-    <Error errorMessage={requestNotSend} />
-  );
-
-  return (
-    <article className="block-centered">
-      <h5>Заявка отправлена в банк</h5>
-      <p>Подробная информация доступна в разделе <Link href='/requests'><a>&laquo;Заявки&raquo;</a></Link></p>
-    </article>
-  );
 }
 
 function RequestSend(props: Props) {

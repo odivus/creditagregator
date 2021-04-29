@@ -11,14 +11,14 @@ interface Props {
     rate: number,
     term: number
   };
-  selected_goods: {
-    brand: string,
+  selected_goods: [
+    _id: string,
     category: string,
+    brand: string,
     model: string,
     price: number,
     quantity: number,
-    _id: string
-  } [];
+  ];
 }
 
 function RequestSendContent(props: Props) {
