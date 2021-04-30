@@ -56,6 +56,12 @@ function Goods(props: GoodsProps) {
     'btn btn-large-custom disabled': goodsPriceSum === 0
   });
 
+  const goodsCardsWrapperClassName = cx({
+    ['custom-scroll-bar']: true,
+    [styles['goods-cards-wrapper']]: true,
+    [styles['goods-cards-wrapper_noscroll']]: goodsAdded.length === 0,
+  });
+
   useEffect(() => {
     const length = goodsAdded.length;
 
@@ -112,7 +118,7 @@ function Goods(props: GoodsProps) {
             />
           </div>
           <div className={styles['goods-cards-wrap']}>
-            <div className={cx(styles['goods-cards-wrapper'], 'custom-scroll-bar')}>
+            <div className={goodsCardsWrapperClassName}>
               {
                 showGoodsCards(showGoodsCardsParams)
               }
