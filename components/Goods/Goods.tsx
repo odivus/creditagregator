@@ -59,7 +59,7 @@ function Goods(props: GoodsProps) {
   const goodsCardsWrapperClassName = cx({
     ['custom-scroll-bar']: true,
     [styles['goods-cards-wrapper']]: true,
-    [styles['goods-cards-wrapper_noscroll']]: goodsAdded.length === 0,
+    [styles['goods-cards-wrapper_noscroll']]: goodsAdded.length < 3,
   });
 
   useEffect(() => {
