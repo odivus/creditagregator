@@ -6,7 +6,7 @@ import dbUpdateUserData from '../../database/db-update-user-data';
 import cx from 'classnames';
 import styles from './Goods-card.module.scss';
 
-function GoodsCard(props: GoodsCardProps) {
+function GoodsCard(props: any) {
   const {
     goodsAdded,
     userGoodsAdded,

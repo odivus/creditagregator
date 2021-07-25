@@ -1,11 +1,6 @@
-type goodsAdded = Array<{
-  brand: string,
-  category?: string,
-  model: string,
-  price: number,
-  quantity: number,
-  _id: string
-}>;
+import GoodsAdded from './GoodsAdded';
+
+type goodsAdded = Array<GoodsAdded>;
 
 interface GoodsCardProps {
   key: string;

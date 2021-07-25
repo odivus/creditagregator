@@ -6,8 +6,8 @@ import GoodsProps from '../../Interfaces/Goods-props';
 import GoodsSelect from '../Goods-select/Goods-select';
 import GoodsSum from '../Goods-sum/Goods-sum';
 import AddGoodsQuantity from './Add-goods-quantity';
+import ShowGoodsCards from './Show-goods-cards';
 
-import showGoodsCards from './show-goods-cards';
 import addGoods from './add-goods';
 
 import cx from 'classnames';
@@ -44,13 +44,6 @@ function Goods(props: GoodsProps) {
     dbUpdateUserData 
   ];
 
-  const showGoodsCardsParams = [
-    goodsAdded, 
-    userGoodsAdded, 
-    setGoodsAdded,
-    setGoodsPriceSum
-  ];
-  
   const calcCreditClassName = cx({
     'waves-effect waves-light btn btn-large-custom btn-custom_green': goodsPriceSum > 0,
     'btn btn-large-custom disabled': goodsPriceSum === 0
@@ -119,9 +112,12 @@ function Goods(props: GoodsProps) {
           </div>
           <div className={styles['goods-cards-wrap']}>
             <div className={goodsCardsWrapperClassName}>
-              {
-                showGoodsCards(showGoodsCardsParams)
-              }
+              <ShowGoodsCards 
+                goodsAdded={goodsAdded}
+                userGoodsAdded={userGoodsAdded}
+                setGoodsAdded={setGoodsAdded}
+                setGoodsPriceSum={setGoodsPriceSum}
+              />
             </div>
           </div>
         </div>
