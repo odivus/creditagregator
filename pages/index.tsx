@@ -38,13 +38,10 @@ function Index({ requestsLength }) {
               на&nbsp;приобретаемые товары
             </h5>
             <p className='p-h5-first'>
-              После добавления необходимой функциональности и&nbsp;создания
-              серверной части, приложение может составить конкуренцию
-              на&nbsp;рынке существующих решений по&nbsp;подбору банковских
-              кредитных продуктов.
+              После доработки до&nbsp;необходимой функциональности, данный прототип может стать реальным приложением по&nbsp;подбору банковских кредитов на&nbsp;приобретаемые товары и&nbsp;составить конкурецию существующим сервисам.
             </p>
             <h6>Используемые технологии</h6>
-            <p className='p-h6-first'>Nextjs, Mongoosejs, TypeScript, Scss, BEM, Materialize.</p>
+            <p className='p-h6-first'>Nextjs, Mongoose, TypeScript, Scss, BEM, Materialize.</p>
           </article>
         </div>
       </div>
