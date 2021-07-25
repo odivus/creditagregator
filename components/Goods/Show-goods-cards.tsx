@@ -12,7 +12,7 @@ interface Props {
   setGoodsPriceSum: (state: number) => void;
 }
 
-function ShowGoodsCards(props: Props) {
+function ShowGoodsCards(props: any) {
   const {
     goodsAdded, 
     userGoodsAdded, 
