@@ -5,10 +5,10 @@ import GoodsAdded from '../../Interfaces/GoodsAdded';
 interface Props {
   goodsAdded: Array<GoodsAdded>;
   userGoodsAdded: number;
-  setGoodsAdded: {
+  setGoodsAdded: (state: {
     id: string,
     selected_goods: GoodsAdded,
-  }
+  }) => void;
   setGoodsPriceSum: (state: number) => void;
 }
 

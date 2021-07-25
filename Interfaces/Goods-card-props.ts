@@ -3,7 +3,7 @@ import GoodsAdded from './GoodsAdded';
 type goodsAdded = Array<GoodsAdded>;
 
 interface GoodsCardProps {
-  key: string;
+  key?: string;
   goodsAdded: goodsAdded;
   userGoodsAdded: {
     id: string,

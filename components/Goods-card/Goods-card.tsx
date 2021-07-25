@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
 import dbUpdateUserData from '../../database/db-update-user-data';
-
+// import GoodsCardProps from '../../Interfaces/Goods-card-props';
 import cx from 'classnames';
 import styles from './Goods-card.module.scss';
 
