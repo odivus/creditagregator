@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.4.0",
     "@types/classnames": "^2.2.11",
     "@types/materialize-css": "^1.0.8",
     "classnames": "^2.2.6",
@@ -18,7 +17,6 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-lottie": "^1.2.3",
-    "react-redux": "^7.2.2",
     "sass": "^1.29.0"
   },
   "devDependencies": {
