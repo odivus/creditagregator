@@ -20,7 +20,7 @@ function ShowGoodsCards(props: Props) {
     setGoodsPriceSum
   } = props;
 
-  return (
+  return <>{
     goodsAdded
       .map((goodsItem, index) => (
         <GoodsCard
@@ -37,7 +37,7 @@ function ShowGoodsCards(props: Props) {
         />)
       )
       .reverse()
-    );
+    }</>
 }
 
 export default ShowGoodsCards;
