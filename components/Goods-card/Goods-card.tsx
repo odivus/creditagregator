@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import GoodsCardProps from '../../Interfaces/Goods-card-props';
 import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
 import dbUpdateUserData from '../../database/db-update-user-data';
 
