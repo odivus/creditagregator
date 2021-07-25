@@ -1,6 +1,6 @@
 import React from 'react';
 import GoodsCard from '../Goods-card/Goods-card';
-import GoodsAdded from '../../Interfaces/GoodsAdded';
+import GoodsAdded from '../../Interfaces/Goods-added';
 
 interface Props {
   goodsAdded: Array<GoodsAdded>;

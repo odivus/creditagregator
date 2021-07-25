@@ -1,4 +1,4 @@
-import GoodsAdded from './GoodsAdded';
+import GoodsAdded from './Goods-added';
 
 type goodsAdded = Array<GoodsAdded>;
 
