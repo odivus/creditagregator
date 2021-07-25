@@ -41,7 +41,7 @@ function Index({ requestsLength }) {
               После доработки до&nbsp;необходимой функциональности, данный прототип может стать реальным приложением по&nbsp;подбору банковских кредитов на&nbsp;приобретаемые товары и&nbsp;составить конкурецию существующим сервисам.
             </p>
             <h6>Используемые технологии</h6>
-            <p className='p-h6-first'>Nextjs, Mongoose, TypeScript, Scss, BEM, Materialize.</p>
+            <p className='p-h6-first'>Nextjs, TypeScript, Mongoose, Scss, BEM, Materialize.</p>
           </article>
         </div>
       </div>
