@@ -1,3 +1,4 @@
+import React from 'react';
 import {useState, useEffect} from 'react';
 import ChangeGoodsAddedQuantity from '../Goods/Change-goods-added-quantity';
 import dbUpdateUserData from '../../database/db-update-user-data';

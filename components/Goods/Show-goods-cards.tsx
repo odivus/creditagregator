@@ -1,3 +1,4 @@
+import React from 'react';
 import GoodsCard from '../Goods-card/Goods-card';
 import GoodsAdded from '../../Interfaces/GoodsAdded';
 
