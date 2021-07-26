@@ -15,6 +15,10 @@ async function saveToDb(data: data) {
   })[0];
   
   await dbConnect();
+
+  console.log(id);
+  console.log(category);
+  console.log(data[category]);
   
   try {
     const doc = await Users.findById({_id: id});
