@@ -2,6 +2,7 @@ async function dbUpdateUserData(data: object) {
   try {
       const res = await fetch(`/api/user/update`, {
         method: 'PUT',
+        mode: 'cors',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
