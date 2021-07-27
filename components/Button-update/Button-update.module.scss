@@ -1,11 +1,10 @@
 .update {
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .update__icon {
-  position: absolute;
-  top: -4px;
-  right: 130px;
+  margin-top: 12px;
 }
 
 .update__icon_visibility_show {
