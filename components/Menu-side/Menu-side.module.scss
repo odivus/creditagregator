@@ -15,6 +15,7 @@
 
 .menu-side_show {
   display: block;
+  position: fixed;
   @include drop-shaddow;
 }
 
